@@ -1,31 +1,98 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#28A745" />
-    <meta
-      name="description"
-      content="高雄英語冒險 - 在地化英語學習應用"
-    />
-    <title>高雄英語冒險 | Kaohsiung English Quest</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
-          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-    </style>
-  </head>
-  <body>
-    <noscript>你需要啟用 JavaScript 來執行這個應用程式。</noscript>
-    <div id="root"></div>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangQuest: Immersive English</title>
+    <link rel="stylesheet" href="app.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <div class="logo">LangQuest 🚀</div>
+            <nav id="nav-menu">
+                <button onclick="app.navigate('home')" class="nav-btn active" id="nav-home">首頁</button>
+                <button onclick="app.navigate('scenarios')" class="nav-btn" id="nav-scenarios">情境</button>
+                <button onclick="app.navigate('badges')" class="nav-btn" id="nav-badges">我的進度</button>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <!-- Home View -->
+            <section id="view-home" class="view active">
+                <div class="hero">
+                    <h1>在真實情境中掌握英語</h1>
+                    <p>練習與市場、節慶及農漁特產相關的對話。</p>
+                    <button class="primary-btn pulse" onclick="app.navigate('scenarios')">開始學習</button>
+                </div>
+            </section>
+
+            <!-- Scenarios Selection View -->
+            <section id="view-scenarios" class="view">
+                <h2>選擇情境</h2>
+                <div id="topics-grid" class="card-grid">
+                    <!-- Topics will be dynamically populated here -->
+                </div>
+            </section>
+
+            <!-- Chat View -->
+            <section id="view-chat" class="view">
+                <div class="chat-header">
+                    <button class="back-btn" onclick="app.navigate('scenarios')">← 返回</button>
+                    <h2 id="chat-scenario-title">情境</h2>
+                    <button class="task-btn" onclick="app.showTasks()">📋 任務</button>
+                </div>
+                <div id="chat-messages" class="messages-container">
+                    <!-- Messages will be injected here -->
+                </div>
+                <div class="chat-controls">
+                    <button class="tool-btn hint-btn" onclick="app.requestHint()">💡 提示</button>
+                    <button class="tool-btn translate-btn" onclick="app.toggleTranslation()">🌐 翻譯</button>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="用英文輸入您的訊息..." onkeypress="app.handleInputKeypress(event)">
+                    <button id="send-btn" class="send-btn" onclick="app.sendMessage()">發送</button>
+                </div>
+            </section>
+
+            <!-- Task View (Overlay/Modal) -->
+            <div id="task-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="app.hideTasks()">&times;</span>
+                    <h2>任務目標</h2>
+                    <ul id="task-list" class="task-list">
+                        <!-- Tasks go here -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Badges/Progress View -->
+            <section id="view-badges" class="view">
+                <h2>我的進度與徽章</h2>
+                <div class="stats-overview">
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-completed">0</span>
+                        <span class="stat-label">已完成任務</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-streak">1</span>
+                        <span class="stat-label">連續天數 🔥</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-rounds">0</span>
+                        <span class="stat-label">平均對話輪數</span>
+                    </div>
+                </div>
+                <h3 class="badges-title">獲得徽章</h3>
+                <div id="badges-grid" class="badges-grid">
+                    <!-- Badges injected here -->
+                    <div class="empty-state">尚未獲得徽章。快開始一個情境對話吧！</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>

@@ -1,40 +1,16 @@
 {
   "name": "kaohsiung-english-app",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "https://luluheart77.github.io/kaohsiung-english-app",
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "lucide-react": "^0.383.0"
-  },
+  "version": "1.0.0",
+  "description": "Language learning app based on Supabase and Gemini",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "wrangler pages dev public",
+    "deploy": "wrangler pages deploy public"
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0"
   }
 }
