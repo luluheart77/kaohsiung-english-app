@@ -1,4 +1,5 @@
 const app = {
+    data: null,
     state: {
         currentView: 'home',
         currentScenario: null,
@@ -13,10 +14,21 @@ const app = {
         }
     },
 
-    init() {
+    async init() {
         console.log("App initialized");
         this.loadStatsFromStorage();
+        await this.loadAppJson();
         this.navigate('home');
+    },
+
+    async loadAppJson() {
+        try {
+            const response = await fetch('/kaohsiung_tour_data.json');
+            this.data = await response.json();
+            console.log("Loaded local JSON data:", this.data);
+        } catch(e) {
+            console.error("Failed to load JSON data:", e);
+        }
     },
 
     loadStatsFromStorage() {
@@ -72,29 +84,29 @@ const app = {
     },
 
     async loadTopics() {
+        if (!this.data) return;
         const grid = document.getElementById('topics-grid');
         grid.innerHTML = '';
         
-        const topics = [
-            { id: 1, title_zh: '當地市場', title_en: 'market', icon: '🛒', desc: '練習購物、殺價及詢問商品。' },
-            { id: 2, title_zh: '文化節慶', title_en: 'festival', icon: '🏮', desc: '學習描述傳統、活動與感受。' },
-            { id: 3, title_zh: '農漁特產', title_en: 'agrifood', icon: '🌾', desc: '討論農業、當地特產及食物來源。' },
-            { id: 4, title_zh: '市區導覽', title_en: 'city tour', icon: '🗺️', desc: '學習問路、搭乘交通工具。' },
-            { id: 5, title_zh: '餐廳點餐', title_en: 'dining', icon: '🍽️', desc: '練習看菜單、點餐與結帳。' }
-        ];
+        // Let's only list the first 12 topics so it doesn't get overwhelmingly long for now.
+        const topics = this.data.topics.slice(0, 12);
         
         topics.forEach((topic, index) => {
             const card = document.createElement('div');
             card.className = 'scenario-card';
-            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animationDelay = `${index * 0.05}s`;
             card.onclick = () => this.startScenario(topic);
             
+            // Find the location icon
+            const location = this.data.locations.find(l => l.id === topic.location_id);
+            const icon = location ? location.icon : "📍";
+            
             card.innerHTML = `
-                <div class="icon-wrapper"><div class="icon">${topic.icon}</div></div>
+                <div class="icon-wrapper"><div class="icon">${icon}</div></div>
                 <div class="card-content">
                     <h3>${topic.title_zh}</h3>
                     <p class="subtitle">${topic.title_en.toUpperCase()}</p>
-                    <p class="desc">${topic.desc}</p>
+                    <p class="desc">${location ? location.name_zh : ''}</p>
                 </div>
             `;
             grid.appendChild(card);
@@ -254,26 +266,17 @@ const app = {
     },
 
     async loadTasksForScenario(topicId) {
-        const tasksMock = {
-            1: [
-                { id: 1, text: "詢問商品價格", task_content_en: "Ask for the price of an item", completed: false },
-                { id: 2, text: "嘗試殺價", task_content_en: "Bargain for a lower price", completed: false }
-            ],
-            2: [
-                { id: 3, text: "詢問一個節慶傳統", task_content_en: "Ask about a festival tradition", completed: false }
-            ],
-            3: [
-                { id: 4, text: "詢問食物的來源", task_content_en: "Ask where the food is sourced", completed: false }
-            ],
-            4: [
-                { id: 5, text: "請問怎麼去捷運站", task_content_en: "Ask for directions to the MRT station", completed: false }
-            ],
-            5: [
-                { id: 6, text: "點一杯珍珠奶茶", task_content_en: "Order a bubble tea", completed: false }
-            ]
-        };
+        if(!this.data) return;
         
-        this.currentTasks = tasksMock[topicId] || [];
+        const tasks = this.data.tasks.filter(t => t.topic_id === topicId);
+        
+        this.currentTasks = tasks.map((task, index) => ({
+            id: topicId * 100 + index, // Generate unique ID for evaluator
+            text: task.task_content_zh,
+            task_content_en: task.task_content_en,
+            completed: false
+        }));
+        
         this.renderTasks();
     },
 
