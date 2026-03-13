@@ -224,8 +224,11 @@ const app = {
             
             if (data.reply) {
                 this.addMessageToUI('bot', data.reply, data.translation);
+            } else if (data.error) {
+                const detailedError = data.details ? JSON.stringify(data.details) : '';
+                this.addMessageToUI('bot', `Backend Error: ${data.error} ${detailedError}`, `伺服器錯誤: ${data.error}`);
             } else {
-                this.addMessageToUI('bot', "Sorry, I had trouble processing that.", "抱歉，我無法處理這個訊息。");
+                this.addMessageToUI('bot', `Unknown error: ${JSON.stringify(data)}`, `未知錯誤`);
             }
             
         } catch (error) {
