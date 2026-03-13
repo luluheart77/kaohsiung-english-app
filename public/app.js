@@ -15,7 +15,44 @@ const app = {
 
     init() {
         console.log("App initialized");
+        this.loadStatsFromStorage();
         this.navigate('home');
+    },
+
+    loadStatsFromStorage() {
+        try {
+            const savedStats = localStorage.getItem('langquest_stats');
+            const lastDate = localStorage.getItem('langquest_last_date');
+            const today = new Date().toDateString();
+            
+            if (savedStats) {
+                // Merge with default state structure
+                this.state.stats = { ...this.state.stats, ...JSON.parse(savedStats) };
+                
+                // Track streak safely
+                if (lastDate !== today) {
+                    if (lastDate) {
+                        const lastTime = new Date(lastDate).getTime();
+                        const diffDays = Math.floor((new Date().getTime() - lastTime) / (1000 * 3600 * 24));
+                        if (diffDays === 1) {
+                            this.state.stats.streak++;
+                        } else if (diffDays > 1) {
+                            this.state.stats.streak = 1; // Reset streak if missed a day
+                        }
+                    }
+                    localStorage.setItem('langquest_last_date', today);
+                    this.saveStats();
+                }
+            } else {
+                localStorage.setItem('langquest_last_date', today);
+            }
+        } catch (e) {
+            console.error("Storage error:", e);
+        }
+    },
+
+    saveStats() {
+        localStorage.setItem('langquest_stats', JSON.stringify(this.state.stats));
     },
 
     navigate(viewId) {
@@ -77,16 +114,27 @@ const app = {
         
         // Mock session stats
         this.state.stats.sessions++;
+        this.saveStats();
 
         this.navigate('chat');
         this.loadTasksForScenario(topic.id);
         
         const typingId = this.showTypingIndicator();
         try {
-            // Mock offline response instead of calling backend
-            await new Promise(resolve => setTimeout(resolve, 800));
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    scenario: topic.title_en,
+                    messages: []
+                })
+            });
+            const data = await response.json();
             this.removeTypingIndicator(typingId);
-            this.addMessageToUI('bot', `Hello! Welcome to the ${topic.title_en}. I am the vendor. How can I assist you today?`, `你好！歡迎來到${topic.title_zh}。我是老闆，今天能為您提供什麼協助？`);
+            
+            if (data.reply) {
+                this.addMessageToUI('bot', data.reply, data.translation);
+            }
         } catch (error) {
             console.error(error);
             this.removeTypingIndicator(typingId);
@@ -129,6 +177,7 @@ const app = {
         
         if (role === 'user') {
             this.state.stats.rounds++;
+            this.saveStats();
         }
     },
 
@@ -149,24 +198,27 @@ const app = {
         try {
             this.evaluateUserMessageSync(text);
 
-            // Mock an offline response
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    scenario: this.state.currentScenario,
+                    messages: this.state.messages
+                })
+            });
+
+            const data = await response.json();
             this.removeTypingIndicator(typingId);
             
-            const mockResponses = [
-                {en: "That sounds great! Would you like anything else?", zh: "聽起來很棒！您還需要點什麼嗎？"},
-                {en: "I see. Let me think about that.", zh: "我明白了。讓我想一下。"},
-                {en: "Could you repeat that?", zh: "您可以再說一次嗎？"},
-                {en: "Perfect, let's do it.", zh: "完美，就這麼辦吧。"},
-                {en: "How about we try another approach?", zh: "我們試試其他方法如何？"}
-            ];
-            const randomReply = mockResponses[Math.floor(Math.random() * mockResponses.length)];
-            
-            this.addMessageToUI('bot', randomReply.en, randomReply.zh);
+            if (data.reply) {
+                this.addMessageToUI('bot', data.reply, data.translation);
+            } else {
+                this.addMessageToUI('bot', "Sorry, I had trouble processing that.", "抱歉，我無法處理這個訊息。");
+            }
             
         } catch (error) {
             this.removeTypingIndicator(typingId);
-            this.addMessageToUI('bot', "Sorry, an error occurred offline.", "抱歉，離線時發生錯誤。");
+            this.addMessageToUI('bot', "Sorry, I had trouble connecting to the server.", "抱歉，無法連接到伺服器。");
             console.error(error);
         }
     },
@@ -181,13 +233,19 @@ const app = {
     async requestHint() {
         const typingId = this.showTypingIndicator();
         try {
-            await new Promise(resolve => setTimeout(resolve, 500));
+            const response = await fetch('/api/task', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'request_hint',
+                    scenario: this.state.currentScenario,
+                    history: this.state.messages
+                })
+            });
+            const data = await response.json();
             this.removeTypingIndicator(typingId);
-            const openTasks = this.currentTasks.filter(t => !t.completed);
-            if (openTasks.length > 0) {
-                document.getElementById('chat-input').value = `How do I ${openTasks[0].task_content_en.toLowerCase()}?`;
-            } else {
-                document.getElementById('chat-input').value = `What should I say next?`;
+            if(data.hint) {
+                document.getElementById('chat-input').value = data.hint;
             }
         } catch (e) {
             this.removeTypingIndicator(typingId);
@@ -232,16 +290,34 @@ const app = {
     },
 
     async evaluateUserMessageSync(userMessage) {
-        const openTasks = this.currentTasks.filter(t => !t.completed);
+        const openTasks = this.currentTasks.filter(t => !t.completed).map(t => ({ id: t.id, question: t.task_content_en || t.text }));
         if(openTasks.length === 0) return;
 
-        // Offline mock evaluation: If the user says something reasonably long, check off a random task
-        if (userMessage.length > 5) {
-            const randomTask = openTasks[Math.floor(Math.random() * openTasks.length)];
-            randomTask.completed = true;
-            this.notifyTaskCompleted(randomTask.text);
-            this.state.stats.taskCount++;
-            this.renderTasks();
+        try {
+            const response = await fetch('/api/task', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'evaluate_tasks',
+                    scenario: this.state.currentScenario,
+                    userMessage: userMessage,
+                    currentTasks: openTasks
+                })
+            });
+            const data = await response.json();
+            if(data.completedIds && data.completedIds.length > 0) {
+                this.currentTasks.forEach(t => {
+                    if (data.completedIds.includes(t.id)) {
+                        t.completed = true;
+                        this.notifyTaskCompleted(t.text);
+                        this.state.stats.taskCount++;
+                        this.saveStats();
+                    }
+                });
+                this.renderTasks();
+            }
+        } catch (e) {
+            console.error("Eval error", e);
         }
     },
 
