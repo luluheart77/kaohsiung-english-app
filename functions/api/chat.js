@@ -38,7 +38,7 @@ export async function onRequestPost(context) {
         }
 
         const apiKey = env.GEMINI_API_KEY;
-        const apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+        const apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
 
         const geminiReqBody = {
             systemInstruction: { parts: [{ text: systemPrompt }] },
