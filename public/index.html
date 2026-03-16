@@ -6,44 +6,56 @@
     <title>LangQuest: Kaohsiung</title>
     <link rel="stylesheet" href="app.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
     <div id="app-container">
         <header>
             <div class="logo">LangQuest 🗺️</div>
             <nav id="nav-menu">
-                <button onclick="app.navigate('home')" class="nav-btn active" id="nav-home">首頁</button>
-                <button onclick="app.navigate('scenarios')" class="nav-btn" id="nav-scenarios">地圖</button>
-                <button onclick="app.navigate('badges')" class="nav-btn" id="nav-badges">我的進度</button>
+                <button onclick="app.navigate('home')"      class="nav-btn active" id="nav-home">首頁</button>
+                <button onclick="app.navigate('scenarios')" class="nav-btn"        id="nav-scenarios">地圖</button>
+                <button onclick="app.navigate('routes')"    class="nav-btn"        id="nav-routes">路線</button>
+                <button onclick="app.navigate('vocab')"     class="nav-btn"        id="nav-vocab">單字庫</button>
+                <button onclick="app.navigate('badges')"    class="nav-btn"        id="nav-badges">進度</button>
             </nav>
         </header>
 
         <main id="main-content">
-            <!-- Home View -->
+
+            <!-- Home -->
             <section id="view-home" class="view active">
                 <div class="hero">
-                    <div class="hero-badge">高雄在地英語學習</div>
+                    <div class="hero-badge">高雄在地英語學習 × SDGs</div>
                     <h1>探索高雄<br>掌握英語</h1>
-                    <p>點擊地圖上的景點，與AI導遊用英語對話，學習在地文化知識。</p>
+                    <p>點擊地圖上的景點，與 AI 導遊用英語對話，學習永續發展知識。</p>
                     <button class="primary-btn" onclick="app.navigate('scenarios')">
                         <span>開啟地圖</span>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
                     <div class="hero-stats">
                         <div class="hero-stat"><span class="hero-stat-num">80+</span><span>學習景點</span></div>
-                        <div class="hero-stat"><span class="hero-stat-num">5</span><span>主題路線</span></div>
-                        <div class="hero-stat"><span class="hero-stat-num">∞</span><span>對話情境</span></div>
+                        <div class="hero-stat"><span class="hero-stat-num">5</span><span>永續路線</span></div>
+                        <div class="hero-stat"><span class="hero-stat-num">17</span><span>SDG 目標</span></div>
                     </div>
                 </div>
             </section>
 
-            <!-- Map / Scenarios View -->
+            <!-- Map -->
             <section id="view-scenarios" class="view map-view">
-                <div id="map"></div>
+                <div class="sdg-filter-bar" id="sdg-filter-bar">
+                    <button class="sdg-filter-btn active" data-sdg="all" onclick="app.filterBySdg('all')">全部</button>
+                    <button class="sdg-filter-btn" data-sdg="6"  onclick="app.filterBySdg(6)"  title="潔淨水資源">SDG 6 💧</button>
+                    <button class="sdg-filter-btn" data-sdg="7"  onclick="app.filterBySdg(7)"  title="可負擔的潔淨能源">SDG 7 ⚡</button>
+                    <button class="sdg-filter-btn" data-sdg="11" onclick="app.filterBySdg(11)" title="永續城鄉">SDG 11 🏙️</button>
+                    <button class="sdg-filter-btn" data-sdg="13" onclick="app.filterBySdg(13)" title="氣候行動">SDG 13 🌡️</button>
+                    <button class="sdg-filter-btn" data-sdg="14" onclick="app.filterBySdg(14)" title="海洋生態">SDG 14 🌊</button>
+                    <button class="sdg-filter-btn" data-sdg="15" onclick="app.filterBySdg(15)" title="陸域生態">SDG 15 🌿</button>
+                </div>
 
-                <!-- Location Side Panel -->
+                <div id="map" style="width:100%;height:100%;min-height:500px;"></div>
+
                 <div id="location-panel" class="location-panel hidden">
                     <div class="panel-header">
                         <button class="panel-close-btn" onclick="app.closeLocationPanel()">✕</button>
@@ -56,7 +68,6 @@
                     <div id="panel-topic-list" class="panel-topic-list"></div>
                 </div>
 
-                <!-- Map legend -->
                 <div class="map-legend">
                     <div class="legend-item"><span class="legend-dot" style="background:#4f46e5"></span>愛河</div>
                     <div class="legend-item"><span class="legend-dot" style="background:#0891b2"></span>西子灣</div>
@@ -66,30 +77,54 @@
                 </div>
             </section>
 
-            <!-- Chat View -->
+            <!-- Routes -->
+            <section id="view-routes" class="view">
+                <h2>🌿 永續學習路線</h2>
+                <p class="view-subtitle">每條路線串連數個相關景點，依 SDG 主題規劃完整學習地圖。點選路線即可在地圖上查看並開始學習。</p>
+                <div id="routes-grid" class="routes-grid"></div>
+            </section>
+
+            <!-- Vocab -->
+            <section id="view-vocab" class="view">
+                <div class="vocab-header">
+                    <h2>📖 我的永續單字庫</h2>
+                    <input type="text" id="vocab-search" placeholder="搜尋單字…" oninput="app.filterVocab(this.value)">
+                </div>
+                <div class="vocab-sdg-filters" id="vocab-sdg-filters"></div>
+                <div id="vocab-empty" class="vocab-empty">
+                    <div class="vocab-empty-icon">📚</div>
+                    <p>還沒有單字！完成對話後，新學到的永續詞彙會自動出現在這裡。</p>
+                </div>
+                <div id="vocab-grid" class="vocab-grid"></div>
+            </section>
+
+            <!-- Chat -->
             <section id="view-chat" class="view chat-view">
                 <div class="chat-header">
                     <button class="back-btn" onclick="app.navigate('scenarios')">← 返回地圖</button>
                     <div class="chat-title-wrap">
                         <span id="chat-location-icon" class="chat-loc-icon"></span>
-                        <h2 id="chat-scenario-title">情境</h2>
+                        <div>
+                            <h2 id="chat-scenario-title">情境</h2>
+                            <div id="chat-sdg-tags" class="chat-sdg-tags"></div>
+                        </div>
                     </div>
                     <button class="task-btn" onclick="app.showTasks()">📋 任務</button>
                 </div>
                 <div id="chat-messages" class="messages-container"></div>
                 <div class="chat-controls">
-                    <button class="tool-btn hint-btn" onclick="app.requestHint()">💡 提示</button>
-                    <button class="tool-btn translate-btn" onclick="app.toggleTranslation()">🌐 翻譯</button>
+                    <button class="tool-btn" onclick="app.requestHint()">💡 提示</button>
+                    <button class="tool-btn" onclick="app.toggleTranslation()">🌐 翻譯</button>
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="用英文輸入您的訊息..." onkeypress="app.handleInputKeypress(event)">
-                    <button id="send-btn" class="send-btn" onclick="app.sendMessage()">
+                    <input type="text" id="chat-input" placeholder="用英文輸入您的訊息…" onkeypress="app.handleInputKeypress(event)">
+                    <button class="send-btn" onclick="app.sendMessage()">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 2l7 7-7 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
                 </div>
             </section>
 
-            <!-- Task Modal -->
+            <!-- Task modal -->
             <div id="task-modal" class="modal hidden">
                 <div class="modal-content">
                     <span class="close-btn" onclick="app.hideTasks()">✕</span>
@@ -99,31 +134,31 @@
                 </div>
             </div>
 
-            <!-- Badges/Progress View -->
+            <!-- Vocab detail modal -->
+            <div id="vocab-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="app.closeVocabModal()">✕</span>
+                    <div id="vocab-modal-body"></div>
+                </div>
+            </div>
+
+            <!-- Badges -->
             <section id="view-badges" class="view">
                 <h2>我的進度與徽章</h2>
                 <div class="stats-overview">
-                    <div class="stat-box">
-                        <span class="stat-value" id="stat-completed">0</span>
-                        <span class="stat-label">已完成任務</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-value" id="stat-streak">1</span>
-                        <span class="stat-label">連續天數 🔥</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-value" id="stat-rounds">0</span>
-                        <span class="stat-label">平均對話輪數</span>
-                    </div>
+                    <div class="stat-box"><span class="stat-value" id="stat-completed">0</span><span class="stat-label">已完成任務</span></div>
+                    <div class="stat-box"><span class="stat-value" id="stat-streak">1</span><span class="stat-label">連續天數 🔥</span></div>
+                    <div class="stat-box"><span class="stat-value" id="stat-rounds">0</span><span class="stat-label">平均對話輪數</span></div>
+                    <div class="stat-box"><span class="stat-value" id="stat-vocab">0</span><span class="stat-label">永續單字數</span></div>
                 </div>
                 <h3 class="badges-title">獲得徽章</h3>
                 <div id="badges-grid" class="badges-grid">
                     <div class="empty-state">尚未獲得徽章。快開始一個情境對話吧！</div>
                 </div>
             </section>
+
         </main>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>

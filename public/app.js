@@ -1,21 +1,131 @@
+// ── SDG metadata ─────────────────────────────────────────────────────────────
+const SDG_META = {
+    6:  { label: 'SDG 6',  name: '潔淨水資源',     color: '#26BDE2', emoji: '💧' },
+    7:  { label: 'SDG 7',  name: '可負擔的潔淨能源', color: '#FCC30B', emoji: '⚡' },
+    11: { label: 'SDG 11', name: '永續城鄉',         color: '#FD9D24', emoji: '🏙️' },
+    13: { label: 'SDG 13', name: '氣候行動',         color: '#3F7E44', emoji: '🌡️' },
+    14: { label: 'SDG 14', name: '海洋生態',         color: '#0A97D9', emoji: '🌊' },
+    15: { label: 'SDG 15', name: '陸域生態',         color: '#56C02B', emoji: '🌿' },
+};
+
+// ── Sustainability routes definition ─────────────────────────────────────────
+const ROUTES = [
+    {
+        id: 'water',
+        title: '高雄水文循環路線',
+        title_en: 'Kaohsiung Water Cycle Route',
+        emoji: '💧',
+        color: '#26BDE2',
+        sdgs: [6, 11, 13],
+        desc: '從愛河整治到沿海濕地，探索高雄如何透過工程與生態雙軌管理城市水資源。',
+        location_ids: [1, 2, 56, 55, 127],
+        topic_ids: [1, 3, 56, 55, 127],
+    },
+    {
+        id: 'energy',
+        title: '再生能源海岸路線',
+        title_en: 'Renewable Energy Coastal Route',
+        emoji: '⚡',
+        color: '#FCC30B',
+        sdgs: [7, 13, 14],
+        desc: '沿著高雄西海岸，認識風力發電、太陽能愛之船，以及綠能轉型中的漁業社區。',
+        location_ids: [1, 57, 10, 110, 125],
+        topic_ids: [2, 57, 20, 110, 125],
+    },
+    {
+        id: 'industrial',
+        title: '工業轉型文化路線',
+        title_en: 'Industrial Transformation Route',
+        emoji: '🏭',
+        color: '#FD9D24',
+        sdgs: [11, 13],
+        desc: '見證高雄從重工業城市轉型的軌跡——廢倉庫變藝術特區，糖廠變文化園區，鐵道變公共空間。',
+        location_ids: [4, 5, 58, 123, 109],
+        topic_ids: [7, 9, 58, 123, 109],
+    },
+    {
+        id: 'biodiversity',
+        title: '生態多樣性路線',
+        title_en: 'Biodiversity & Wetlands Route',
+        emoji: '🌿',
+        color: '#56C02B',
+        sdgs: [14, 15, 6],
+        desc: '從都市濕地紅樹林到南部候鳥棲地，追蹤黑面琵鷺的足跡，認識高雄的生態廊道。',
+        location_ids: [2, 56, 52, 127, 134],
+        topic_ids: [4, 56, 52, 127, 134],
+    },
+    {
+        id: 'indigenous',
+        title: '原住民永續智慧路線',
+        title_en: 'Indigenous Sustainability Route',
+        emoji: '🌸',
+        color: '#E5243B',
+        sdgs: [15, 11],
+        desc: '深入高雄山區部落，從布農族八部合音到茂林紫蝶幽谷，認識原住民與土地共生的永續智慧。',
+        location_ids: [134, 135, 136, 130, 129],
+        topic_ids: [134, 135, 136, 130, 129],
+    },
+];
+
+// ── Vocab keywords mapped to topics ──────────────────────────────────────────
+// These are extracted when the user completes tasks. Each entry becomes a vocab card.
+const VOCAB_BY_TOPIC = {
+    1:   [{ word: 'remediation',      zh: '整治／復育',     sdgs: [6,11] },
+          { word: 'watershed',        zh: '流域',           sdgs: [6]    }],
+    2:   [{ word: 'zero-emission',    zh: '零排放',         sdgs: [7,13] },
+          { word: 'sustainable tourism', zh: '永續觀光',    sdgs: [11]   }],
+    3:   [{ word: 'sponge city',      zh: '海綿城市',       sdgs: [6,11] },
+          { word: 'green infrastructure', zh: '綠色基礎設施', sdgs: [11,13] }],
+    4:   [{ word: 'biodiversity',     zh: '生物多樣性',     sdgs: [14,15] },
+          { word: 'ecological corridor', zh: '生態廊道',    sdgs: [15]   }],
+    7:   [{ word: 'adaptive reuse',   zh: '活化再利用',     sdgs: [11]   },
+          { word: 'industrial heritage', zh: '工業遺產',    sdgs: [11]   }],
+    9:   [{ word: 'rotating bridge',  zh: '旋轉橋',         sdgs: [11]   }],
+    11:  [{ word: 'marine ecology',   zh: '海洋生態',       sdgs: [14]   },
+          { word: 'coastal erosion',  zh: '海岸侵蝕',       sdgs: [14]   }],
+    13:  [{ word: 'wildlife coexistence', zh: '野生動物共存', sdgs: [15] }],
+    15:  [{ word: 'air-raid shelter', zh: '防空洞',         sdgs: [11]   }],
+    51:  [{ word: 'urban heat island', zh: '都市熱島效應',  sdgs: [11,13] },
+          { word: 'carbon sequestration', zh: '碳封存',     sdgs: [13]   }],
+    52:  [{ word: 'habitat restoration', zh: '棲地復育',    sdgs: [15]   }],
+    55:  [{ word: 'detention pond',   zh: '滯洪池',         sdgs: [6,11] },
+          { word: 'flood governance', zh: '防洪治理',       sdgs: [6]    }],
+    56:  [{ word: 'mangrove',         zh: '紅樹林',         sdgs: [14,15] },
+          { word: 'wetland buffer',   zh: '濕地緩衝帶',     sdgs: [6,14] }],
+    57:  [{ word: 'wind turbine',     zh: '風力發電機',     sdgs: [7]    },
+          { word: 'renewable energy', zh: '再生能源',       sdgs: [7,13] }],
+    59:  [{ word: 'landfill rehabilitation', zh: '掩埋場復育', sdgs: [11,15] }],
+    109: [{ word: 'petrochemical',    zh: '石化工業',       sdgs: [11]   },
+          { word: 'environmental justice', zh: '環境正義',  sdgs: [11]   }],
+    126: [{ word: 'aquaculture',      zh: '養殖漁業',       sdgs: [14]   }],
+    127: [{ word: 'Black-faced Spoonbill', zh: '黑面琵鷺', sdgs: [14,15] },
+          { word: 'migratory birds',  zh: '候鳥',           sdgs: [15]   }],
+    134: [{ word: 'indigenous conservation', zh: '原住民保育', sdgs: [15] }],
+    135: [{ word: 'cultural preservation', zh: '文化保存',  sdgs: [11]   }],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 const app = {
     data: null,
     map: null,
+    allMarkers: [],        // { marker, locationId, sdgs[] }
+    routeLayer: null,      // active polyline on map
+    activeSdgFilter: 'all',
+
     state: {
         currentView: 'home',
         currentScenario: null,
         currentTopicId: null,
+        currentTopicSdgs: [],
         currentLocationIcon: '',
         messages: [],
         showTranslations: false,
-        stats: {
-            taskCount: 0,
-            streak: 1,
-            rounds: 0,
-            sessions: 0
-        }
+        stats: { taskCount: 0, streak: 1, rounds: 0, sessions: 0 },
     },
     currentTasks: [],
+
+    // ── Init ─────────────────────────────────────────────────────────────────
 
     async init() {
         this.loadStatsFromStorage();
@@ -25,26 +135,23 @@ const app = {
 
     async loadAppJson() {
         try {
-            const response = await fetch('/kaohsiung_tour_data.json');
-            this.data = await response.json();
-        } catch(e) {
-            console.error('Failed to load JSON data:', e);
-        }
+            const r = await fetch('/kaohsiung_tour_data.json');
+            this.data = await r.json();
+        } catch(e) { console.error('Failed to load JSON:', e); }
     },
 
     loadStatsFromStorage() {
         try {
-            const savedStats = localStorage.getItem('langquest_stats');
+            const saved = localStorage.getItem('langquest_stats');
             const lastDate = localStorage.getItem('langquest_last_date');
             const today = new Date().toDateString();
-
-            if (savedStats) {
-                this.state.stats = { ...this.state.stats, ...JSON.parse(savedStats) };
+            if (saved) {
+                this.state.stats = { ...this.state.stats, ...JSON.parse(saved) };
                 if (lastDate !== today) {
                     if (lastDate) {
-                        const diffDays = Math.floor((new Date() - new Date(lastDate)) / (1000 * 3600 * 24));
-                        if (diffDays === 1) this.state.stats.streak++;
-                        else if (diffDays > 1) this.state.stats.streak = 1;
+                        const diff = Math.floor((new Date() - new Date(lastDate)) / 86400000);
+                        if (diff === 1) this.state.stats.streak++;
+                        else if (diff > 1) this.state.stats.streak = 1;
                     }
                     localStorage.setItem('langquest_last_date', today);
                     this.saveStats();
@@ -52,14 +159,14 @@ const app = {
             } else {
                 localStorage.setItem('langquest_last_date', today);
             }
-        } catch(e) {
-            console.error('Storage error:', e);
-        }
+        } catch(e) { console.error('Storage error:', e); }
     },
 
     saveStats() {
         localStorage.setItem('langquest_stats', JSON.stringify(this.state.stats));
     },
+
+    // ── Navigation ───────────────────────────────────────────────────────────
 
     navigate(viewId) {
         document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
@@ -67,121 +174,148 @@ const app = {
         this.state.currentView = viewId;
 
         document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-        const activeNavBtn = document.getElementById(`nav-${viewId}`);
-        if (activeNavBtn) activeNavBtn.classList.add('active');
+        const btn = document.getElementById(`nav-${viewId}`);
+        if (btn) btn.classList.add('active');
 
         if (viewId === 'scenarios') {
-            // Wait for the element to be visible and sized before initialising Leaflet
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    this.initMap();
-                    if (this.map) {
-                        this.map.invalidateSize();
-                    }
-                });
-            });
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                this.initMap();
+                if (this.map) {
+                    this.map.invalidateSize();
+                    setTimeout(() => this.map.invalidateSize(), 300);
+                }
+            }));
         }
-        if (viewId === 'badges') {
-            this.loadStats();
-        }
+        if (viewId === 'routes')  this.renderRoutes();
+        if (viewId === 'vocab')   this.renderVocab();
+        if (viewId === 'badges')  this.loadStats();
     },
 
     // ── Map ──────────────────────────────────────────────────────────────────
 
-    // Area color mapping
     areaColors: {
-        1: '#4f46e5', // Love River — indigo
-        2: '#0891b2', // Sizihwan — cyan
-        3: '#d97706', // Food — amber
-        4: '#dc2626', // Culture/Districts — red
-        5: '#059669', // Parks — emerald
+        1: '#4f46e5',
+        2: '#0891b2',
+        3: '#d97706',
+        4: '#dc2626',
+        5: '#059669',
+    },
+
+    // Build a lookup: locationId → sdg numbers[]
+    _buildLocationSdgIndex() {
+        const index = {};
+        this.data.topics.forEach(topic => {
+            const sdgs = topic.sdg_ids || [];
+            if (!index[topic.location_id]) index[topic.location_id] = new Set();
+            sdgs.forEach(s => index[topic.location_id].add(s));
+        });
+        return index;
     },
 
     initMap() {
         if (!this.data) return;
-
         const mapEl = document.getElementById('map');
         if (!mapEl) return;
+        if (this.map) { this.map.invalidateSize(); return; }
 
-        // Already initialised — just refresh size
-        if (this.map) {
-            this.map.invalidateSize();
-            return;
-        }
-
-        this.map = L.map('map', {
-            center: [22.638, 120.298],
-            zoom: 12,
-            zoomControl: true,
-        });
-
+        this.map = L.map('map', { center: [22.638, 120.298], zoom: 12 });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             maxZoom: 18,
         }).addTo(this.map);
 
-        // Group topics by location_id
         const topicsByLocation = {};
         this.data.topics.forEach(t => {
             if (!topicsByLocation[t.location_id]) topicsByLocation[t.location_id] = [];
             topicsByLocation[t.location_id].push(t);
         });
 
-        // Place a marker for each location that has coordinates
+        const locationSdgIndex = this._buildLocationSdgIndex();
+
         this.data.locations.forEach(loc => {
             if (!loc.lat || !loc.lng) return;
-
             const topics = topicsByLocation[loc.id] || [];
             if (topics.length === 0) return;
 
             const color = this.areaColors[loc.area_id] || '#4f46e5';
+            const locSdgs = Array.from(locationSdgIndex[loc.id] || []);
 
-            const icon = L.divIcon({
-                className: '',
-                html: `
-                    <div class="map-pin" style="
-                        width: 38px; height: 38px;
-                        border: 2.5px solid ${color};
-                        box-shadow: 0 4px 14px ${color}55;
-                    ">
-                        <span style="font-size:1.05rem; line-height:1">${loc.icon}</span>
-                        <span class="pin-badge" style="background:${color}">${topics.length}</span>
-                    </div>`,
-                iconSize: [38, 38],
-                iconAnchor: [19, 19],
-                popupAnchor: [0, -22],
-            });
-
-            const marker = L.marker([loc.lat, loc.lng], { icon }).addTo(this.map);
+            const marker = this._createMarker(loc, topics, color);
+            marker.addTo(this.map);
             marker.on('click', () => this.showLocationPanel(loc, topics));
+
+            this.allMarkers.push({ marker, locationId: loc.id, sdgs: locSdgs });
         });
 
-        // Slight delay to ensure container is sized
         setTimeout(() => this.map.invalidateSize(), 150);
     },
 
+    _createMarker(loc, topics, color) {
+        const icon = L.divIcon({
+            className: '',
+            html: `<div class="map-pin" style="width:38px;height:38px;border:2.5px solid ${color};box-shadow:0 4px 14px ${color}55;">
+                       <span style="font-size:1.05rem;line-height:1">${loc.icon}</span>
+                       <span class="pin-badge" style="background:${color}">${topics.length}</span>
+                   </div>`,
+            iconSize: [38, 38],
+            iconAnchor: [19, 19],
+        });
+        return L.marker([loc.lat, loc.lng], { icon });
+    },
+
+    // ── SDG filter ────────────────────────────────────────────────────────────
+
+    filterBySdg(sdg) {
+        this.activeSdgFilter = sdg;
+
+        // Update button states
+        document.querySelectorAll('.sdg-filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.sdg == sdg);
+        });
+
+        // Show/hide markers
+        this.allMarkers.forEach(({ marker, sdgs }) => {
+            if (sdg === 'all' || sdgs.includes(Number(sdg))) {
+                if (!this.map.hasLayer(marker)) marker.addTo(this.map);
+            } else {
+                if (this.map.hasLayer(marker)) this.map.removeLayer(marker);
+            }
+        });
+
+        // Clear any active route line when changing filter
+        if (this.routeLayer) {
+            this.map.removeLayer(this.routeLayer);
+            this.routeLayer = null;
+        }
+    },
+
+    // ── Location panel ────────────────────────────────────────────────────────
+
     showLocationPanel(loc, topics) {
         const area = this.data.areas.find(a => a.id === loc.area_id);
-        const color = this.areaColors[loc.area_id] || '#4f46e5';
-
         document.getElementById('panel-location-icon').textContent = loc.icon;
         document.getElementById('panel-location-name').textContent = loc.name_zh;
         document.getElementById('panel-location-meta').textContent =
             `${loc.name_en}${area ? ' · ' + area.name_zh : ''}`;
 
         const list = document.getElementById('panel-topic-list');
-        list.innerHTML = topics.map(t => `
-            <div class="topic-card" onclick="app.startScenario(${JSON.stringify(t).replace(/"/g, '&quot;')}, '${loc.icon}')">
+        list.innerHTML = topics.map(t => {
+            const sdgPills = (t.sdg_ids || []).map(s => {
+                const m = SDG_META[s];
+                return m ? `<span class="sdg-pill" style="background:${m.color}20;color:${m.color};border-color:${m.color}40">${m.emoji} ${m.label}</span>` : '';
+            }).join('');
+            return `
+            <div class="topic-card" onclick="app.startScenario(${JSON.stringify(t).replace(/"/g,'&quot;')}, '${loc.icon}')">
                 <div class="topic-card-zh">${t.title_zh}</div>
                 <div class="topic-card-en">${t.title_en}</div>
-            </div>
-        `).join('');
+                ${sdgPills ? `<div class="topic-sdg-pills">${sdgPills}</div>` : ''}
+            </div>`;
+        }).join('');
 
         const panel = document.getElementById('location-panel');
         panel.classList.remove('hidden');
-        // Re-trigger animation
         panel.style.animation = 'none';
-        panel.offsetHeight; // reflow
+        panel.offsetHeight;
         panel.style.animation = '';
     },
 
@@ -189,20 +323,97 @@ const app = {
         document.getElementById('location-panel').classList.add('hidden');
     },
 
+    // ── Routes ────────────────────────────────────────────────────────────────
+
+    renderRoutes() {
+        const grid = document.getElementById('routes-grid');
+        grid.innerHTML = ROUTES.map(route => {
+            const sdgPills = route.sdgs.map(s => {
+                const m = SDG_META[s];
+                return m ? `<span class="sdg-pill" style="background:${m.color}20;color:${m.color};border-color:${m.color}40">${m.emoji} ${m.label} ${m.name}</span>` : '';
+            }).join('');
+
+            const stops = route.location_ids.length;
+
+            return `
+            <div class="route-card" onclick="app.openRoute('${route.id}')">
+                <div class="route-card-header" style="background:${route.color}15;border-bottom:2px solid ${route.color}30">
+                    <span class="route-emoji">${route.emoji}</span>
+                    <div>
+                        <div class="route-title">${route.title}</div>
+                        <div class="route-title-en">${route.title_en}</div>
+                    </div>
+                    <span class="route-stops">${stops} 站</span>
+                </div>
+                <div class="route-card-body">
+                    <p class="route-desc">${route.desc}</p>
+                    <div class="route-sdg-pills">${sdgPills}</div>
+                    <button class="route-start-btn" style="background:${route.color}" onclick="event.stopPropagation();app.openRoute('${route.id}')">
+                        在地圖上查看 →
+                    </button>
+                </div>
+            </div>`;
+        }).join('');
+    },
+
+    openRoute(routeId) {
+        const route = ROUTES.find(r => r.id === routeId);
+        if (!route || !this.data) return;
+
+        // Navigate to map
+        this.navigate('scenarios');
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            // Clear old route
+            if (this.routeLayer) this.map.removeLayer(this.routeLayer);
+
+            // Gather coordinates in order
+            const coords = route.location_ids
+                .map(id => this.data.locations.find(l => l.id === id))
+                .filter(l => l && l.lat && l.lng)
+                .map(l => [l.lat, l.lng]);
+
+            if (coords.length === 0) return;
+
+            // Draw polyline
+            this.routeLayer = L.polyline(coords, {
+                color: route.color,
+                weight: 4,
+                opacity: 0.75,
+                dashArray: '10 6',
+            }).addTo(this.map);
+
+            // Fit bounds with padding
+            this.map.fitBounds(this.routeLayer.getBounds(), { padding: [60, 60] });
+
+            // Reset filter to show all
+            this.filterBySdg('all');
+
+            // Show route info toast
+            this.showToast(`${route.emoji} ${route.title} — ${coords.length} 站`);
+        }));
+    },
+
     // ── Chat ─────────────────────────────────────────────────────────────────
 
     async startScenario(topic, locationIcon = '') {
         this.state.currentScenario = topic.title_en;
         this.state.currentTopicId = topic.id;
+        this.state.currentTopicSdgs = topic.sdg_ids || [];
         this.state.currentLocationIcon = locationIcon;
 
         document.getElementById('chat-scenario-title').textContent = topic.title_zh;
         document.getElementById('chat-location-icon').textContent = locationIcon;
+
+        // Render SDG tags in chat header
+        const tagContainer = document.getElementById('chat-sdg-tags');
+        tagContainer.innerHTML = (topic.sdg_ids || []).map(s => {
+            const m = SDG_META[s];
+            return m ? `<span class="sdg-pill small" style="background:${m.color}20;color:${m.color};border-color:${m.color}40">${m.emoji} ${m.label}</span>` : '';
+        }).join('');
+
         document.getElementById('chat-messages').innerHTML = '';
-
-        // Reset message history
         this.state.messages = [];
-
         this.state.stats.sessions++;
         this.saveStats();
 
@@ -210,24 +421,21 @@ const app = {
         this.closeLocationPanel();
         this.loadTasksForScenario(topic.id);
 
-        const typingId = this.showTypingIndicator();
+        const tid = this.showTypingIndicator();
         try {
-            const response = await fetch('/api/chat', {
+            const r = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ scenario: topic.title_en, messages: [] })
+                body: JSON.stringify({ scenario: topic.title_en, messages: [] }),
             });
-            const data = await response.json();
-            this.removeTypingIndicator(typingId);
-            if (data.reply) {
-                this.addMessageToUI('bot', data.reply, data.translation);
-            }
-        } catch(error) {
-            this.removeTypingIndicator(typingId);
+            const d = await r.json();
+            this.removeTypingIndicator(tid);
+            if (d.reply) this.addMessageToUI('bot', d.reply, d.translation);
+        } catch(e) {
+            this.removeTypingIndicator(tid);
             this.addMessageToUI('bot',
                 `Welcome! Let's talk about ${topic.title_en}.`,
-                `歡迎！讓我們聊聊${topic.title_zh}。`
-            );
+                `歡迎！讓我們聊聊${topic.title_zh}。`);
         }
     },
 
@@ -248,15 +456,13 @@ const app = {
     },
 
     addMessageToUI(role, content, translation = '') {
-        const container = document.getElementById('chat-messages');
+        const c = document.getElementById('chat-messages');
         const div = document.createElement('div');
         div.className = `message ${role}${this.state.showTranslations && translation ? ' show-translation' : ''}`;
-
         const safe = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         div.innerHTML = `<div class="content">${safe(content)}</div>` +
             (translation ? `<div class="translation">${safe(translation)}</div>` : '');
-
-        container.appendChild(div);
+        c.appendChild(div);
         this._scrollToBottom();
     },
 
@@ -265,100 +471,77 @@ const app = {
         if (c) c.scrollTop = c.scrollHeight;
     },
 
-    handleInputKeypress(e) {
-        if (e.key === 'Enter') this.sendMessage();
-    },
+    handleInputKeypress(e) { if (e.key === 'Enter') this.sendMessage(); },
 
     async sendMessage() {
         const inputEl = document.getElementById('chat-input');
         const text = inputEl.value.trim();
         if (!text) return;
-
         inputEl.value = '';
 
-        // Show in UI immediately
         this.addMessageToUI('user', text);
-
-        // Snapshot history BEFORE adding the new user message
         const historyToSend = [...this.state.messages];
-
-        // Now push user message to state
         this.state.messages.push({ role: 'user', content: text });
         this.state.stats.rounds++;
         this.saveStats();
 
-        const typingId = this.showTypingIndicator();
-
-        // Evaluate tasks in parallel (fire and forget)
+        const tid = this.showTypingIndicator();
         this.evaluateUserMessage(text);
 
         try {
-            const response = await fetch('/api/chat', {
+            const r = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     scenario: this.state.currentScenario,
-                    messages: [...historyToSend, { role: 'user', content: text }]
-                })
+                    messages: [...historyToSend, { role: 'user', content: text }],
+                }),
             });
-
-            const data = await response.json();
-            this.removeTypingIndicator(typingId);
-
-            if (data.reply) {
-                this.addMessageToUI('bot', data.reply, data.translation);
-                this.state.messages.push({ role: 'bot', content: data.reply, translation: data.translation || '' });
+            const d = await r.json();
+            this.removeTypingIndicator(tid);
+            if (d.reply) {
+                this.addMessageToUI('bot', d.reply, d.translation);
+                this.state.messages.push({ role: 'bot', content: d.reply, translation: d.translation || '' });
             } else {
-                this.addMessageToUI('bot', `Error: ${data.error || 'Unknown error'}`);
+                this.addMessageToUI('bot', `Error: ${d.error || 'Unknown error'}`);
             }
-        } catch(error) {
-            this.removeTypingIndicator(typingId);
-            this.addMessageToUI('bot', 'Sorry, I had trouble connecting to the server.', '抱歉，無法連接到伺服器。');
+        } catch(e) {
+            this.removeTypingIndicator(tid);
+            this.addMessageToUI('bot', 'Sorry, connection failed.', '抱歉，連線失敗。');
         }
     },
 
     toggleTranslation() {
         this.state.showTranslations = !this.state.showTranslations;
-        document.querySelectorAll('.message').forEach(msg => {
-            const hasTranslation = msg.querySelector('.translation');
-            if (hasTranslation) {
-                msg.classList.toggle('show-translation', this.state.showTranslations);
-            }
+        document.querySelectorAll('.message').forEach(m => {
+            if (m.querySelector('.translation'))
+                m.classList.toggle('show-translation', this.state.showTranslations);
         });
     },
 
     async requestHint() {
-        const typingId = this.showTypingIndicator();
+        const tid = this.showTypingIndicator();
         try {
-            const response = await fetch('/api/task', {
+            const r = await fetch('/api/task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'request_hint',
-                    scenario: this.state.currentScenario,
-                    history: this.state.messages
-                })
+                body: JSON.stringify({ action: 'request_hint', scenario: this.state.currentScenario, history: this.state.messages }),
             });
-            const data = await response.json();
-            this.removeTypingIndicator(typingId);
-            if (data.hint) {
-                document.getElementById('chat-input').value = data.hint;
-                document.getElementById('chat-input').focus();
-            }
-        } catch(e) {
-            this.removeTypingIndicator(typingId);
-        }
+            const d = await r.json();
+            this.removeTypingIndicator(tid);
+            if (d.hint) { document.getElementById('chat-input').value = d.hint; document.getElementById('chat-input').focus(); }
+        } catch(e) { this.removeTypingIndicator(tid); }
     },
 
-    // ── Tasks ────────────────────────────────────────────────────────────────
+    // ── Tasks ─────────────────────────────────────────────────────────────────
 
     loadTasksForScenario(topicId) {
         if (!this.data) return;
         const tasks = this.data.tasks.filter(t => t.topic_id === topicId);
-        this.currentTasks = tasks.map((task, i) => ({
+        this.currentTasks = tasks.map((t, i) => ({
             id: topicId * 100 + i,
-            text: task.task_content_zh,
-            task_content_en: task.task_content_en,
+            text: t.task_content_zh,
+            task_content_en: t.task_content_en,
             completed: false,
         }));
         this.renderTasks();
@@ -373,81 +556,223 @@ const app = {
     },
 
     async evaluateUserMessage(userMessage) {
-        const openTasks = this.currentTasks
-            .filter(t => !t.completed)
+        const open = this.currentTasks.filter(t => !t.completed)
             .map(t => ({ id: t.id, question: t.task_content_en || t.text }));
-        if (openTasks.length === 0) return;
-
+        if (open.length === 0) return;
         try {
-            const response = await fetch('/api/task', {
+            const r = await fetch('/api/task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'evaluate_tasks',
-                    scenario: this.state.currentScenario,
-                    userMessage,
-                    currentTasks: openTasks
-                })
+                body: JSON.stringify({ action: 'evaluate_tasks', scenario: this.state.currentScenario, userMessage, currentTasks: open }),
             });
-            const data = await response.json();
-            if (data.completedIds && data.completedIds.length > 0) {
+            const d = await r.json();
+            if (d.completedIds && d.completedIds.length > 0) {
                 this.currentTasks.forEach(t => {
-                    if (data.completedIds.includes(t.id)) {
+                    if (d.completedIds.includes(t.id)) {
                         t.completed = true;
                         this.showToast(`🎯 任務完成：${t.text}`);
                         this.state.stats.taskCount++;
                         this.saveStats();
+                        // Award vocab for this topic
+                        this._awardVocab(this.state.currentTopicId);
                     }
                 });
                 this.renderTasks();
             }
-        } catch(e) {
-            console.error('Eval error:', e);
+        } catch(e) { console.error('Eval error:', e); }
+    },
+
+    showTasks()  { document.getElementById('task-modal').classList.remove('hidden'); },
+    hideTasks()  { document.getElementById('task-modal').classList.add('hidden'); },
+
+    // ── Vocab ─────────────────────────────────────────────────────────────────
+
+    _awardVocab(topicId) {
+        const words = VOCAB_BY_TOPIC[topicId];
+        if (!words || words.length === 0) return;
+
+        const stored = this._loadVocab();
+        let added = 0;
+        words.forEach(entry => {
+            if (!stored.find(v => v.word === entry.word)) {
+                stored.push({
+                    word: entry.word,
+                    zh: entry.zh,
+                    sdgs: entry.sdgs,
+                    topicId,
+                    learnedAt: new Date().toISOString(),
+                    seen: 1,
+                });
+                added++;
+            } else {
+                // Increment seen count
+                const existing = stored.find(v => v.word === entry.word);
+                if (existing) existing.seen = (existing.seen || 1) + 1;
+            }
+        });
+        this._saveVocab(stored);
+
+        if (added > 0) {
+            setTimeout(() => this.showToast(`📖 新增 ${added} 個永續單字！`), 1000);
         }
     },
 
-    showToast(msg) {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3500);
+    _loadVocab() {
+        try { return JSON.parse(localStorage.getItem('langquest_vocab') || '[]'); }
+        catch(e) { return []; }
     },
 
-    showTasks() { document.getElementById('task-modal').classList.remove('hidden'); },
-    hideTasks() { document.getElementById('task-modal').classList.add('hidden'); },
+    _saveVocab(vocab) {
+        localStorage.setItem('langquest_vocab', JSON.stringify(vocab));
+    },
 
-    // ── Badges ───────────────────────────────────────────────────────────────
+    _vocabFilter: 'all',
+    _vocabSearch: '',
+
+    renderVocab() {
+        const vocab = this._loadVocab();
+
+        // Build SDG filter pills from vocab actually owned
+        const sdgsInVocab = new Set();
+        vocab.forEach(v => (v.sdgs || []).forEach(s => sdgsInVocab.add(s)));
+
+        const filterContainer = document.getElementById('vocab-sdg-filters');
+        filterContainer.innerHTML = `
+            <button class="sdg-filter-btn ${this._vocabFilter === 'all' ? 'active' : ''}"
+                onclick="app.setVocabSdgFilter('all')">全部 (${vocab.length})</button>
+            ${Array.from(sdgsInVocab).sort((a,b)=>a-b).map(s => {
+                const m = SDG_META[s];
+                const count = vocab.filter(v => (v.sdgs||[]).includes(s)).length;
+                return m ? `<button class="sdg-filter-btn ${this._vocabFilter == s ? 'active' : ''}"
+                    onclick="app.setVocabSdgFilter(${s})"
+                    style="${this._vocabFilter == s ? `background:${m.color}20;border-color:${m.color};color:${m.color}` : ''}">
+                    ${m.emoji} ${m.label} (${count})
+                </button>` : '';
+            }).join('')}`;
+
+        // Filter
+        let filtered = vocab;
+        if (this._vocabFilter !== 'all') {
+            filtered = filtered.filter(v => (v.sdgs||[]).includes(Number(this._vocabFilter)));
+        }
+        if (this._vocabSearch) {
+            const q = this._vocabSearch.toLowerCase();
+            filtered = filtered.filter(v => v.word.toLowerCase().includes(q) || v.zh.includes(q));
+        }
+
+        const empty = document.getElementById('vocab-empty');
+        const grid = document.getElementById('vocab-grid');
+
+        if (filtered.length === 0) {
+            empty.classList.remove('hidden');
+            grid.innerHTML = '';
+            return;
+        }
+        empty.classList.add('hidden');
+
+        grid.innerHTML = filtered.map(v => {
+            const sdgPills = (v.sdgs || []).map(s => {
+                const m = SDG_META[s];
+                return m ? `<span class="sdg-pill" style="background:${m.color}20;color:${m.color};border-color:${m.color}40">${m.emoji} ${m.label}</span>` : '';
+            }).join('');
+
+            const date = v.learnedAt ? new Date(v.learnedAt).toLocaleDateString('zh-TW') : '';
+            return `
+            <div class="vocab-card" onclick="app.openVocabModal('${v.word.replace(/'/g,"\\'")}')">
+                <div class="vocab-word">${v.word}</div>
+                <div class="vocab-zh">${v.zh}</div>
+                <div class="vocab-pills">${sdgPills}</div>
+                <div class="vocab-meta">學習於 ${date} · 出現 ${v.seen || 1} 次</div>
+            </div>`;
+        }).join('');
+    },
+
+    setVocabSdgFilter(sdg) {
+        this._vocabFilter = sdg;
+        this.renderVocab();
+    },
+
+    filterVocab(q) {
+        this._vocabSearch = q;
+        this.renderVocab();
+    },
+
+    openVocabModal(word) {
+        const vocab = this._loadVocab();
+        const v = vocab.find(x => x.word === word);
+        if (!v) return;
+
+        const sdgPills = (v.sdgs || []).map(s => {
+            const m = SDG_META[s];
+            return m ? `
+            <div class="vocab-sdg-detail" style="border-left:3px solid ${m.color};background:${m.color}10">
+                <span style="font-size:1.4rem">${m.emoji}</span>
+                <div>
+                    <div style="font-weight:600;color:${m.color}">${m.label}: ${m.name}</div>
+                </div>
+            </div>` : '';
+        }).join('');
+
+        document.getElementById('vocab-modal-body').innerHTML = `
+            <div style="margin-bottom:1.2rem">
+                <div style="font-size:1.8rem;font-weight:700;color:#1e293b;margin-bottom:0.3rem">${v.word}</div>
+                <div style="font-size:1.1rem;color:#64748b;margin-bottom:1rem">${v.zh}</div>
+                <div style="font-size:0.8rem;color:#94a3b8">出現 ${v.seen || 1} 次 · 首次學習 ${v.learnedAt ? new Date(v.learnedAt).toLocaleDateString('zh-TW') : ''}</div>
+            </div>
+            <div style="margin-bottom:1rem">
+                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:0.6rem">相關 SDG 目標</div>
+                <div style="display:flex;flex-direction:column;gap:0.5rem">${sdgPills}</div>
+            </div>`;
+
+        document.getElementById('vocab-modal').classList.remove('hidden');
+    },
+
+    closeVocabModal() {
+        document.getElementById('vocab-modal').classList.add('hidden');
+    },
+
+    // ── Toast ─────────────────────────────────────────────────────────────────
+
+    showToast(msg) {
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
+    },
+
+    // ── Badges ────────────────────────────────────────────────────────────────
 
     loadStats() {
-        document.getElementById('stat-streak').textContent = this.state.stats.streak;
+        const vocab = this._loadVocab();
+        document.getElementById('stat-streak').textContent    = this.state.stats.streak;
         document.getElementById('stat-completed').textContent = this.state.stats.taskCount;
+        document.getElementById('stat-vocab').textContent     = vocab.length;
         const avg = this.state.stats.sessions > 0
-            ? (this.state.stats.rounds / this.state.stats.sessions).toFixed(1)
-            : 0;
+            ? (this.state.stats.rounds / this.state.stats.sessions).toFixed(1) : 0;
         document.getElementById('stat-rounds').textContent = avg;
-        this.renderBadges(this.state.stats.taskCount, this.state.stats.streak);
+        this.renderBadges(this.state.stats.taskCount, this.state.stats.streak, vocab.length);
     },
 
-    renderBadges(taskCount, streak) {
+    renderBadges(taskCount, streak, vocabCount) {
         const grid = document.getElementById('badges-grid');
         const badges = [
-            { icon: '🐣', title: '初學起步', req: '完成 1 個任務', earned: taskCount >= 1 },
-            { icon: '💬', title: '侃侃而談', req: '完成 5 個任務', earned: taskCount >= 5 },
-            { icon: '🌟', title: '在地專家', req: '完成 10 個任務', earned: taskCount >= 10 },
-            { icon: '🗺️', title: '地圖探索家', req: '完成 20 個任務', earned: taskCount >= 20 },
-            { icon: '🔥', title: '持之以恆', req: '連續 3 天學習', earned: streak >= 3 },
-            { icon: '🏆', title: '高雄通', req: '連續 7 天學習', earned: streak >= 7 },
+            { icon: '🐣', title: '初學起步',   req: '完成 1 個任務',     earned: taskCount  >= 1  },
+            { icon: '💬', title: '侃侃而談',   req: '完成 5 個任務',     earned: taskCount  >= 5  },
+            { icon: '🌟', title: '在地專家',   req: '完成 10 個任務',    earned: taskCount  >= 10 },
+            { icon: '🗺️', title: '地圖探索家', req: '完成 20 個任務',    earned: taskCount  >= 20 },
+            { icon: '🔥', title: '持之以恆',   req: '連續 3 天學習',     earned: streak     >= 3  },
+            { icon: '🏆', title: '高雄通',     req: '連續 7 天學習',     earned: streak     >= 7  },
+            { icon: '📖', title: '永續學者',   req: '蒐集 10 個永續單字', earned: vocabCount >= 10 },
+            { icon: '🌍', title: 'SDG 達人',   req: '蒐集 30 個永續單字', earned: vocabCount >= 30 },
         ];
-
         grid.innerHTML = badges.map(b => `
             <div class="badge-card ${b.earned ? 'earned' : 'locked'}">
                 <div class="icon">${b.icon}</div>
                 <h4>${b.title}</h4>
                 <p>${b.req}</p>
-            </div>
-        `).join('');
-    }
+            </div>`).join('');
+    },
 };
 
 document.addEventListener('DOMContentLoaded', () => app.init());
