@@ -1,2027 +1,245 @@
 {
   "areas": [
-    {
-      "id": 1,
-      "name_zh": "愛河深度導覽",
-      "name_en": "Love River In-depth Tour"
-    },
-    {
-      "id": 2,
-      "name_zh": "西子灣深度導覽",
-      "name_en": "Sizihwan In-depth Tour"
-    },
-    {
-      "id": 3,
-      "name_zh": "高雄在地美食地圖",
-      "name_en": "Kaohsiung Local Food Map"
-    },
-    {
-      "id": 4,
-      "name_zh": "高雄 38 區文化巡禮",
-      "name_en": "Kaohsiung 38-District Cultural Tour"
-    },
-    {
-      "id": 5,
-      "name_zh": "城市綠鏡：公園與永續導覽",
-      "name_en": "Urban Green Mirrors: Parks & Sustainability"
-    }
+    { "id": 1, "name_zh": "愛河深度導覽", "name_en": "Love River In-depth Tour" },
+    { "id": 2, "name_zh": "西子灣深度導覽", "name_en": "Sizihwan In-depth Tour" },
+    { "id": 3, "name_zh": "高雄在地美食地圖", "name_en": "Kaohsiung Local Food Map" },
+    { "id": 4, "name_zh": "高雄 38 區文化巡禮", "name_en": "Kaohsiung 38-District Cultural Tour" },
+    { "id": 5, "name_zh": "城市綠鏡：公園與永續導覽", "name_en": "Urban Green Mirrors: Parks & Sustainability" }
   ],
   "locations": [
-    {
-      "id": 1,
-      "area_id": 1,
-      "name_zh": "愛河步道與愛之船",
-      "name_en": "Love River Path & Boats",
-      "icon": "🛥️"
-    },
-    {
-      "id": 2,
-      "area_id": 1,
-      "name_zh": "中都濕地公園",
-      "name_en": "Zhongdu Wetlands Park",
-      "icon": "🌳"
-    },
-    {
-      "id": 3,
-      "area_id": 1,
-      "name_zh": "高雄流行音樂中心",
-      "name_en": "Kaohsiung Music Center",
-      "icon": "🎵"
-    },
-    {
-      "id": 4,
-      "area_id": 1,
-      "name_zh": "駁二藝術特區",
-      "name_en": "The Pier-2 Art Center",
-      "icon": "🎨"
-    },
-    {
-      "id": 5,
-      "area_id": 1,
-      "name_zh": "大港橋",
-      "name_en": "Great Harbor Bridge",
-      "icon": "🌉"
-    },
-    {
-      "id": 6,
-      "area_id": 2,
-      "name_zh": "西子灣海水浴場",
-      "name_en": "Sizihwan Beach",
-      "icon": "🏖️"
-    },
-    {
-      "id": 7,
-      "area_id": 2,
-      "name_zh": "中山大學",
-      "name_en": "NSYSU",
-      "icon": "🏫"
-    },
-    {
-      "id": 8,
-      "area_id": 2,
-      "name_zh": "西子灣隧道",
-      "name_en": "Sizihwan Tunnel",
-      "icon": "🚇"
-    },
-    {
-      "id": 9,
-      "area_id": 2,
-      "name_zh": "打狗英國領事館",
-      "name_en": "British Consular",
-      "icon": "🏛️"
-    },
-    {
-      "id": 10,
-      "area_id": 2,
-      "name_zh": "鼓山旗津渡輪",
-      "name_en": "Ferry",
-      "icon": "⛴️"
-    },
-    {
-      "id": 11,
-      "area_id": 3,
-      "name_zh": "在地小吃與餐廳",
-      "name_en": "Local Snacks & Restaurants",
-      "icon": "🍜"
-    },
-    {
-      "id": 12,
-      "area_id": 3,
-      "name_zh": "特色早餐與早午餐",
-      "name_en": "Breakfast & Brunch",
-      "icon": "🍳"
-    },
-    {
-      "id": 13,
-      "area_id": 3,
-      "name_zh": "火鍋燒烤與吃到飽",
-      "name_en": "Hot Pot & BBQ",
-      "icon": "🔥"
-    },
-    {
-      "id": 14,
-      "area_id": 3,
-      "name_zh": "深夜食堂與宵夜",
-      "name_en": "Late Night Cravings",
-      "icon": "🌙"
-    },
-    {
-      "id": 15,
-      "area_id": 3,
-      "name_zh": "精緻甜點與蛋糕",
-      "name_en": "Desserts & Sweets",
-      "icon": "🍰"
-    },
-    {
-      "id": 16,
-      "area_id": 3,
-      "name_zh": "美味素食與蔬食",
-      "name_en": "Vegetarian & Vegan",
-      "icon": "🌿"
-    },
-    {
-      "id": 51,
-      "area_id": 5,
-      "name_zh": "凹子底森林公園",
-      "name_en": "Aozihdi Forest Park",
-      "icon": "🌲"
-    },
-    {
-      "id": 52,
-      "area_id": 5,
-      "name_zh": "衛武營都會公園",
-      "name_en": "Weiwuying Metropolitan Park",
-      "icon": "🎭"
-    },
-    {
-      "id": 53,
-      "area_id": 5,
-      "name_zh": "高雄市文化中心",
-      "name_en": "Kaohsiung Cultural Center",
-      "icon": "🕊️"
-    },
-    {
-      "id": 54,
-      "area_id": 5,
-      "name_zh": "時代公園",
-      "name_en": "Times Park",
-      "icon": "🎡"
-    },
-    {
-      "id": 55,
-      "area_id": 5,
-      "name_zh": "岡山河堤公園",
-      "name_en": "Gangshan Riverbank Park",
-      "icon": "🚲"
-    },
-    {
-      "id": 56,
-      "area_id": 5,
-      "name_zh": "中都濕地公園",
-      "name_en": "Zhongdu Wetlands Park",
-      "icon": "🦀"
-    },
-    {
-      "id": 57,
-      "area_id": 5,
-      "name_zh": "旗津風車公園",
-      "name_en": "Qijin Wind Turbine Park",
-      "icon": "🌬️"
-    },
-    {
-      "id": 58,
-      "area_id": 5,
-      "name_zh": "哈瑪星鐵道文化園區",
-      "name_en": "Hamasen Railway Cultural Park",
-      "icon": "🚂"
-    },
-    {
-      "id": 59,
-      "area_id": 5,
-      "name_zh": "高雄都會公園",
-      "name_en": "Kaohsiung Metropolitan Park",
-      "icon": "🦌"
-    },
-    {
-      "id": 101,
-      "area_id": 4,
-      "name_zh": "三民區",
-      "name_en": "Sanmin",
-      "icon": "🛕"
-    },
-    {
-      "id": 102,
-      "area_id": 4,
-      "name_zh": "左營區",
-      "name_en": "Zuoying",
-      "icon": "🐉"
-    },
-    {
-      "id": 103,
-      "area_id": 4,
-      "name_zh": "楠梓區",
-      "name_en": "Nanzih",
-      "icon": "⛩️"
-    },
-    {
-      "id": 104,
-      "area_id": 4,
-      "name_zh": "鼓山區",
-      "name_en": "Gushan",
-      "icon": "🏯"
-    },
-    {
-      "id": 105,
-      "area_id": 4,
-      "name_zh": "鹽埕區",
-      "name_en": "Yancheng",
-      "icon": "🕯️"
-    },
-    {
-      "id": 106,
-      "area_id": 4,
-      "name_zh": "前金區",
-      "name_en": "Qianjin",
-      "icon": "✨"
-    },
-    {
-      "id": 107,
-      "area_id": 4,
-      "name_zh": "新興區",
-      "name_en": "Sinsing",
-      "icon": "🕯️"
-    },
-    {
-      "id": 108,
-      "area_id": 4,
-      "name_zh": "苓雅區",
-      "name_en": "Lingya",
-      "icon": "🔱"
-    },
-    {
-      "id": 109,
-      "area_id": 4,
-      "name_zh": "前鎮區",
-      "name_en": "Qianzhen",
-      "icon": "⚓"
-    },
-    {
-      "id": 110,
-      "area_id": 4,
-      "name_zh": "旗津區",
-      "name_en": "Qijin",
-      "icon": "🌊"
-    },
-    {
-      "id": 111,
-      "area_id": 4,
-      "name_zh": "小港區",
-      "name_en": "Siaogang",
-      "icon": "✈️"
-    },
-    {
-      "id": 112,
-      "area_id": 4,
-      "name_zh": "鳳山區",
-      "name_en": "Fongshan",
-      "icon": "🧱"
-    },
-    {
-      "id": 113,
-      "area_id": 4,
-      "name_zh": "大寮區",
-      "name_en": "Daliao",
-      "icon": "🌾"
-    },
-    {
-      "id": 114,
-      "area_id": 4,
-      "name_zh": "鳥松區",
-      "name_en": "Niaosong",
-      "icon": "💧"
-    },
-    {
-      "id": 115,
-      "area_id": 4,
-      "name_zh": "大樹區",
-      "name_en": "Dashu",
-      "icon": "🙏"
-    },
-    {
-      "id": 116,
-      "area_id": 4,
-      "name_zh": "仁武區",
-      "name_en": "Renwu",
-      "icon": "🛠️"
-    },
-    {
-      "id": 117,
-      "area_id": 4,
-      "name_zh": "大社區",
-      "name_en": "Dashe",
-      "icon": "🐄"
-    },
-    {
-      "id": 118,
-      "area_id": 4,
-      "name_zh": "岡山區",
-      "name_en": "Gangshan",
-      "icon": "🔩"
-    },
-    {
-      "id": 119,
-      "area_id": 4,
-      "name_zh": "路竹區",
-      "name_en": "Lujhu",
-      "icon": "🥦"
-    },
-    {
-      "id": 120,
-      "area_id": 4,
-      "name_zh": "阿蓮區",
-      "name_en": "Alian",
-      "icon": "⛰️"
-    },
-    {
-      "id": 121,
-      "area_id": 4,
-      "name_zh": "田寮區",
-      "name_en": "Tianliao",
-      "icon": "🌙"
-    },
-    {
-      "id": 122,
-      "area_id": 4,
-      "name_zh": "燕巢區",
-      "name_en": "Yanchao",
-      "icon": "🍐"
-    },
-    {
-      "id": 123,
-      "area_id": 4,
-      "name_zh": "橋頭區",
-      "name_en": "Ciaotou",
-      "icon": "🚂"
-    },
-    {
-      "id": 124,
-      "area_id": 4,
-      "name_zh": "梓官區",
-      "name_en": "Ziguan",
-      "icon": "🐟"
-    },
-    {
-      "id": 125,
-      "area_id": 4,
-      "name_zh": "彌陀區",
-      "name_en": "Mituo",
-      "icon": "🎣"
-    },
-    {
-      "id": 126,
-      "area_id": 4,
-      "name_zh": "永安區",
-      "name_en": "Yongan",
-      "icon": "🔥"
-    },
-    {
-      "id": 127,
-      "area_id": 4,
-      "name_zh": "茄萣區",
-      "name_en": "Qieding",
-      "icon": "⛵"
-    },
-    {
-      "id": 128,
-      "area_id": 4,
-      "name_zh": "旗山區",
-      "name_en": "Cishan",
-      "icon": "🍌"
-    },
-    {
-      "id": 129,
-      "area_id": 4,
-      "name_zh": "美濃區",
-      "name_en": "Meinong",
-      "icon": "☂️"
-    },
-    {
-      "id": 130,
-      "area_id": 4,
-      "name_zh": "六龜區",
-      "name_en": "Liuguei",
-      "icon": "♨️"
-    },
-    {
-      "id": 131,
-      "area_id": 4,
-      "name_zh": "甲仙區",
-      "name_en": "Jiaxian",
-      "icon": "🍠"
-    },
-    {
-      "id": 132,
-      "area_id": 4,
-      "name_zh": "杉林區",
-      "name_en": "Shanlin",
-      "icon": "🥒"
-    },
-    {
-      "id": 133,
-      "area_id": 4,
-      "name_zh": "內門區",
-      "name_en": "Neimen",
-      "icon": "⚔️"
-    },
-    {
-      "id": 134,
-      "area_id": 4,
-      "name_zh": "茂林區",
-      "name_en": "Maolin",
-      "icon": "🦋"
-    },
-    {
-      "id": 135,
-      "area_id": 4,
-      "name_zh": "桃源區",
-      "name_en": "Taoyuan",
-      "icon": "🌸"
-    },
-    {
-      "id": 136,
-      "area_id": 4,
-      "name_zh": "那瑪夏區",
-      "name_en": "Namasia",
-      "icon": "🌌"
-    },
-    {
-      "id": 137,
-      "area_id": 4,
-      "name_zh": "林園區",
-      "name_en": "Linyuan",
-      "icon": "🌳"
-    },
-    {
-      "id": 138,
-      "area_id": 4,
-      "name_zh": "湖內區",
-      "name_en": "Hunei",
-      "icon": "🦆"
-    },
-    {
-      "id": 521,
-      "area_id": 5,
-      "name_zh": "大東濕地公園",
-      "name_en": "Dadong Wetlands Park",
-      "icon": "🌿"
-    }
+    { "id": 1,   "area_id": 1, "name_zh": "愛河步道與愛之船",   "name_en": "Love River Path & Boats",          "icon": "🛥️", "lat": 22.6376, "lng": 120.2855 },
+    { "id": 2,   "area_id": 1, "name_zh": "中都濕地公園",       "name_en": "Zhongdu Wetlands Park",            "icon": "🌳", "lat": 22.6480, "lng": 120.2830 },
+    { "id": 3,   "area_id": 1, "name_zh": "高雄流行音樂中心",   "name_en": "Kaohsiung Music Center",           "icon": "🎵", "lat": 22.6182, "lng": 120.2870 },
+    { "id": 4,   "area_id": 1, "name_zh": "駁二藝術特區",       "name_en": "The Pier-2 Art Center",            "icon": "🎨", "lat": 22.6241, "lng": 120.2745 },
+    { "id": 5,   "area_id": 1, "name_zh": "大港橋",             "name_en": "Great Harbor Bridge",              "icon": "🌉", "lat": 22.6215, "lng": 120.2810 },
+    { "id": 6,   "area_id": 2, "name_zh": "西子灣海水浴場",     "name_en": "Sizihwan Beach",                   "icon": "🏖️", "lat": 22.6275, "lng": 120.2560 },
+    { "id": 7,   "area_id": 2, "name_zh": "中山大學",           "name_en": "NSYSU",                            "icon": "🏫", "lat": 22.6264, "lng": 120.2635 },
+    { "id": 8,   "area_id": 2, "name_zh": "西子灣隧道",         "name_en": "Sizihwan Tunnel",                  "icon": "🚇", "lat": 22.6295, "lng": 120.2602 },
+    { "id": 9,   "area_id": 2, "name_zh": "打狗英國領事館",     "name_en": "British Consular",                 "icon": "🏛️", "lat": 22.6285, "lng": 120.2580 },
+    { "id": 10,  "area_id": 2, "name_zh": "鼓山旗津渡輪",       "name_en": "Ferry",                            "icon": "⛴️", "lat": 22.6328, "lng": 120.2637 },
+    { "id": 11,  "area_id": 3, "name_zh": "在地小吃與餐廳",     "name_en": "Local Snacks & Restaurants",       "icon": "🍜", "lat": 22.6273, "lng": 120.2986 },
+    { "id": 12,  "area_id": 3, "name_zh": "特色早餐與早午餐",   "name_en": "Breakfast & Brunch",               "icon": "🍳", "lat": 22.6333, "lng": 120.3012 },
+    { "id": 13,  "area_id": 3, "name_zh": "火鍋燒烤與吃到飽",   "name_en": "Hot Pot & BBQ",                    "icon": "🔥", "lat": 22.6380, "lng": 120.3100 },
+    { "id": 14,  "area_id": 3, "name_zh": "深夜食堂與宵夜",     "name_en": "Late Night Cravings",              "icon": "🌙", "lat": 22.6217, "lng": 120.3031 },
+    { "id": 15,  "area_id": 3, "name_zh": "精緻甜點與蛋糕",     "name_en": "Desserts & Sweets",                "icon": "🍰", "lat": 22.6158, "lng": 120.3070 },
+    { "id": 16,  "area_id": 3, "name_zh": "美味素食與蔬食",     "name_en": "Vegetarian & Vegan",               "icon": "🌿", "lat": 22.6296, "lng": 120.3055 },
+    { "id": 51,  "area_id": 5, "name_zh": "凹子底森林公園",     "name_en": "Aozihdi Forest Park",              "icon": "🌲", "lat": 22.6693, "lng": 120.3138 },
+    { "id": 52,  "area_id": 5, "name_zh": "衛武營都會公園",     "name_en": "Weiwuying Metropolitan Park",      "icon": "🎭", "lat": 22.6357, "lng": 120.3327 },
+    { "id": 53,  "area_id": 5, "name_zh": "高雄市文化中心",     "name_en": "Kaohsiung Cultural Center",        "icon": "🕊️", "lat": 22.6368, "lng": 120.3118 },
+    { "id": 54,  "area_id": 5, "name_zh": "時代公園",           "name_en": "Times Park",                       "icon": "🎡", "lat": 22.6130, "lng": 120.3215 },
+    { "id": 55,  "area_id": 5, "name_zh": "岡山河堤公園",       "name_en": "Gangshan Riverbank Park",          "icon": "🚲", "lat": 22.7962, "lng": 120.2960 },
+    { "id": 56,  "area_id": 5, "name_zh": "中都濕地公園",       "name_en": "Zhongdu Wetlands Park",            "icon": "🦀", "lat": 22.6480, "lng": 120.2830 },
+    { "id": 57,  "area_id": 5, "name_zh": "旗津風車公園",       "name_en": "Qijin Wind Turbine Park",          "icon": "🌬️", "lat": 22.5995, "lng": 120.2710 },
+    { "id": 58,  "area_id": 5, "name_zh": "哈瑪星鐵道文化園區", "name_en": "Hamasen Railway Cultural Park",    "icon": "🚂", "lat": 22.6330, "lng": 120.2733 },
+    { "id": 59,  "area_id": 5, "name_zh": "高雄都會公園",       "name_en": "Kaohsiung Metropolitan Park",      "icon": "🦌", "lat": 22.7370, "lng": 120.3103 },
+    { "id": 101, "area_id": 4, "name_zh": "三民區",             "name_en": "Sanmin",                           "icon": "🛕", "lat": 22.6520, "lng": 120.3105 },
+    { "id": 102, "area_id": 4, "name_zh": "左營區",             "name_en": "Zuoying",                          "icon": "🐉", "lat": 22.6899, "lng": 120.2930 },
+    { "id": 103, "area_id": 4, "name_zh": "楠梓區",             "name_en": "Nanzih",                           "icon": "⛩️", "lat": 22.7280, "lng": 120.3165 },
+    { "id": 104, "area_id": 4, "name_zh": "鼓山區",             "name_en": "Gushan",                           "icon": "🏯", "lat": 22.6490, "lng": 120.2760 },
+    { "id": 105, "area_id": 4, "name_zh": "鹽埕區",             "name_en": "Yancheng",                         "icon": "🕯️", "lat": 22.6270, "lng": 120.2835 },
+    { "id": 106, "area_id": 4, "name_zh": "前金區",             "name_en": "Qianjin",                          "icon": "✨",  "lat": 22.6317, "lng": 120.2958 },
+    { "id": 107, "area_id": 4, "name_zh": "新興區",             "name_en": "Sinsing",                          "icon": "🕯️", "lat": 22.6265, "lng": 120.3030 },
+    { "id": 108, "area_id": 4, "name_zh": "苓雅區",             "name_en": "Lingya",                           "icon": "🔱",  "lat": 22.6180, "lng": 120.3060 },
+    { "id": 109, "area_id": 4, "name_zh": "前鎮區",             "name_en": "Qianzhen",                         "icon": "⚓",  "lat": 22.5960, "lng": 120.3100 },
+    { "id": 110, "area_id": 4, "name_zh": "旗津區",             "name_en": "Qijin",                            "icon": "🌊",  "lat": 22.5924, "lng": 120.2695 },
+    { "id": 111, "area_id": 4, "name_zh": "小港區",             "name_en": "Siaogang",                         "icon": "✈️",  "lat": 22.5684, "lng": 120.3503 },
+    { "id": 112, "area_id": 4, "name_zh": "鳳山區",             "name_en": "Fongshan",                         "icon": "🧱",  "lat": 22.6271, "lng": 120.3571 },
+    { "id": 113, "area_id": 4, "name_zh": "大寮區",             "name_en": "Daliao",                           "icon": "🌾",  "lat": 22.5836, "lng": 120.3881 },
+    { "id": 114, "area_id": 4, "name_zh": "鳥松區",             "name_en": "Niaosong",                         "icon": "💧",  "lat": 22.6472, "lng": 120.3680 },
+    { "id": 115, "area_id": 4, "name_zh": "大樹區",             "name_en": "Dashu",                            "icon": "🙏",  "lat": 22.6884, "lng": 120.4221 },
+    { "id": 116, "area_id": 4, "name_zh": "仁武區",             "name_en": "Renwu",                            "icon": "🛠️",  "lat": 22.6974, "lng": 120.3543 },
+    { "id": 117, "area_id": 4, "name_zh": "大社區",             "name_en": "Dashe",                            "icon": "🐄",  "lat": 22.7233, "lng": 120.3553 },
+    { "id": 118, "area_id": 4, "name_zh": "岡山區",             "name_en": "Gangshan",                         "icon": "🔩",  "lat": 22.7962, "lng": 120.2960 },
+    { "id": 119, "area_id": 4, "name_zh": "路竹區",             "name_en": "Lujhu",                            "icon": "🥦",  "lat": 22.8583, "lng": 120.2599 },
+    { "id": 120, "area_id": 4, "name_zh": "阿蓮區",             "name_en": "Alian",                            "icon": "⛰️",  "lat": 22.8854, "lng": 120.3222 },
+    { "id": 121, "area_id": 4, "name_zh": "田寮區",             "name_en": "Tianliao",                         "icon": "🌙",  "lat": 22.8850, "lng": 120.3816 },
+    { "id": 122, "area_id": 4, "name_zh": "燕巢區",             "name_en": "Yanchao",                          "icon": "🍐",  "lat": 22.7898, "lng": 120.3681 },
+    { "id": 123, "area_id": 4, "name_zh": "橋頭區",             "name_en": "Ciaotou",                          "icon": "🚂",  "lat": 22.7590, "lng": 120.3013 },
+    { "id": 124, "area_id": 4, "name_zh": "梓官區",             "name_en": "Ziguan",                           "icon": "🐟",  "lat": 22.7497, "lng": 120.2380 },
+    { "id": 125, "area_id": 4, "name_zh": "彌陀區",             "name_en": "Mituo",                            "icon": "🎣",  "lat": 22.7833, "lng": 120.2363 },
+    { "id": 126, "area_id": 4, "name_zh": "永安區",             "name_en": "Yongan",                           "icon": "🔥",  "lat": 22.8208, "lng": 120.2404 },
+    { "id": 127, "area_id": 4, "name_zh": "茄萣區",             "name_en": "Qieding",                          "icon": "⛵",  "lat": 22.8985, "lng": 120.2071 },
+    { "id": 128, "area_id": 4, "name_zh": "旗山區",             "name_en": "Cishan",                           "icon": "🍌",  "lat": 22.8856, "lng": 120.4805 },
+    { "id": 129, "area_id": 4, "name_zh": "美濃區",             "name_en": "Meinong",                          "icon": "☂️",  "lat": 22.8908, "lng": 120.5452 },
+    { "id": 130, "area_id": 4, "name_zh": "六龜區",             "name_en": "Liuguei",                          "icon": "♨️",  "lat": 23.0028, "lng": 120.6390 },
+    { "id": 131, "area_id": 4, "name_zh": "甲仙區",             "name_en": "Jiaxian",                          "icon": "🍠",  "lat": 23.0771, "lng": 120.5898 },
+    { "id": 132, "area_id": 4, "name_zh": "杉林區",             "name_en": "Shanlin",                          "icon": "🥒",  "lat": 22.9595, "lng": 120.5449 },
+    { "id": 133, "area_id": 4, "name_zh": "內門區",             "name_en": "Neimen",                           "icon": "⚔️",  "lat": 22.9523, "lng": 120.4657 },
+    { "id": 134, "area_id": 4, "name_zh": "茂林區",             "name_en": "Maolin",                           "icon": "🦋",  "lat": 22.9222, "lng": 120.6678 },
+    { "id": 135, "area_id": 4, "name_zh": "桃源區",             "name_en": "Taoyuan",                          "icon": "🌸",  "lat": 23.1603, "lng": 120.7452 },
+    { "id": 136, "area_id": 4, "name_zh": "那瑪夏區",           "name_en": "Namasia",                          "icon": "🌌",  "lat": 23.1918, "lng": 120.6520 },
+    { "id": 137, "area_id": 4, "name_zh": "林園區",             "name_en": "Linyuan",                          "icon": "🌳",  "lat": 22.5032, "lng": 120.3782 },
+    { "id": 138, "area_id": 4, "name_zh": "湖內區",             "name_en": "Hunei",                            "icon": "🦆",  "lat": 22.9028, "lng": 120.2283 },
+    { "id": 521, "area_id": 5, "name_zh": "大東濕地公園",       "name_en": "Dadong Wetlands Park",             "icon": "🌿",  "lat": 22.6223, "lng": 120.3501 }
   ],
   "topics": [
-    {
-      "id": 1,
-      "location_id": 1,
-      "title_zh": "河川整治與城市水文",
-      "title_en": "River Remediation"
-    },
-    {
-      "id": 2,
-      "location_id": 1,
-      "title_zh": "綠能交通與永續觀光",
-      "title_en": "Sustainable Tourism"
-    },
-    {
-      "id": 3,
-      "location_id": 2,
-      "title_zh": "城市防洪與生態工法",
-      "title_en": "Ecological Engineering"
-    },
-    {
-      "id": 4,
-      "location_id": 2,
-      "title_zh": "生物多樣性與自然棲地",
-      "title_en": "Biodiversity"
-    },
-    {
-      "id": 5,
-      "location_id": 3,
-      "title_zh": "現代建築美學與海洋意象",
-      "title_en": "Modern Architecture"
-    },
-    {
-      "id": 6,
-      "location_id": 3,
-      "title_zh": "流行音樂與多元母語",
-      "title_en": "Music & Culture"
-    },
-    {
-      "id": 7,
-      "location_id": 4,
-      "title_zh": "工業遺產活化與轉型",
-      "title_en": "Industrial Heritage"
-    },
-    {
-      "id": 8,
-      "location_id": 4,
-      "title_zh": "公共藝術與言論自由",
-      "title_en": "Public Art & Expression"
-    },
-    {
-      "id": 9,
-      "location_id": 5,
-      "title_zh": "橋樑工程與港區運作",
-      "title_en": "Bridge Engineering"
-    },
-    {
-      "id": 10,
-      "location_id": 5,
-      "title_zh": "港區經濟的日夜輪轉",
-      "title_en": "Harbor Economy"
-    },
-    {
-      "id": 11,
-      "location_id": 6,
-      "title_zh": "海洋環境與生態",
-      "title_en": "Marine Environment"
-    },
-    {
-      "id": 12,
-      "location_id": 6,
-      "title_zh": "休閒文化差異",
-      "title_en": "Leisure Culture"
-    },
-    {
-      "id": 13,
-      "location_id": 7,
-      "title_zh": "野生動物與人類共存",
-      "title_en": "Wildlife Coexistence"
-    },
-    {
-      "id": 14,
-      "location_id": 7,
-      "title_zh": "跨國教育與校園生活",
-      "title_en": "Higher Education"
-    },
-    {
-      "id": 15,
-      "location_id": 8,
-      "title_zh": "二戰軍事歷史",
-      "title_en": "WWII History"
-    },
-    {
-      "id": 16,
-      "location_id": 8,
-      "title_zh": "古蹟活化與空間再造",
-      "title_en": "Adaptive Reuse"
-    },
-    {
-      "id": 17,
-      "location_id": 9,
-      "title_zh": "19世紀全球海權與貿易",
-      "title_en": "Global Trade"
-    },
-    {
-      "id": 18,
-      "location_id": 9,
-      "title_zh": "殖民地建築美學",
-      "title_en": "Colonial Architecture"
-    },
-    {
-      "id": 19,
-      "location_id": 10,
-      "title_zh": "城市交通與流動",
-      "title_en": "Urban Mobility"
-    },
-    {
-      "id": 20,
-      "location_id": 10,
-      "title_zh": "海洋經濟與在地發展",
-      "title_en": "Marine Economy"
-    },
-    {
-      "id": 21,
-      "location_id": 11,
-      "title_zh": "鹽埕與岡山的老字號",
-      "title_en": "Historic Eateries"
-    },
-    {
-      "id": 22,
-      "location_id": 12,
-      "title_zh": "傳統與新潮的早晨",
-      "title_en": "Morning Traditions"
-    },
-    {
-      "id": 23,
-      "location_id": 13,
-      "title_zh": "聚會必吃的澎湃料理",
-      "title_en": "Grand Feast & Gathering"
-    },
-    {
-      "id": 24,
-      "location_id": 14,
-      "title_zh": "高雄人的深夜補給",
-      "title_en": "Midnight Fuel"
-    },
-    {
-      "id": 25,
-      "location_id": 15,
-      "title_zh": "法式美學與在地香蕉",
-      "title_en": "Patisserie & Local Flavors"
-    },
-    {
-      "id": 26,
-      "location_id": 16,
-      "title_zh": "健康蔬食新選擇",
-      "title_en": "Green Dining"
-    },
-    {
-      "id": 51,
-      "location_id": 51,
-      "title_zh": "都市之肺與氣候調節",
-      "title_en": "Urban Lungs & Climate Regulation"
-    },
-    {
-      "id": 52,
-      "location_id": 52,
-      "title_zh": "軍事基地轉型自然棲地",
-      "title_en": "From Military Base to Natural Habitat"
-    },
-    {
-      "id": 53,
-      "location_id": 53,
-      "title_zh": "市民生活與公共藝術空間",
-      "title_en": "Civic Life & Public Art Spaces"
-    },
-    {
-      "id": 54,
-      "location_id": 54,
-      "title_zh": "共融式遊戲場與社會包容",
-      "title_en": "Inclusive Playgrounds & Social Inclusion"
-    },
-    {
-      "id": 55,
-      "location_id": 55,
-      "title_zh": "流域治理與親水空間",
-      "title_en": "River Governance & Waterfront Spaces"
-    },
-    {
-      "id": 56,
-      "location_id": 56,
-      "title_zh": "紅樹林生態與生物多樣性",
-      "title_en": "Mangrove Ecology & Biodiversity"
-    },
-    {
-      "id": 57,
-      "location_id": 57,
-      "title_zh": "再生能源與海濱休閒",
-      "title_en": "Renewable Energy & Seaside Leisure"
-    },
-    {
-      "id": 58,
-      "location_id": 58,
-      "title_zh": "鐵道遺產與空間再造",
-      "title_en": "Railway Heritage & Space Reuse"
-    },
-    {
-      "id": 59,
-      "location_id": 59,
-      "title_zh": "垃圾掩埋場的華麗轉身",
-      "title_en": "Transformation of Landfill to Park"
-    },
-    {
-      "id": 101,
-      "location_id": 101,
-      "title_zh": "三鳳宮：太子爺信仰與紅燈籠美學",
-      "title_en": "Sanfeng Temple & Lantern Aesthetics"
-    },
-    {
-      "id": 102,
-      "location_id": 102,
-      "title_zh": "慈濟宮：龍虎塔的消災解厄傳說",
-      "title_en": "Ciji Palace & Dragon Tiger Towers"
-    },
-    {
-      "id": 103,
-      "location_id": 103,
-      "title_zh": "右昌元帥府：不燒金紙的環保先驅",
-      "title_en": "Youchang Yuanshuai Temple"
-    },
-    {
-      "id": 104,
-      "location_id": 104,
-      "title_zh": "代天宮：哈瑪星的信仰與藝術殿堂",
-      "title_en": "Daitian Temple"
-    },
-    {
-      "id": 105,
-      "location_id": 105,
-      "title_zh": "霞海城隍廟：鹽埕的守護神與緣分",
-      "title_en": "Xiahai City God Temple"
-    },
-    {
-      "id": 108,
-      "location_id": 108,
-      "title_zh": "高雄關帝廟：商賈必拜的財富與正義",
-      "title_en": "Kaohsiung Guandi Temple"
-    },
-    {
-      "id": 110,
-      "location_id": 110,
-      "title_zh": "旗津天后宮：打狗開港的信仰起點",
-      "title_en": "Qijin Tianhou Temple"
-    },
-    {
-      "id": 112,
-      "location_id": 112,
-      "title_zh": "鳳山龍山寺：兩百年的國定古蹟珍寶",
-      "title_en": "Fongshan Longshan Temple"
-    },
-    {
-      "id": 115,
-      "location_id": 115,
-      "title_zh": "佛光山：走向國際的現代佛教聖地",
-      "title_en": "Fo Guang Shan"
-    },
-    {
-      "id": 118,
-      "location_id": 118,
-      "title_zh": "壽天宮：媽祖與岡山螺絲產業",
-      "title_en": "Shoutian Temple"
-    },
-    {
-      "id": 121,
-      "location_id": 121,
-      "title_zh": "田寮慈玄聖天宮：奇幻的石頭廟建築",
-      "title_en": "Stone Temple"
-    },
-    {
-      "id": 128,
-      "location_id": 128,
-      "title_zh": "旗山孔廟：全台規模最大的孔廟建築",
-      "title_en": "Cishan Confucius Temple"
-    },
-    {
-      "id": 129,
-      "location_id": 129,
-      "title_zh": "美濃輔天五穀宮：客家工藝與傳統",
-      "title_en": "Meinong Futian Temple"
-    },
-    {
-      "id": 131,
-      "location_id": 131,
-      "title_zh": "龍鳳山龍鳳寺：俯瞰甲仙山城的靈氣",
-      "title_en": "Longfeng Temple"
-    },
-    {
-      "id": 133,
-      "location_id": 133,
-      "title_zh": "內門紫竹寺：觀音信仰與宋江陣文化",
-      "title_en": "Neimen Zizhu Temple"
-    },
-    {
-      "id": 134,
-      "location_id": 134,
-      "title_zh": "茂林原民文化：紫蝶幽谷與自然信仰",
-      "title_en": "Maolin Indigenous Culture"
-    },
-    {
-      "id": 136,
-      "location_id": 136,
-      "title_zh": "那瑪夏原民文化：星空下的族群傳承",
-      "title_en": "Namasia Indigenous Culture"
-    },
-    {
-      "id": 521,
-      "location_id": 521,
-      "title_zh": "都市森林與視覺美學",
-      "title_en": "Urban Forest & Visual Aesthetics"
-    },
-    {
-      "id": 106,
-      "location_id": 106,
-      "title_zh": "高雄市立歷史博物館：城市記憶的守護者",
-      "title_en": "Kaohsiung Museum of History: Guardian of City Memory"
-    },
-    {
-      "id": 107,
-      "location_id": 107,
-      "title_zh": "新興區：高雄的心臟地帶與商業脈動",
-      "title_en": "Sinsing District: Kaohsiung's Commercial Heartbeat"
-    },
-    {
-      "id": 109,
-      "location_id": 109,
-      "title_zh": "前鎮區：臨海工業的核心引擎",
-      "title_en": "Qianzhen District: Engine of Coastal Industry"
-    },
-    {
-      "id": 111,
-      "location_id": 111,
-      "title_zh": "小港區：台灣天空門戶的守望者",
-      "title_en": "Siaogang District: Gateway to Taiwan's Skies"
-    },
-    {
-      "id": 113,
-      "location_id": 113,
-      "title_zh": "大寮區：鳳梨與農業轉型的故事",
-      "title_en": "Daliao District: The Story of Pineapples and Agricultural Transformation"
-    },
-    {
-      "id": 114,
-      "location_id": 114,
-      "title_zh": "鳥松區：澄清湖與城市水資源的守護",
-      "title_en": "Niaosong District: Chengching Lake and Urban Water Conservation"
-    },
-    {
-      "id": 116,
-      "location_id": 116,
-      "title_zh": "仁武區：石化工業與社區共存的課題",
-      "title_en": "Renwu District: Coexisting with the Petrochemical Industry"
-    },
-    {
-      "id": 117,
-      "location_id": 117,
-      "title_zh": "大社區：觀音山下的信仰與寧靜生活",
-      "title_en": "Dashe District: Faith and Quiet Life beneath Guanyin Mountain"
-    },
-    {
-      "id": 119,
-      "location_id": 119,
-      "title_zh": "路竹區：竹仔港與沿海漁業文化",
-      "title_en": "Lujhu District: Coastal Fishing Culture along Zhuzai Harbor"
-    },
-    {
-      "id": 120,
-      "location_id": 120,
-      "title_zh": "阿蓮區：信仰山城與關廟文化",
-      "title_en": "Alian District: Temple Town of Faith and Festivity"
-    },
-    {
-      "id": 122,
-      "location_id": 122,
-      "title_zh": "燕巢區：泥火山與台灣獨特地質奇景",
-      "title_en": "Yanchao District: Mud Volcanoes and Taiwan's Unique Geological Wonders"
-    },
-    {
-      "id": 123,
-      "location_id": 123,
-      "title_zh": "橋頭區：台灣第一座糖廠與工業文化遺產",
-      "title_en": "Ciaotou District: Taiwan's First Sugar Refinery and Industrial Heritage"
-    },
-    {
-      "id": 124,
-      "location_id": 124,
-      "title_zh": "梓官區：蚵仔寮漁港的鮮味與漁人生活",
-      "title_en": "Ziguan District: Fresh Catches and Fisher Life at Kezailiao Harbor"
-    },
-    {
-      "id": 125,
-      "location_id": 125,
-      "title_zh": "彌陀區：海洋與蝦米的飄香故事",
-      "title_en": "Mituo District: The Fragrant Story of the Sea and Dried Shrimp"
-    },
-    {
-      "id": 126,
-      "location_id": 126,
-      "title_zh": "永安區：石斑魚養殖王國的產業傳奇",
-      "title_en": "Yongan District: The Industrial Legend of Grouper Aquaculture"
-    },
-    {
-      "id": 127,
-      "location_id": 127,
-      "title_zh": "茄萣區：濕地候鳥與黑面琵鷺的秘境",
-      "title_en": "Qieding District: Wetland Migratory Birds and the Black-faced Spoonbill Sanctuary"
-    },
-    {
-      "id": 130,
-      "location_id": 130,
-      "title_zh": "六龜區：溫泉山林與荖濃溪的自然秘境",
-      "title_en": "Liuguei District: Hot Springs, Forests, and the Natural Splendor of Laonong River"
-    },
-    {
-      "id": 132,
-      "location_id": 132,
-      "title_zh": "杉林區：美濃平原邊緣的客家農鄉",
-      "title_en": "Shanlin District: Hakka Farming Village on the Edge of Meinong Plain"
-    },
-    {
-      "id": 135,
-      "location_id": 135,
-      "title_zh": "桃源區：布農族的山間家園與文化傳承",
-      "title_en": "Taoyuan District: Bunun Homeland and Cultural Preservation in the Mountains"
-    },
-    {
-      "id": 137,
-      "location_id": 137,
-      "title_zh": "林園區：石化工業聚落與海岸生態的拉鋸",
-      "title_en": "Linyuan District: The Tension Between Petrochemical Clusters and Coastal Ecology"
-    },
-    {
-      "id": 138,
-      "location_id": 138,
-      "title_zh": "湖內區：湖光水色與在地農村文化",
-      "title_en": "Hunei District: Lakeside Scenery and Local Rural Culture"
-    }
+    { "id": 1,   "location_id": 1,   "title_zh": "河川整治與城市水文",             "title_en": "River Remediation" },
+    { "id": 2,   "location_id": 1,   "title_zh": "綠能交通與永續觀光",             "title_en": "Sustainable Tourism" },
+    { "id": 3,   "location_id": 2,   "title_zh": "城市防洪與生態工法",             "title_en": "Ecological Engineering" },
+    { "id": 4,   "location_id": 2,   "title_zh": "生物多樣性與自然棲地",           "title_en": "Biodiversity" },
+    { "id": 5,   "location_id": 3,   "title_zh": "現代建築美學與海洋意象",         "title_en": "Modern Architecture" },
+    { "id": 6,   "location_id": 3,   "title_zh": "流行音樂與多元母語",             "title_en": "Music & Culture" },
+    { "id": 7,   "location_id": 4,   "title_zh": "工業遺產活化與轉型",             "title_en": "Industrial Heritage" },
+    { "id": 8,   "location_id": 4,   "title_zh": "公共藝術與言論自由",             "title_en": "Public Art & Expression" },
+    { "id": 9,   "location_id": 5,   "title_zh": "橋樑工程與港區運作",             "title_en": "Bridge Engineering" },
+    { "id": 10,  "location_id": 5,   "title_zh": "港區經濟的日夜輪轉",             "title_en": "Harbor Economy" },
+    { "id": 11,  "location_id": 6,   "title_zh": "海洋環境與生態",                 "title_en": "Marine Environment" },
+    { "id": 12,  "location_id": 6,   "title_zh": "休閒文化差異",                   "title_en": "Leisure Culture" },
+    { "id": 13,  "location_id": 7,   "title_zh": "野生動物與人類共存",             "title_en": "Wildlife Coexistence" },
+    { "id": 14,  "location_id": 7,   "title_zh": "跨國教育與校園生活",             "title_en": "Higher Education" },
+    { "id": 15,  "location_id": 8,   "title_zh": "二戰軍事歷史",                   "title_en": "WWII History" },
+    { "id": 16,  "location_id": 8,   "title_zh": "古蹟活化與空間再造",             "title_en": "Adaptive Reuse" },
+    { "id": 17,  "location_id": 9,   "title_zh": "19世紀全球海權與貿易",           "title_en": "Global Trade" },
+    { "id": 18,  "location_id": 9,   "title_zh": "殖民地建築美學",                 "title_en": "Colonial Architecture" },
+    { "id": 19,  "location_id": 10,  "title_zh": "城市交通與流動",                 "title_en": "Urban Mobility" },
+    { "id": 20,  "location_id": 10,  "title_zh": "海洋經濟與在地發展",             "title_en": "Marine Economy" },
+    { "id": 21,  "location_id": 11,  "title_zh": "鹽埕與岡山的老字號",             "title_en": "Historic Eateries" },
+    { "id": 22,  "location_id": 12,  "title_zh": "傳統與新潮的早晨",               "title_en": "Morning Traditions" },
+    { "id": 23,  "location_id": 13,  "title_zh": "聚會必吃的澎湃料理",             "title_en": "Grand Feast & Gathering" },
+    { "id": 24,  "location_id": 14,  "title_zh": "高雄人的深夜補給",               "title_en": "Midnight Fuel" },
+    { "id": 25,  "location_id": 15,  "title_zh": "法式美學與在地香蕉",             "title_en": "Patisserie & Local Flavors" },
+    { "id": 26,  "location_id": 16,  "title_zh": "健康蔬食新選擇",                 "title_en": "Green Dining" },
+    { "id": 51,  "location_id": 51,  "title_zh": "都市之肺與氣候調節",             "title_en": "Urban Lungs & Climate Regulation" },
+    { "id": 52,  "location_id": 52,  "title_zh": "軍事基地轉型自然棲地",           "title_en": "From Military Base to Natural Habitat" },
+    { "id": 53,  "location_id": 53,  "title_zh": "市民生活與公共藝術空間",         "title_en": "Civic Life & Public Art Spaces" },
+    { "id": 54,  "location_id": 54,  "title_zh": "共融式遊戲場與社會包容",         "title_en": "Inclusive Playgrounds & Social Inclusion" },
+    { "id": 55,  "location_id": 55,  "title_zh": "流域治理與親水空間",             "title_en": "River Governance & Waterfront Spaces" },
+    { "id": 56,  "location_id": 56,  "title_zh": "紅樹林生態與生物多樣性",         "title_en": "Mangrove Ecology & Biodiversity" },
+    { "id": 57,  "location_id": 57,  "title_zh": "再生能源與海濱休閒",             "title_en": "Renewable Energy & Seaside Leisure" },
+    { "id": 58,  "location_id": 58,  "title_zh": "鐵道遺產與空間再造",             "title_en": "Railway Heritage & Space Reuse" },
+    { "id": 59,  "location_id": 59,  "title_zh": "垃圾掩埋場的華麗轉身",           "title_en": "Transformation of Landfill to Park" },
+    { "id": 101, "location_id": 101, "title_zh": "三鳳宮：太子爺信仰與紅燈籠美學", "title_en": "Sanfeng Temple & Lantern Aesthetics" },
+    { "id": 102, "location_id": 102, "title_zh": "慈濟宮：龍虎塔的消災解厄傳說",   "title_en": "Ciji Palace & Dragon Tiger Towers" },
+    { "id": 103, "location_id": 103, "title_zh": "右昌元帥府：不燒金紙的環保先驅", "title_en": "Youchang Yuanshuai Temple" },
+    { "id": 104, "location_id": 104, "title_zh": "代天宮：哈瑪星的信仰與藝術殿堂", "title_en": "Daitian Temple" },
+    { "id": 105, "location_id": 105, "title_zh": "霞海城隍廟：鹽埕的守護神與緣分", "title_en": "Xiahai City God Temple" },
+    { "id": 108, "location_id": 108, "title_zh": "高雄關帝廟：商賈必拜的財富與正義","title_en": "Kaohsiung Guandi Temple" },
+    { "id": 110, "location_id": 110, "title_zh": "旗津天后宮：打狗開港的信仰起點",  "title_en": "Qijin Tianhou Temple" },
+    { "id": 112, "location_id": 112, "title_zh": "鳳山龍山寺：兩百年的國定古蹟珍寶","title_en": "Fongshan Longshan Temple" },
+    { "id": 115, "location_id": 115, "title_zh": "佛光山：走向國際的現代佛教聖地",  "title_en": "Fo Guang Shan" },
+    { "id": 118, "location_id": 118, "title_zh": "壽天宮：媽祖與岡山螺絲產業",      "title_en": "Shoutian Temple" },
+    { "id": 121, "location_id": 121, "title_zh": "田寮慈玄聖天宮：奇幻的石頭廟建築","title_en": "Stone Temple" },
+    { "id": 128, "location_id": 128, "title_zh": "旗山孔廟：全台規模最大的孔廟建築", "title_en": "Cishan Confucius Temple" },
+    { "id": 129, "location_id": 129, "title_zh": "美濃輔天五穀宮：客家工藝與傳統",  "title_en": "Meinong Futian Temple" },
+    { "id": 131, "location_id": 131, "title_zh": "龍鳳山龍鳳寺：俯瞰甲仙山城的靈氣","title_en": "Longfeng Temple" },
+    { "id": 133, "location_id": 133, "title_zh": "內門紫竹寺：觀音信仰與宋江陣文化", "title_en": "Neimen Zizhu Temple" },
+    { "id": 134, "location_id": 134, "title_zh": "茂林原民文化：紫蝶幽谷與自然信仰", "title_en": "Maolin Indigenous Culture" },
+    { "id": 136, "location_id": 136, "title_zh": "那瑪夏原民文化：星空下的族群傳承", "title_en": "Namasia Indigenous Culture" },
+    { "id": 521, "location_id": 521, "title_zh": "都市森林與視覺美學",               "title_en": "Urban Forest & Visual Aesthetics" },
+    { "id": 106, "location_id": 106, "title_zh": "高雄市立歷史博物館：城市記憶的守護者",       "title_en": "Kaohsiung Museum of History: Guardian of City Memory" },
+    { "id": 107, "location_id": 107, "title_zh": "新興區：高雄的心臟地帶與商業脈動",           "title_en": "Sinsing District: Kaohsiung's Commercial Heartbeat" },
+    { "id": 109, "location_id": 109, "title_zh": "前鎮區：臨海工業的核心引擎",                 "title_en": "Qianzhen District: Engine of Coastal Industry" },
+    { "id": 111, "location_id": 111, "title_zh": "小港區：台灣天空門戶的守望者",               "title_en": "Siaogang District: Gateway to Taiwan's Skies" },
+    { "id": 113, "location_id": 113, "title_zh": "大寮區：鳳梨與農業轉型的故事",               "title_en": "Daliao District: The Story of Pineapples and Agricultural Transformation" },
+    { "id": 114, "location_id": 114, "title_zh": "鳥松區：澄清湖與城市水資源的守護",           "title_en": "Niaosong District: Chengching Lake and Urban Water Conservation" },
+    { "id": 116, "location_id": 116, "title_zh": "仁武區：石化工業與社區共存的課題",           "title_en": "Renwu District: Coexisting with the Petrochemical Industry" },
+    { "id": 117, "location_id": 117, "title_zh": "大社區：觀音山下的信仰與寧靜生活",           "title_en": "Dashe District: Faith and Quiet Life beneath Guanyin Mountain" },
+    { "id": 119, "location_id": 119, "title_zh": "路竹區：竹仔港與沿海漁業文化",               "title_en": "Lujhu District: Coastal Fishing Culture along Zhuzai Harbor" },
+    { "id": 120, "location_id": 120, "title_zh": "阿蓮區：信仰山城與關廟文化",                 "title_en": "Alian District: Temple Town of Faith and Festivity" },
+    { "id": 122, "location_id": 122, "title_zh": "燕巢區：泥火山與台灣獨特地質奇景",           "title_en": "Yanchao District: Mud Volcanoes and Taiwan's Unique Geological Wonders" },
+    { "id": 123, "location_id": 123, "title_zh": "橋頭區：台灣第一座糖廠與工業文化遺產",       "title_en": "Ciaotou District: Taiwan's First Sugar Refinery and Industrial Heritage" },
+    { "id": 124, "location_id": 124, "title_zh": "梓官區：蚵仔寮漁港的鮮味與漁人生活",         "title_en": "Ziguan District: Fresh Catches and Fisher Life at Kezailiao Harbor" },
+    { "id": 125, "location_id": 125, "title_zh": "彌陀區：海洋與蝦米的飄香故事",               "title_en": "Mituo District: The Fragrant Story of the Sea and Dried Shrimp" },
+    { "id": 126, "location_id": 126, "title_zh": "永安區：石斑魚養殖王國的產業傳奇",           "title_en": "Yongan District: The Industrial Legend of Grouper Aquaculture" },
+    { "id": 127, "location_id": 127, "title_zh": "茄萣區：濕地候鳥與黑面琵鷺的秘境",           "title_en": "Qieding District: Wetland Migratory Birds and the Black-faced Spoonbill Sanctuary" },
+    { "id": 130, "location_id": 130, "title_zh": "六龜區：溫泉山林與荖濃溪的自然秘境",         "title_en": "Liuguei District: Hot Springs, Forests, and the Natural Splendor of Laonong River" },
+    { "id": 132, "location_id": 132, "title_zh": "杉林區：美濃平原邊緣的客家農鄉",             "title_en": "Shanlin District: Hakka Farming Village on the Edge of Meinong Plain" },
+    { "id": 135, "location_id": 135, "title_zh": "桃源區：布農族的山間家園與文化傳承",         "title_en": "Taoyuan District: Bunun Homeland and Cultural Preservation in the Mountains" },
+    { "id": 137, "location_id": 137, "title_zh": "林園區：石化工業聚落與海岸生態的拉鋸",       "title_en": "Linyuan District: The Tension Between Petrochemical Clusters and Coastal Ecology" },
+    { "id": 138, "location_id": 138, "title_zh": "湖內區：湖光水色與在地農村文化",             "title_en": "Hunei District: Lakeside Scenery and Local Rural Culture" }
   ],
   "tasks": [
-    {
-      "topic_id": 1,
-      "task_content_zh": "從臭水溝到觀光地標的環保奇蹟",
-      "task_content_en": "Environmental miracle: from sewage to landmark",
-      "target_keywords": [
-        "remediation",
-        "landmark",
-        "sewage"
-      ]
-    },
-    {
-      "topic_id": 1,
-      "task_content_zh": "外國城市整治經驗比較",
-      "task_content_en": "Comparison with Thames or Seine remediation",
-      "target_keywords": [
-        "Thames",
-        "Seine",
-        "comparison"
-      ]
-    },
-    {
-      "topic_id": 2,
-      "task_content_zh": "太陽能愛之船的零碳排原理",
-      "task_content_en": "Zero-emission solar love boats",
-      "target_keywords": [
-        "solar",
-        "zero-emission",
-        "renewable"
-      ]
-    },
-    {
-      "topic_id": 7,
-      "task_content_zh": "廢棄倉庫轉變為文創聚落",
-      "task_content_en": "Transforming warehouses into creative hubs",
-      "target_keywords": [
-        "warehouse",
-        "creative hub",
-        "transformation"
-      ]
-    },
-    {
-      "topic_id": 11,
-      "task_content_zh": "海岸侵蝕與消波塊的工程學防禦",
-      "task_content_en": "Coastal erosion and engineering defense",
-      "target_keywords": [
-        "erosion",
-        "tetrapods",
-        "engineering"
-      ]
-    },
-    {
-      "topic_id": 12,
-      "task_content_zh": "東西方海灘文化探討 (防曬 vs. 日光浴)",
-      "task_content_en": "East vs. West beach culture",
-      "target_keywords": [
-        "sunscreen",
-        "tanning",
-        "culture"
-      ]
-    },
-    {
-      "topic_id": 13,
-      "task_content_zh": "台灣獼猴的生態習性與棲地",
-      "task_content_en": "Habits of Formosan macaques",
-      "target_keywords": [
-        "macaque",
-        "wildlife",
-        "habitat"
-      ]
-    },
-    {
-      "topic_id": 14,
-      "task_content_zh": "各國大學校園文化與住宿體驗差異",
-      "task_content_en": "Global campus and dorm culture",
-      "target_keywords": [
-        "dormitory",
-        "campus",
-        "education"
-      ]
-    },
-    {
-      "topic_id": 15,
-      "task_content_zh": "日治時期的防空洞設計與戰略意義",
-      "task_content_en": "Air-raid shelter design and strategic significance",
-      "target_keywords": [
-        "bunker",
-        "strategic",
-        "shelter"
-      ]
-    },
-    {
-      "topic_id": 17,
-      "task_content_zh": "台灣茶葉、糖與樟腦的外銷黃金時代",
-      "task_content_en": "Golden age of tea and camphor export",
-      "target_keywords": [
-        "camphor",
-        "export",
-        "trade"
-      ]
-    },
-    {
-      "topic_id": 18,
-      "task_content_zh": "紅磚、迴廊與適應熱帶氣候的設計",
-      "task_content_en": "Red bricks and tropical veranda design",
-      "target_keywords": [
-        "veranda",
-        "tropical",
-        "brick"
-      ]
-    },
-    {
-      "topic_id": 19,
-      "task_content_zh": "台灣特有「機車瀑布」與高密度通勤文化",
-      "task_content_en": "Taiwan's unique \"scooter waterfall\"",
-      "target_keywords": [
-        "scooter",
-        "commuting",
-        "waterfall"
-      ]
-    },
-    {
-      "topic_id": 20,
-      "task_content_zh": "旗津作為高雄發源地的歷史定位",
-      "task_content_en": "Historical significance of Cijin as the birthplace of Kaohsiung",
-      "target_keywords": [
-        "birthplace",
-        "history",
-        "origin"
-      ]
-    },
-    {
-      "topic_id": 21,
-      "task_content_zh": "介紹鴨肉珍與北港蔡三代筒仔米糕",
-      "task_content_en": "Introduce Duck Rice Chen & Beigang Cai Rice Cake",
-      "target_keywords": [
-        "duck rice",
-        "rice cake",
-        "Yancheng"
-      ]
-    },
-    {
-      "topic_id": 21,
-      "task_content_zh": "討論港園牛肉麵與廖家黑輪",
-      "task_content_en": "Discuss Gangyuan Beef Noodles & Liao Oden",
-      "target_keywords": [
-        "beef noodles",
-        "oden",
-        "heritage"
-      ]
-    },
-    {
-      "topic_id": 22,
-      "task_content_zh": "大溝頂虱目魚米粉湯的鮮甜祕訣",
-      "task_content_en": "The secret of Milkfish Rice Vermicelli Soup",
-      "target_keywords": [
-        "milkfish",
-        "vermicelli",
-        "fresh"
-      ]
-    },
-    {
-      "topic_id": 22,
-      "task_content_zh": "新濱・駅前：在舊銀行裡喝咖啡",
-      "task_content_en": "Coffee at Hamasen (Former Sanwa Bank)",
-      "target_keywords": [
-        "coffee",
-        "bank",
-        "history"
-      ]
-    },
-    {
-      "topic_id": 23,
-      "task_content_zh": "碳佐麻里與南海澎湖燒烤的特色",
-      "task_content_en": "Charcoal Grill & Penghu Seafood BBQ",
-      "target_keywords": [
-        "BBQ",
-        "seafood",
-        "grill"
-      ]
-    },
-    {
-      "topic_id": 25,
-      "task_content_zh": "猜心泡芙與旗山吉美香蕉蛋糕",
-      "task_content_en": "Guess What Puff & Chimei Banana Cake",
-      "target_keywords": [
-        "puff",
-        "banana cake",
-        "pastry"
-      ]
-    },
-    {
-      "topic_id": 26,
-      "task_content_zh": "慈香庭與漢來蔬食的創新菜色",
-      "task_content_en": "Innovative dishes at Ci Xiang Ting & Hi-Lai Vegan",
-      "target_keywords": [
-        "vegan",
-        "innovative",
-        "healthy"
-      ]
-    },
-    {
-      "topic_id": 101,
-      "task_content_zh": "向外國朋友介紹三鳳宮的紅燈籠美學",
-      "task_content_en": "Introduce the red lantern aesthetics of Sanfeng Temple",
-      "target_keywords": [
-        "lantern",
-        "aesthetic",
-        "temple"
-      ]
-    },
-    {
-      "topic_id": 102,
-      "task_content_zh": "解釋「龍口入、虎口出」的消災習俗",
-      "task_content_en": "Explain the custom of \"Entering the Dragon and Exiting the Tiger\"",
-      "target_keywords": [
-        "dragon",
-        "tiger",
-        "fortune"
-      ]
-    },
-    {
-      "topic_id": 103,
-      "task_content_zh": "討論右昌元帥府不燒金紙的環保理念",
-      "task_content_en": "Discuss the eco-friendly concept of not burning joss paper",
-      "target_keywords": [
-        "eco-friendly",
-        "joss paper",
-        "environment"
-      ]
-    },
-    {
-      "topic_id": 104,
-      "task_content_zh": "介紹哈瑪星代天宮的彩繪藝術與歷史",
-      "task_content_en": "Introduce the mural art and history of Daitian Temple",
-      "target_keywords": [
-        "mural",
-        "history",
-        "art"
-      ]
-    },
-    {
-      "topic_id": 105,
-      "task_content_zh": "分享在霞海城隍廟求姻緣的文化",
-      "task_content_en": "Share the culture of praying for romance at Xiahai Temple",
-      "target_keywords": [
-        "romance",
-        "marriage",
-        "matchmaker"
-      ]
-    },
-    {
-      "topic_id": 108,
-      "task_content_zh": "探討高雄關帝廟對商業誠信的守護",
-      "task_content_en": "Discuss how Guandi Temple protects business integrity",
-      "target_keywords": [
-        "integrity",
-        "business",
-        "loyalty"
-      ]
-    },
-    {
-      "topic_id": 110,
-      "task_content_zh": "介紹旗津天后宮作為高雄開港的歷史意義",
-      "task_content_en": "Introduce the significance of Qijin Temple in Kaohsiung port history",
-      "target_keywords": [
-        "port",
-        "oldest",
-        "Mazu"
-      ]
-    },
-    {
-      "topic_id": 112,
-      "task_content_zh": "描述鳳山龍山寺兩百年歷史的精緻木雕",
-      "task_content_en": "Describe the exquisite wood carvings of Longshan Temple",
-      "target_keywords": [
-        "wood carving",
-        "heritage",
-        "monument"
-      ]
-    },
-    {
-      "topic_id": 115,
-      "task_content_zh": "介紹佛光山的「佛光大佛」與四大宗旨",
-      "task_content_en": "Introduce the Great Buddha and the four objectives of Fo Guang Shan",
-      "target_keywords": [
-        "Buddha",
-        "charity",
-        "education"
-      ]
-    },
-    {
-      "topic_id": 118,
-      "task_content_zh": "討論壽天宮如何結合當地的螺絲產業",
-      "task_content_en": "Discuss how Shoutian Temple integrates with the local screw industry",
-      "target_keywords": [
-        "screw",
-        "industry",
-        "innovation"
-      ]
-    },
-    {
-      "topic_id": 121,
-      "task_content_zh": "向遊客推薦石頭廟（慈玄聖天宮）的奇幻構造",
-      "task_content_en": "Recommend the Stone Temple for its fantastic structure",
-      "target_keywords": [
-        "stone",
-        "shell",
-        "fantasy"
-      ]
-    },
-    {
-      "topic_id": 128,
-      "task_content_zh": "介紹全台規模最大的旗山孔廟建築特徵",
-      "task_content_en": "Introduce the architectural features of Cishan Confucius Temple",
-      "target_keywords": [
-        "Confucius",
-        "largest",
-        "architecture"
-      ]
-    },
-    {
-      "topic_id": 131,
-      "task_content_zh": "描述龍鳳寺俯瞰甲仙山城的壯闊景色",
-      "task_content_en": "Describe the panoramic view of Jiaxian from Longfeng Temple",
-      "target_keywords": [
-        "panoramic",
-        "mountain",
-        "view"
-      ]
-    },
-    {
-      "topic_id": 133,
-      "task_content_zh": "向外國人解釋宋江陣的武術表演文化",
-      "task_content_en": "Explain the martial arts culture of Song Jiang Jhen",
-      "target_keywords": [
-        "martial arts",
-        "performance",
-        "traditional"
-      ]
-    },
-    {
-      "topic_id": 129,
-      "task_content_zh": "介紹美濃廣進勝油紙傘的傳統工藝",
-      "task_content_en": "Introduce the traditional craft of Meinong oil-paper umbrellas",
-      "target_keywords": [
-        "oil-paper",
-        "umbrella",
-        "craft"
-      ]
-    },
-    {
-      "topic_id": 134,
-      "task_content_zh": "討論紫蝶幽谷的生態保育與原住民文化",
-      "task_content_en": "Discuss the ecological conservation of Purple Butterfly Valley",
-      "target_keywords": [
-        "butterfly",
-        "indigenous",
-        "conservation"
-      ]
-    },
-    {
-      "topic_id": 136,
-      "task_content_zh": "描述那瑪夏的星空與布農族、卡那卡那富族文化",
-      "task_content_en": "Describe Namasia starlight and Bunun/Kanakanavu culture",
-      "target_keywords": [
-        "stars",
-        "tribe",
-        "nature"
-      ]
-    },
-    {
-      "topic_id": 51,
-      "task_content_zh": "討論森林公園如何減緩都市熱島效應",
-      "task_content_en": "Discuss how forest parks mitigate the urban heat island effect",
-      "target_keywords": [
-        "heat island",
-        "mitigate",
-        "cooling"
-      ]
-    },
-    {
-      "topic_id": 51,
-      "task_content_zh": "向外國朋友介紹園內的季節性落羽松景觀",
-      "task_content_en": "Introduce the seasonal Bald Cypress scenery in the park",
-      "target_keywords": [
-        "Bald Cypress",
-        "seasonal",
-        "scenery"
-      ]
-    },
-    {
-      "topic_id": 52,
-      "task_content_zh": "分享衛武營從軍營轉型為藝文公園的過程",
-      "task_content_en": "Share the transformation of Weiwuying from a military camp to an arts park",
-      "target_keywords": [
-        "transformation",
-        "military",
-        "cultural"
-      ]
-    },
-    {
-      "topic_id": 53,
-      "task_content_zh": "描述晨間或傍晚市民在廣場運動的在地文化",
-      "task_content_en": "Describe the local culture of citizens exercising in the plaza",
-      "target_keywords": [
-        "community",
-        "exercise",
-        "plaza"
-      ]
-    },
-    {
-      "topic_id": 54,
-      "task_content_zh": "介紹共融式遊具如何服務不同能力的兒童",
-      "task_content_en": "Introduce how inclusive play equipment serves children of all abilities",
-      "target_keywords": [
-        "inclusive",
-        "accessibility",
-        "play equipment"
-      ]
-    },
-    {
-      "topic_id": 55,
-      "task_content_zh": "探討滯洪池與都市防洪的設計理念",
-      "task_content_en": "Explore the design concepts of detention ponds and urban flood control",
-      "target_keywords": [
-        "flood control",
-        "detention pond",
-        "drainage"
-      ]
-    },
-    {
-      "topic_id": 56,
-      "task_content_zh": "介紹中都濕地如何復育紅樹林生態",
-      "task_content_en": "Introduce the restoration of mangrove ecology in Zhongdu",
-      "target_keywords": [
-        "mangrove",
-        "restoration",
-        "wetland"
-      ]
-    },
-    {
-      "topic_id": 56,
-      "task_content_zh": "討論濕地公園作為都市防洪緩衝的作用",
-      "task_content_en": "Discuss the role of wetlands as urban flood buffers",
-      "target_keywords": [
-        "buffer",
-        "flood control",
-        "ecology"
-      ]
-    },
-    {
-      "topic_id": 521,
-      "task_content_zh": "描述大東濕地公園「城市版忘憂森林」的美景",
-      "task_content_en": "Describe the beauty of the \"Urban Mini Forest\" in Dadong",
-      "target_keywords": [
-        "forest",
-        "scenery",
-        "serene"
-      ]
-    },
-    {
-      "topic_id": 57,
-      "task_content_zh": "向遊客介紹風車公園如何利用風力發電",
-      "task_content_en": "Introduce how the park utilizes wind power for electricity",
-      "target_keywords": [
-        "wind power",
-        "renewable",
-        "turbine"
-      ]
-    },
-    {
-      "topic_id": 58,
-      "task_content_zh": "分享舊鐵道轉變為市民放風箏、看藝術品的空間",
-      "task_content_en": "Share how the old railway became a space for kites and art",
-      "target_keywords": [
-        "railway",
-        "recreation",
-        "installation art"
-      ]
-    },
-    {
-      "topic_id": 58,
-      "task_content_zh": "介紹園區內由廢鐵製成的公共藝術裝置",
-      "task_content_en": "Introduce public art installations made of scrap metal",
-      "target_keywords": [
-        "scrap metal",
-        "installation",
-        "creativity"
-      ]
-    },
-    {
-      "topic_id": 59,
-      "task_content_zh": "探討都會公園從垃圾掩埋場轉型為綠地的意義",
-      "task_content_en": "Discuss the significance of transforming a landfill into green space",
-      "target_keywords": [
-        "landfill",
-        "transformation",
-        "rehabilitation"
-      ]
-    },
-    {
-      "topic_id": 3,
-      "task_content_zh": "解釋海綿城市概念如何應用於高雄的濕地設計",
-      "task_content_en": "Explain how the 'sponge city' concept applies to Kaohsiung's wetland design",
-      "target_keywords": [
-        "sponge city",
-        "wetland",
-        "flood retention"
-      ]
-    },
-    {
-      "topic_id": 3,
-      "task_content_zh": "比較傳統硬體防洪與生態工法的優劣",
-      "task_content_en": "Compare hard engineering flood defenses with ecological engineering approaches",
-      "target_keywords": [
-        "ecological engineering",
-        "flood defense",
-        "green infrastructure"
-      ]
-    },
-    {
-      "topic_id": 4,
-      "task_content_zh": "介紹中都濕地可觀察到的候鳥與留鳥種類",
-      "task_content_en": "Introduce migratory and resident bird species observable at Zhongdu Wetlands",
-      "target_keywords": [
-        "migratory birds",
-        "wetland",
-        "birdwatching"
-      ]
-    },
-    {
-      "topic_id": 4,
-      "task_content_zh": "討論都市中的生態廊道如何維持生物多樣性",
-      "task_content_en": "Discuss how urban ecological corridors maintain biodiversity in cities",
-      "target_keywords": [
-        "ecological corridor",
-        "urban wildlife",
-        "biodiversity"
-      ]
-    },
-    {
-      "topic_id": 5,
-      "task_content_zh": "向遊客描述高雄流行音樂中心的鯨魚造型設計靈感",
-      "task_content_en": "Describe the whale-inspired architectural design of Kaohsiung Music Center to visitors",
-      "target_keywords": [
-        "whale",
-        "architecture",
-        "ocean-inspired"
-      ]
-    },
-    {
-      "topic_id": 5,
-      "task_content_zh": "比較高雄流行音樂中心與其他亞洲地標性音樂場館",
-      "task_content_en": "Compare Kaohsiung Music Center with other iconic Asian music venues",
-      "target_keywords": [
-        "landmark",
-        "venue",
-        "comparison"
-      ]
-    },
-    {
-      "topic_id": 6,
-      "task_content_zh": "介紹台灣流行音樂史上的重要里程碑",
-      "task_content_en": "Introduce key milestones in the history of Taiwanese pop music",
-      "target_keywords": [
-        "Mandopop",
-        "Hokkien",
-        "music history"
-      ]
-    },
-    {
-      "topic_id": 6,
-      "task_content_zh": "探討台語、客語、原住民語歌曲在當代音樂中的復興",
-      "task_content_en": "Explore the revival of Taiwanese, Hakka, and indigenous language songs in contemporary music",
-      "target_keywords": [
-        "Taiwanese language",
-        "Hakka",
-        "indigenous music"
-      ]
-    },
-    {
-      "topic_id": 8,
-      "task_content_zh": "介紹駁二藝術特區最具代表性的公共藝術裝置",
-      "task_content_en": "Introduce the most iconic public art installations at Pier-2 Art Center",
-      "target_keywords": [
-        "installation",
-        "public art",
-        "Pier-2"
-      ]
-    },
-    {
-      "topic_id": 8,
-      "task_content_zh": "探討創作自由與公共空間的邊界：街頭藝術的尺度",
-      "task_content_en": "Explore the boundaries of creative freedom and public space through street art",
-      "target_keywords": [
-        "street art",
-        "censorship",
-        "creative freedom"
-      ]
-    },
-    {
-      "topic_id": 9,
-      "task_content_zh": "解釋大港橋的旋轉開橋機制與工程挑戰",
-      "task_content_en": "Explain the rotating bridge mechanism and engineering challenges of Great Harbor Bridge",
-      "target_keywords": [
-        "rotating bridge",
-        "bascule",
-        "engineering"
-      ]
-    },
-    {
-      "topic_id": 9,
-      "task_content_zh": "比較世界各地著名的旋轉橋與活動橋設計",
-      "task_content_en": "Compare famous rotating and movable bridge designs around the world",
-      "target_keywords": [
-        "movable bridge",
-        "drawbridge",
-        "world comparison"
-      ]
-    },
-    {
-      "topic_id": 10,
-      "task_content_zh": "描述高雄港的集裝箱吞吐量與全球航運排名",
-      "task_content_en": "Describe Kaohsiung Port's container throughput and global shipping ranking",
-      "target_keywords": [
-        "container port",
-        "throughput",
-        "global ranking"
-      ]
-    },
-    {
-      "topic_id": 10,
-      "task_content_zh": "探討港區從工業重鎮轉型為觀光親水空間的歷程",
-      "task_content_en": "Explore the transformation of the harbor district from an industrial hub to a tourist waterfront",
-      "target_keywords": [
-        "waterfront",
-        "transformation",
-        "port economy"
-      ]
-    },
-    {
-      "topic_id": 16,
-      "task_content_zh": "介紹西子灣隧道從軍事管制區到公共文化空間的轉型",
-      "task_content_en": "Introduce the transformation of Sizihwan Tunnel from restricted military zone to public cultural space",
-      "target_keywords": [
-        "tunnel",
-        "adaptive reuse",
-        "military history"
-      ]
-    },
-    {
-      "topic_id": 16,
-      "task_content_zh": "探討台灣各地廢棄軍事設施活化再利用的案例",
-      "task_content_en": "Explore examples of repurposed military facilities across Taiwan",
-      "target_keywords": [
-        "military repurpose",
-        "heritage",
-        "reuse"
-      ]
-    },
-    {
-      "topic_id": 24,
-      "task_content_zh": "介紹高雄六合夜市與瑞豐夜市的宵夜必吃",
-      "task_content_en": "Introduce must-eat late-night foods at Liuhe and Ruifeng Night Markets",
-      "target_keywords": [
-        "night market",
-        "Liuhe",
-        "Ruifeng"
-      ]
-    },
-    {
-      "topic_id": 24,
-      "task_content_zh": "討論台灣宵夜文化與工作節奏的關係",
-      "task_content_en": "Discuss the relationship between Taiwan's late-night food culture and work rhythms",
-      "target_keywords": [
-        "night market",
-        "work culture",
-        "midnight snack"
-      ]
-    },
-    {
-      "topic_id": 106,
-      "task_content_zh": "介紹高雄市立歷史博物館日治時代的市役所建築",
-      "task_content_en": "Introduce the Japanese colonial-era City Hall architecture of Kaohsiung Museum of History",
-      "target_keywords": [
-        "City Hall",
-        "Japanese colonial",
-        "baroque"
-      ]
-    },
-    {
-      "topic_id": 106,
-      "task_content_zh": "探討前金區如何從行政中心演變為現代商業區",
-      "task_content_en": "Explore how Qianjin evolved from administrative center to modern commercial district",
-      "target_keywords": [
-        "administrative",
-        "commercial",
-        "urban evolution"
-      ]
-    },
-    {
-      "topic_id": 107,
-      "task_content_zh": "描述新興區作為高雄市中心商業核心的地位",
-      "task_content_en": "Describe Sinsing District's role as the commercial core of central Kaohsiung",
-      "target_keywords": [
-        "commercial",
-        "city center",
-        "retail"
-      ]
-    },
-    {
-      "topic_id": 107,
-      "task_content_zh": "介紹新堀江商圈的潮流文化與青年消費文化",
-      "task_content_en": "Introduce the youth fashion culture of Shinkuchan shopping district",
-      "target_keywords": [
-        "Shinkuchan",
-        "fashion",
-        "youth culture"
-      ]
-    },
-    {
-      "topic_id": 109,
-      "task_content_zh": "介紹前鎮加工出口區如何推動台灣1960年代經濟起飛",
-      "task_content_en": "Introduce how Qianzhen Export Processing Zone drove Taiwan's economic takeoff in the 1960s",
-      "target_keywords": [
-        "export processing zone",
-        "economic miracle",
-        "manufacturing"
-      ]
-    },
-    {
-      "topic_id": 109,
-      "task_content_zh": "探討高雄臨海工業區的石化產業與環境影響",
-      "task_content_en": "Explore the petrochemical industry and environmental impact of Kaohsiung's coastal industrial zone",
-      "target_keywords": [
-        "petrochemical",
-        "industrial",
-        "environmental impact"
-      ]
-    },
-    {
-      "topic_id": 111,
-      "task_content_zh": "介紹高雄國際機場的歷史與南台灣航空樞紐地位",
-      "task_content_en": "Introduce Kaohsiung International Airport's history and its role as Southern Taiwan's aviation hub",
-      "target_keywords": [
-        "airport",
-        "aviation hub",
-        "international"
-      ]
-    },
-    {
-      "topic_id": 111,
-      "task_content_zh": "探討機場周邊社區的噪音問題與居民生活",
-      "task_content_en": "Explore noise pollution issues and community life around the airport",
-      "target_keywords": [
-        "noise pollution",
-        "community",
-        "airport neighborhood"
-      ]
-    },
-    {
-      "topic_id": 113,
-      "task_content_zh": "介紹大寮區的鳳梨產業與農業觀光發展",
-      "task_content_en": "Introduce Daliao's pineapple industry and development of agricultural tourism",
-      "target_keywords": [
-        "pineapple",
-        "agricultural tourism",
-        "farming"
-      ]
-    },
-    {
-      "topic_id": 113,
-      "task_content_zh": "探討台灣農業從傳統耕作到觀光農場的轉型",
-      "task_content_en": "Explore Taiwan's agricultural shift from traditional farming to tourism farms",
-      "target_keywords": [
-        "agritourism",
-        "transformation",
-        "rural economy"
-      ]
-    },
-    {
-      "topic_id": 114,
-      "task_content_zh": "介紹澄清湖作為高雄重要水源地與觀光景點的雙重角色",
-      "task_content_en": "Introduce Chengching Lake's dual role as Kaohsiung's water source and tourist attraction",
-      "target_keywords": [
-        "Chengching Lake",
-        "reservoir",
-        "water supply"
-      ]
-    },
-    {
-      "topic_id": 114,
-      "task_content_zh": "探討城市水庫如何兼顧生態保育與市民休憩需求",
-      "task_content_en": "Explore how urban reservoirs balance ecological conservation with recreational needs",
-      "target_keywords": [
-        "reservoir",
-        "ecology",
-        "recreation"
-      ]
-    },
-    {
-      "topic_id": 116,
-      "task_content_zh": "討論仁武區居民與周邊石化廠的長期共存與環境抗爭",
-      "task_content_en": "Discuss long-term coexistence and environmental activism of Renwu residents near petrochemical plants",
-      "target_keywords": [
-        "petrochemical",
-        "community",
-        "environmental activism"
-      ]
-    },
-    {
-      "topic_id": 116,
-      "task_content_zh": "探討台灣工業區設置對周邊土地價值與居民健康的影響",
-      "task_content_en": "Explore the impact of industrial zones on land values and resident health in Taiwan",
-      "target_keywords": [
-        "industrial zone",
-        "health impact",
-        "land value"
-      ]
-    },
-    {
-      "topic_id": 117,
-      "task_content_zh": "介紹大社觀音山的健行步道與俯瞰高雄市景的體驗",
-      "task_content_en": "Introduce the hiking trails on Guanyin Mountain in Dashe with panoramic views of Kaohsiung",
-      "target_keywords": [
-        "Guanyin Mountain",
-        "hiking",
-        "panoramic view"
-      ]
-    },
-    {
-      "topic_id": 117,
-      "task_content_zh": "探討大社區農業聚落的傳統生活方式與社區文化",
-      "task_content_en": "Explore the traditional lifestyle and community culture of Dashe's agricultural settlements",
-      "target_keywords": [
-        "agricultural village",
-        "traditional",
-        "community culture"
-      ]
-    },
-    {
-      "topic_id": 119,
-      "task_content_zh": "介紹路竹沿海漁村的傳統捕魚方式與漁業文化",
-      "task_content_en": "Introduce traditional fishing methods and fishing culture in Lujhu's coastal villages",
-      "target_keywords": [
-        "fishing village",
-        "coastal",
-        "traditional fishing"
-      ]
-    },
-    {
-      "topic_id": 119,
-      "task_content_zh": "討論台灣沿海養殖漁業的發展與挑戰",
-      "task_content_en": "Discuss the development and challenges of coastal aquaculture in Taiwan",
-      "target_keywords": [
-        "aquaculture",
-        "fishery",
-        "coastal development"
-      ]
-    },
-    {
-      "topic_id": 120,
-      "task_content_zh": "介紹阿蓮區主要廟宇與每年盛大的宗教慶典活動",
-      "task_content_en": "Introduce Alian's major temples and grand annual religious festival activities",
-      "target_keywords": [
-        "temple festival",
-        "religious ceremony",
-        "local faith"
-      ]
-    },
-    {
-      "topic_id": 120,
-      "task_content_zh": "探討台灣廟會文化對地方凝聚力與經濟的影響",
-      "task_content_en": "Explore how temple festivals foster community cohesion and local economies in Taiwan",
-      "target_keywords": [
-        "temple fair",
-        "community",
-        "local economy"
-      ]
-    },
-    {
-      "topic_id": 122,
-      "task_content_zh": "向外國遊客介紹燕巢泥火山的地質成因與視覺奇景",
-      "task_content_en": "Introduce the geological formation and visual spectacle of Yanchao mud volcanoes to foreign visitors",
-      "target_keywords": [
-        "mud volcano",
-        "geology",
-        "natural wonder"
-      ]
-    },
-    {
-      "topic_id": 122,
-      "task_content_zh": "比較台灣泥火山與世界其他泥火山景觀的特色",
-      "task_content_en": "Compare Taiwan's mud volcanoes with similar geological formations around the world",
-      "target_keywords": [
-        "comparison",
-        "geology",
-        "global"
-      ]
-    },
-    {
-      "topic_id": 123,
-      "task_content_zh": "介紹橋頭糖廠作為台灣第一座現代化糖廠的歷史意義",
-      "task_content_en": "Introduce the historical significance of Ciaotou Sugar Refinery as Taiwan's first modern sugar factory",
-      "target_keywords": [
-        "sugar refinery",
-        "colonial history",
-        "industrial heritage"
-      ]
-    },
-    {
-      "topic_id": 123,
-      "task_content_zh": "探討橋頭糖廠如何從工業生產轉型為文化藝術園區",
-      "task_content_en": "Explore how Ciaotou Sugar Refinery transformed from industrial production to a cultural arts park",
-      "target_keywords": [
-        "adaptive reuse",
-        "cultural park",
-        "transformation"
-      ]
-    },
-    {
-      "topic_id": 124,
-      "task_content_zh": "介紹蚵仔寮漁港的清晨魚市與新鮮海產文化",
-      "task_content_en": "Introduce the dawn fish market and fresh seafood culture at Kezailiao Fishing Harbor",
-      "target_keywords": [
-        "fish market",
-        "fresh seafood",
-        "fishing harbor"
-      ]
-    },
-    {
-      "topic_id": 124,
-      "task_content_zh": "描述梓官區蚵農養殖牡蠣的傳統工法與海上作業",
-      "task_content_en": "Describe traditional oyster farming methods and offshore operations in Ziguan's oyster industry",
-      "target_keywords": [
-        "oyster farming",
-        "aquaculture",
-        "traditional method"
-      ]
-    },
-    {
-      "topic_id": 125,
-      "task_content_zh": "介紹彌陀區蝦米產業的曬蝦傳統與加工文化",
-      "task_content_en": "Introduce the sun-drying tradition and processing culture of Mituo's dried shrimp industry",
-      "target_keywords": [
-        "dried shrimp",
-        "sun drying",
-        "fishing tradition"
-      ]
-    },
-    {
-      "topic_id": 125,
-      "task_content_zh": "探討台灣沿海水產加工業如何傳承在地技藝",
-      "task_content_en": "Explore how Taiwan's coastal seafood processing industry preserves local craftsmanship",
-      "target_keywords": [
-        "seafood processing",
-        "heritage",
-        "craftsmanship"
-      ]
-    },
-    {
-      "topic_id": 126,
-      "task_content_zh": "介紹永安區如何成為台灣石斑魚養殖的重要重鎮",
-      "task_content_en": "Introduce how Yongan became a major hub for grouper aquaculture in Taiwan",
-      "target_keywords": [
-        "grouper",
-        "aquaculture",
-        "fishery industry"
-      ]
-    },
-    {
-      "topic_id": 126,
-      "task_content_zh": "探討台灣養殖漁業的科技化發展與出口市場",
-      "task_content_en": "Explore the technological advancement and export markets of Taiwan's aquaculture industry",
-      "target_keywords": [
-        "export",
-        "technology",
-        "aquaculture"
-      ]
-    },
-    {
-      "topic_id": 127,
-      "task_content_zh": "向遊客介紹茄萣溼地作為黑面琵鷺重要棲息地的生態價值",
-      "task_content_en": "Introduce the ecological value of Qieding Wetlands as a key habitat for the Black-faced Spoonbill",
-      "target_keywords": [
-        "Black-faced Spoonbill",
-        "endangered",
-        "wetland"
-      ]
-    },
-    {
-      "topic_id": 127,
-      "task_content_zh": "探討濕地保育與在地社區發展之間的平衡課題",
-      "task_content_en": "Explore the balance between wetland conservation and local community development",
-      "target_keywords": [
-        "conservation",
-        "community",
-        "sustainable development"
-      ]
-    },
-    {
-      "topic_id": 130,
-      "task_content_zh": "介紹六龜區溫泉資源的地質成因與養生文化",
-      "task_content_en": "Introduce the geological origins of Liuguei's hot springs and their wellness culture",
-      "target_keywords": [
-        "hot springs",
-        "geology",
-        "wellness"
-      ]
-    },
-    {
-      "topic_id": 130,
-      "task_content_zh": "描述荖濃溪泛舟與山林生態旅遊的體驗",
-      "task_content_en": "Describe the whitewater rafting on Laonong River and mountain ecotourism experiences",
-      "target_keywords": [
-        "rafting",
-        "ecotourism",
-        "river"
-      ]
-    },
-    {
-      "topic_id": 132,
-      "task_content_zh": "介紹杉林區的客家農業聚落與傳統農耕文化",
-      "task_content_en": "Introduce Shanlin's Hakka agricultural settlements and traditional farming culture",
-      "target_keywords": [
-        "Hakka",
-        "farming",
-        "rural culture"
-      ]
-    },
-    {
-      "topic_id": 132,
-      "task_content_zh": "探討八八風災後杉林月眉農場的重建與農業轉型",
-      "task_content_en": "Explore the reconstruction of Yuemei Farm in Shanlin after Typhoon Morakot and its agricultural transformation",
-      "target_keywords": [
-        "Typhoon Morakot",
-        "reconstruction",
-        "agricultural revival"
-      ]
-    },
-    {
-      "topic_id": 135,
-      "task_content_zh": "介紹桃源區布農族的八部合音（Pasibutbut）與音樂文化",
-      "task_content_en": "Introduce the Bunun's eight-part harmony Pasibutbut and their musical culture in Taoyuan District",
-      "target_keywords": [
-        "Pasibutbut",
-        "Bunun",
-        "polyphony"
-      ]
-    },
-    {
-      "topic_id": 135,
-      "task_content_zh": "探討台灣原住民族在山區面臨的土地權與文化保存議題",
-      "task_content_en": "Explore land rights and cultural preservation issues faced by Taiwan's indigenous peoples in mountain regions",
-      "target_keywords": [
-        "indigenous rights",
-        "land rights",
-        "cultural preservation"
-      ]
-    },
-    {
-      "topic_id": 137,
-      "task_content_zh": "介紹林園石化工業區的規模與台灣石化產業鏈的重要性",
-      "task_content_en": "Introduce the scale of Linyuan's petrochemical zone and its importance to Taiwan's petrochemical supply chain",
-      "target_keywords": [
-        "petrochemical",
-        "industrial zone",
-        "supply chain"
-      ]
-    },
-    {
-      "topic_id": 137,
-      "task_content_zh": "探討高雄林園沿海居民面對工業污染的環境正義運動",
-      "task_content_en": "Explore the environmental justice movement of Linyuan coastal residents facing industrial pollution",
-      "target_keywords": [
-        "environmental justice",
-        "pollution",
-        "community resistance"
-      ]
-    },
-    {
-      "topic_id": 138,
-      "task_content_zh": "介紹湖內區的龍目井與在地水資源文化",
-      "task_content_en": "Introduce Lungmujing (Dragon Eye Well) and local water resource culture in Hunei District",
-      "target_keywords": [
-        "Lungmujing",
-        "well",
-        "water culture"
-      ]
-    },
-    {
-      "topic_id": 138,
-      "task_content_zh": "描述湖內區農村慢遊的體驗與季節農產特色",
-      "task_content_en": "Describe the slow travel experience and seasonal produce of Hunei's rural landscape",
-      "target_keywords": [
-        "slow travel",
-        "rural",
-        "seasonal produce"
-      ]
-    }
+    { "topic_id": 1,   "task_content_zh": "從臭水溝到觀光地標的環保奇蹟",             "task_content_en": "Environmental miracle: from sewage to landmark",                "target_keywords": ["remediation","landmark","sewage"] },
+    { "topic_id": 1,   "task_content_zh": "外國城市整治經驗比較",                       "task_content_en": "Comparison with Thames or Seine remediation",                  "target_keywords": ["Thames","Seine","comparison"] },
+    { "topic_id": 2,   "task_content_zh": "太陽能愛之船的零碳排原理",                   "task_content_en": "Zero-emission solar love boats",                              "target_keywords": ["solar","zero-emission","renewable"] },
+    { "topic_id": 7,   "task_content_zh": "廢棄倉庫轉變為文創聚落",                     "task_content_en": "Transforming warehouses into creative hubs",                   "target_keywords": ["warehouse","creative hub","transformation"] },
+    { "topic_id": 11,  "task_content_zh": "海岸侵蝕與消波塊的工程學防禦",               "task_content_en": "Coastal erosion and engineering defense",                      "target_keywords": ["erosion","tetrapods","engineering"] },
+    { "topic_id": 12,  "task_content_zh": "東西方海灘文化探討 (防曬 vs. 日光浴)",       "task_content_en": "East vs. West beach culture",                                 "target_keywords": ["sunscreen","tanning","culture"] },
+    { "topic_id": 13,  "task_content_zh": "台灣獼猴的生態習性與棲地",                   "task_content_en": "Habits of Formosan macaques",                                 "target_keywords": ["macaque","wildlife","habitat"] },
+    { "topic_id": 14,  "task_content_zh": "各國大學校園文化與住宿體驗差異",             "task_content_en": "Global campus and dorm culture",                              "target_keywords": ["dormitory","campus","education"] },
+    { "topic_id": 15,  "task_content_zh": "日治時期的防空洞設計與戰略意義",             "task_content_en": "Air-raid shelter design and strategic significance",           "target_keywords": ["bunker","strategic","shelter"] },
+    { "topic_id": 17,  "task_content_zh": "台灣茶葉、糖與樟腦的外銷黃金時代",           "task_content_en": "Golden age of tea and camphor export",                        "target_keywords": ["camphor","export","trade"] },
+    { "topic_id": 18,  "task_content_zh": "紅磚、迴廊與適應熱帶氣候的設計",             "task_content_en": "Red bricks and tropical veranda design",                      "target_keywords": ["veranda","tropical","brick"] },
+    { "topic_id": 19,  "task_content_zh": "台灣特有「機車瀑布」與高密度通勤文化",       "task_content_en": "Taiwan's unique \"scooter waterfall\"",                         "target_keywords": ["scooter","commuting","waterfall"] },
+    { "topic_id": 20,  "task_content_zh": "旗津作為高雄發源地的歷史定位",               "task_content_en": "Historical significance of Cijin as the birthplace of Kaohsiung","target_keywords": ["birthplace","history","origin"] },
+    { "topic_id": 21,  "task_content_zh": "介紹鴨肉珍與北港蔡三代筒仔米糕",             "task_content_en": "Introduce Duck Rice Chen & Beigang Cai Rice Cake",            "target_keywords": ["duck rice","rice cake","Yancheng"] },
+    { "topic_id": 21,  "task_content_zh": "討論港園牛肉麵與廖家黑輪",                   "task_content_en": "Discuss Gangyuan Beef Noodles & Liao Oden",                    "target_keywords": ["beef noodles","oden","heritage"] },
+    { "topic_id": 22,  "task_content_zh": "大溝頂虱目魚米粉湯的鮮甜祕訣",               "task_content_en": "The secret of Milkfish Rice Vermicelli Soup",                  "target_keywords": ["milkfish","vermicelli","fresh"] },
+    { "topic_id": 22,  "task_content_zh": "新濱・駅前：在舊銀行裡喝咖啡",               "task_content_en": "Coffee at Hamasen (Former Sanwa Bank)",                        "target_keywords": ["coffee","bank","history"] },
+    { "topic_id": 23,  "task_content_zh": "碳佐麻里與南海澎湖燒烤的特色",               "task_content_en": "Charcoal Grill & Penghu Seafood BBQ",                         "target_keywords": ["BBQ","seafood","grill"] },
+    { "topic_id": 25,  "task_content_zh": "猜心泡芙與旗山吉美香蕉蛋糕",                 "task_content_en": "Guess What Puff & Chimei Banana Cake",                        "target_keywords": ["puff","banana cake","pastry"] },
+    { "topic_id": 26,  "task_content_zh": "慈香庭與漢來蔬食的創新菜色",                 "task_content_en": "Innovative dishes at Ci Xiang Ting & Hi-Lai Vegan",           "target_keywords": ["vegan","innovative","healthy"] },
+    { "topic_id": 101, "task_content_zh": "向外國朋友介紹三鳳宮的紅燈籠美學",           "task_content_en": "Introduce the red lantern aesthetics of Sanfeng Temple",       "target_keywords": ["lantern","aesthetic","temple"] },
+    { "topic_id": 102, "task_content_zh": "解釋「龍口入、虎口出」的消災習俗",           "task_content_en": "Explain the custom of \"Entering the Dragon and Exiting the Tiger\"","target_keywords": ["dragon","tiger","fortune"] },
+    { "topic_id": 103, "task_content_zh": "討論右昌元帥府不燒金紙的環保理念",           "task_content_en": "Discuss the eco-friendly concept of not burning joss paper",   "target_keywords": ["eco-friendly","joss paper","environment"] },
+    { "topic_id": 104, "task_content_zh": "介紹哈瑪星代天宮的彩繪藝術與歷史",           "task_content_en": "Introduce the mural art and history of Daitian Temple",        "target_keywords": ["mural","history","art"] },
+    { "topic_id": 105, "task_content_zh": "分享在霞海城隍廟求姻緣的文化",               "task_content_en": "Share the culture of praying for romance at Xiahai Temple",    "target_keywords": ["romance","marriage","matchmaker"] },
+    { "topic_id": 108, "task_content_zh": "探討高雄關帝廟對商業誠信的守護",             "task_content_en": "Discuss how Guandi Temple protects business integrity",        "target_keywords": ["integrity","business","loyalty"] },
+    { "topic_id": 110, "task_content_zh": "介紹旗津天后宮作為高雄開港的歷史意義",       "task_content_en": "Introduce the significance of Qijin Temple in Kaohsiung port history","target_keywords": ["port","oldest","Mazu"] },
+    { "topic_id": 112, "task_content_zh": "描述鳳山龍山寺兩百年歷史的精緻木雕",         "task_content_en": "Describe the exquisite wood carvings of Longshan Temple",      "target_keywords": ["wood carving","heritage","monument"] },
+    { "topic_id": 115, "task_content_zh": "介紹佛光山的「佛光大佛」與四大宗旨",         "task_content_en": "Introduce the Great Buddha and the four objectives of Fo Guang Shan","target_keywords": ["Buddha","charity","education"] },
+    { "topic_id": 118, "task_content_zh": "討論壽天宮如何結合當地的螺絲產業",           "task_content_en": "Discuss how Shoutian Temple integrates with the local screw industry","target_keywords": ["screw","industry","innovation"] },
+    { "topic_id": 121, "task_content_zh": "向遊客推薦石頭廟（慈玄聖天宮）的奇幻構造",   "task_content_en": "Recommend the Stone Temple for its fantastic structure",       "target_keywords": ["stone","shell","fantasy"] },
+    { "topic_id": 128, "task_content_zh": "介紹全台規模最大的旗山孔廟建築特徵",         "task_content_en": "Introduce the architectural features of Cishan Confucius Temple","target_keywords": ["Confucius","largest","architecture"] },
+    { "topic_id": 131, "task_content_zh": "描述龍鳳寺俯瞰甲仙山城的壯闊景色",           "task_content_en": "Describe the panoramic view of Jiaxian from Longfeng Temple",  "target_keywords": ["panoramic","mountain","view"] },
+    { "topic_id": 133, "task_content_zh": "向外國人解釋宋江陣的武術表演文化",           "task_content_en": "Explain the martial arts culture of Song Jiang Jhen",         "target_keywords": ["martial arts","performance","traditional"] },
+    { "topic_id": 129, "task_content_zh": "介紹美濃廣進勝油紙傘的傳統工藝",             "task_content_en": "Introduce the traditional craft of Meinong oil-paper umbrellas","target_keywords": ["oil-paper","umbrella","craft"] },
+    { "topic_id": 134, "task_content_zh": "討論紫蝶幽谷的生態保育與原住民文化",         "task_content_en": "Discuss the ecological conservation of Purple Butterfly Valley","target_keywords": ["butterfly","indigenous","conservation"] },
+    { "topic_id": 136, "task_content_zh": "描述那瑪夏的星空與布農族、卡那卡那富族文化", "task_content_en": "Describe Namasia starlight and Bunun/Kanakanavu culture",       "target_keywords": ["stars","tribe","nature"] },
+    { "topic_id": 51,  "task_content_zh": "討論森林公園如何減緩都市熱島效應",           "task_content_en": "Discuss how forest parks mitigate the urban heat island effect","target_keywords": ["heat island","mitigate","cooling"] },
+    { "topic_id": 51,  "task_content_zh": "向外國朋友介紹園內的季節性落羽松景觀",       "task_content_en": "Introduce the seasonal Bald Cypress scenery in the park",      "target_keywords": ["Bald Cypress","seasonal","scenery"] },
+    { "topic_id": 52,  "task_content_zh": "分享衛武營從軍營轉型為藝文公園的過程",       "task_content_en": "Share the transformation of Weiwuying from a military camp to an arts park","target_keywords": ["transformation","military","cultural"] },
+    { "topic_id": 53,  "task_content_zh": "描述晨間或傍晚市民在廣場運動的在地文化",     "task_content_en": "Describe the local culture of citizens exercising in the plaza","target_keywords": ["community","exercise","plaza"] },
+    { "topic_id": 54,  "task_content_zh": "介紹共融式遊具如何服務不同能力的兒童",       "task_content_en": "Introduce how inclusive play equipment serves children of all abilities","target_keywords": ["inclusive","accessibility","play equipment"] },
+    { "topic_id": 55,  "task_content_zh": "探討滯洪池與都市防洪的設計理念",             "task_content_en": "Explore the design concepts of detention ponds and urban flood control","target_keywords": ["flood control","detention pond","drainage"] },
+    { "topic_id": 56,  "task_content_zh": "介紹中都濕地如何復育紅樹林生態",             "task_content_en": "Introduce the restoration of mangrove ecology in Zhongdu",      "target_keywords": ["mangrove","restoration","wetland"] },
+    { "topic_id": 56,  "task_content_zh": "討論濕地公園作為都市防洪緩衝的作用",         "task_content_en": "Discuss the role of wetlands as urban flood buffers",           "target_keywords": ["buffer","flood control","ecology"] },
+    { "topic_id": 521, "task_content_zh": "描述大東濕地公園「城市版忘憂森林」的美景",   "task_content_en": "Describe the beauty of the \"Urban Mini Forest\" in Dadong",      "target_keywords": ["forest","scenery","serene"] },
+    { "topic_id": 57,  "task_content_zh": "向遊客介紹風車公園如何利用風力發電",         "task_content_en": "Introduce how the park utilizes wind power for electricity",    "target_keywords": ["wind power","renewable","turbine"] },
+    { "topic_id": 58,  "task_content_zh": "分享舊鐵道轉變為市民放風箏、看藝術品的空間", "task_content_en": "Share how the old railway became a space for kites and art",    "target_keywords": ["railway","recreation","installation art"] },
+    { "topic_id": 58,  "task_content_zh": "介紹園區內由廢鐵製成的公共藝術裝置",         "task_content_en": "Introduce public art installations made of scrap metal",        "target_keywords": ["scrap metal","installation","creativity"] },
+    { "topic_id": 59,  "task_content_zh": "探討都會公園從垃圾掩埋場轉型為綠地的意義",   "task_content_en": "Discuss the significance of transforming a landfill into green space","target_keywords": ["landfill","transformation","rehabilitation"] },
+    { "topic_id": 3,   "task_content_zh": "解釋海綿城市概念如何應用於高雄的濕地設計",   "task_content_en": "Explain how the 'sponge city' concept applies to Kaohsiung's wetland design","target_keywords": ["sponge city","wetland","flood retention"] },
+    { "topic_id": 3,   "task_content_zh": "比較傳統硬體防洪與生態工法的優劣",           "task_content_en": "Compare hard engineering flood defenses with ecological engineering approaches","target_keywords": ["ecological engineering","flood defense","green infrastructure"] },
+    { "topic_id": 4,   "task_content_zh": "介紹中都濕地可觀察到的候鳥與留鳥種類",       "task_content_en": "Introduce migratory and resident bird species observable at Zhongdu Wetlands","target_keywords": ["migratory birds","wetland","birdwatching"] },
+    { "topic_id": 4,   "task_content_zh": "討論都市中的生態廊道如何維持生物多樣性",     "task_content_en": "Discuss how urban ecological corridors maintain biodiversity in cities","target_keywords": ["ecological corridor","urban wildlife","biodiversity"] },
+    { "topic_id": 5,   "task_content_zh": "向遊客描述高雄流行音樂中心的鯨魚造型設計靈感","task_content_en": "Describe the whale-inspired architectural design of Kaohsiung Music Center to visitors","target_keywords": ["whale","architecture","ocean-inspired"] },
+    { "topic_id": 5,   "task_content_zh": "比較高雄流行音樂中心與其他亞洲地標性音樂場館","task_content_en": "Compare Kaohsiung Music Center with other iconic Asian music venues","target_keywords": ["landmark","venue","comparison"] },
+    { "topic_id": 6,   "task_content_zh": "介紹台灣流行音樂史上的重要里程碑",           "task_content_en": "Introduce key milestones in the history of Taiwanese pop music","target_keywords": ["Mandopop","Hokkien","music history"] },
+    { "topic_id": 6,   "task_content_zh": "探討台語、客語、原住民語歌曲在當代音樂中的復興","task_content_en": "Explore the revival of Taiwanese, Hakka, and indigenous language songs in contemporary music","target_keywords": ["Taiwanese language","Hakka","indigenous music"] },
+    { "topic_id": 8,   "task_content_zh": "介紹駁二藝術特區最具代表性的公共藝術裝置",   "task_content_en": "Introduce the most iconic public art installations at Pier-2 Art Center","target_keywords": ["installation","public art","Pier-2"] },
+    { "topic_id": 8,   "task_content_zh": "探討創作自由與公共空間的邊界：街頭藝術的尺度","task_content_en": "Explore the boundaries of creative freedom and public space through street art","target_keywords": ["street art","censorship","creative freedom"] },
+    { "topic_id": 9,   "task_content_zh": "解釋大港橋的旋轉開橋機制與工程挑戰",         "task_content_en": "Explain the rotating bridge mechanism and engineering challenges of Great Harbor Bridge","target_keywords": ["rotating bridge","bascule","engineering"] },
+    { "topic_id": 9,   "task_content_zh": "比較世界各地著名的旋轉橋與活動橋設計",       "task_content_en": "Compare famous rotating and movable bridge designs around the world","target_keywords": ["movable bridge","drawbridge","world comparison"] },
+    { "topic_id": 10,  "task_content_zh": "描述高雄港的集裝箱吞吐量與全球航運排名",     "task_content_en": "Describe Kaohsiung Port's container throughput and global shipping ranking","target_keywords": ["container port","throughput","global ranking"] },
+    { "topic_id": 10,  "task_content_zh": "探討港區從工業重鎮轉型為觀光親水空間的歷程", "task_content_en": "Explore the transformation of the harbor district from an industrial hub to a tourist waterfront","target_keywords": ["waterfront","transformation","port economy"] },
+    { "topic_id": 16,  "task_content_zh": "介紹西子灣隧道從軍事管制區到公共文化空間的轉型","task_content_en": "Introduce the transformation of Sizihwan Tunnel from restricted military zone to public cultural space","target_keywords": ["tunnel","adaptive reuse","military history"] },
+    { "topic_id": 16,  "task_content_zh": "探討台灣各地廢棄軍事設施活化再利用的案例",   "task_content_en": "Explore examples of repurposed military facilities across Taiwan","target_keywords": ["military repurpose","heritage","reuse"] },
+    { "topic_id": 24,  "task_content_zh": "介紹高雄六合夜市與瑞豐夜市的宵夜必吃",       "task_content_en": "Introduce must-eat late-night foods at Liuhe and Ruifeng Night Markets","target_keywords": ["night market","Liuhe","Ruifeng"] },
+    { "topic_id": 24,  "task_content_zh": "討論台灣宵夜文化與工作節奏的關係",           "task_content_en": "Discuss the relationship between Taiwan's late-night food culture and work rhythms","target_keywords": ["night market","work culture","midnight snack"] },
+    { "topic_id": 106, "task_content_zh": "介紹高雄市立歷史博物館日治時代的市役所建築", "task_content_en": "Introduce the Japanese colonial-era City Hall architecture of Kaohsiung Museum of History","target_keywords": ["City Hall","Japanese colonial","baroque"] },
+    { "topic_id": 106, "task_content_zh": "探討前金區如何從行政中心演變為現代商業區",   "task_content_en": "Explore how Qianjin evolved from administrative center to modern commercial district","target_keywords": ["administrative","commercial","urban evolution"] },
+    { "topic_id": 107, "task_content_zh": "描述新興區作為高雄市中心商業核心的地位",     "task_content_en": "Describe Sinsing District's role as the commercial core of central Kaohsiung","target_keywords": ["commercial","city center","retail"] },
+    { "topic_id": 107, "task_content_zh": "介紹新堀江商圈的潮流文化與青年消費文化",     "task_content_en": "Introduce the youth fashion culture of Shinkuchan shopping district","target_keywords": ["Shinkuchan","fashion","youth culture"] },
+    { "topic_id": 109, "task_content_zh": "介紹前鎮加工出口區如何推動台灣1960年代經濟起飛","task_content_en": "Introduce how Qianzhen Export Processing Zone drove Taiwan's economic takeoff in the 1960s","target_keywords": ["export processing zone","economic miracle","manufacturing"] },
+    { "topic_id": 109, "task_content_zh": "探討高雄臨海工業區的石化產業與環境影響",     "task_content_en": "Explore the petrochemical industry and environmental impact of Kaohsiung's coastal industrial zone","target_keywords": ["petrochemical","industrial","environmental impact"] },
+    { "topic_id": 111, "task_content_zh": "介紹高雄國際機場的歷史與南台灣航空樞紐地位", "task_content_en": "Introduce Kaohsiung International Airport's history and its role as Southern Taiwan's aviation hub","target_keywords": ["airport","aviation hub","international"] },
+    { "topic_id": 113, "task_content_zh": "介紹大寮區的鳳梨產業與農業觀光發展",         "task_content_en": "Introduce Daliao's pineapple industry and development of agricultural tourism","target_keywords": ["pineapple","agricultural tourism","farming"] },
+    { "topic_id": 114, "task_content_zh": "介紹澄清湖作為高雄重要水源地與觀光景點的雙重角色","task_content_en": "Introduce Chengching Lake's dual role as Kaohsiung's water source and tourist attraction","target_keywords": ["Chengching Lake","reservoir","water supply"] },
+    { "topic_id": 116, "task_content_zh": "討論仁武區居民與周邊石化廠的長期共存與環境抗爭","task_content_en": "Discuss long-term coexistence and environmental activism of Renwu residents near petrochemical plants","target_keywords": ["petrochemical","community","environmental activism"] },
+    { "topic_id": 117, "task_content_zh": "介紹大社觀音山的健行步道與俯瞰高雄市景的體驗","task_content_en": "Introduce the hiking trails on Guanyin Mountain in Dashe with panoramic views of Kaohsiung","target_keywords": ["Guanyin Mountain","hiking","panoramic view"] },
+    { "topic_id": 119, "task_content_zh": "介紹路竹沿海漁村的傳統捕魚方式與漁業文化",   "task_content_en": "Introduce traditional fishing methods and fishing culture in Lujhu's coastal villages","target_keywords": ["fishing village","coastal","traditional fishing"] },
+    { "topic_id": 120, "task_content_zh": "介紹阿蓮區主要廟宇與每年盛大的宗教慶典活動", "task_content_en": "Introduce Alian's major temples and grand annual religious festival activities","target_keywords": ["temple festival","religious ceremony","local faith"] },
+    { "topic_id": 122, "task_content_zh": "向外國遊客介紹燕巢泥火山的地質成因與視覺奇景","task_content_en": "Introduce the geological formation and visual spectacle of Yanchao mud volcanoes to foreign visitors","target_keywords": ["mud volcano","geology","natural wonder"] },
+    { "topic_id": 123, "task_content_zh": "介紹橋頭糖廠作為台灣第一座現代化糖廠的歷史意義","task_content_en": "Introduce the historical significance of Ciaotou Sugar Refinery as Taiwan's first modern sugar factory","target_keywords": ["sugar refinery","colonial history","industrial heritage"] },
+    { "topic_id": 124, "task_content_zh": "介紹蚵仔寮漁港的清晨魚市與新鮮海產文化",     "task_content_en": "Introduce the dawn fish market and fresh seafood culture at Kezailiao Fishing Harbor","target_keywords": ["fish market","fresh seafood","fishing harbor"] },
+    { "topic_id": 125, "task_content_zh": "介紹彌陀區蝦米產業的曬蝦傳統與加工文化",     "task_content_en": "Introduce the sun-drying tradition and processing culture of Mituo's dried shrimp industry","target_keywords": ["dried shrimp","sun drying","fishing tradition"] },
+    { "topic_id": 126, "task_content_zh": "介紹永安區如何成為台灣石斑魚養殖的重要重鎮", "task_content_en": "Introduce how Yongan became a major hub for grouper aquaculture in Taiwan","target_keywords": ["grouper","aquaculture","fishery industry"] },
+    { "topic_id": 127, "task_content_zh": "向遊客介紹茄萣溼地作為黑面琵鷺重要棲息地的生態價值","task_content_en": "Introduce the ecological value of Qieding Wetlands as a key habitat for the Black-faced Spoonbill","target_keywords": ["Black-faced Spoonbill","endangered","wetland"] },
+    { "topic_id": 130, "task_content_zh": "介紹六龜區溫泉資源的地質成因與養生文化",     "task_content_en": "Introduce the geological origins of Liuguei's hot springs and their wellness culture","target_keywords": ["hot springs","geology","wellness"] },
+    { "topic_id": 132, "task_content_zh": "介紹杉林區的客家農業聚落與傳統農耕文化",     "task_content_en": "Introduce Shanlin's Hakka agricultural settlements and traditional farming culture","target_keywords": ["Hakka","farming","rural culture"] },
+    { "topic_id": 135, "task_content_zh": "介紹桃源區布農族的八部合音（Pasibutbut）與音樂文化","task_content_en": "Introduce the Bunun's eight-part harmony Pasibutbut and their musical culture in Taoyuan District","target_keywords": ["Pasibutbut","Bunun","polyphony"] },
+    { "topic_id": 137, "task_content_zh": "介紹林園石化工業區的規模與台灣石化產業鏈的重要性","task_content_en": "Introduce the scale of Linyuan's petrochemical zone and its importance to Taiwan's petrochemical supply chain","target_keywords": ["petrochemical","industrial zone","supply chain"] },
+    { "topic_id": 138, "task_content_zh": "介紹湖內區的龍目井與在地水資源文化",         "task_content_en": "Introduce Lungmujing (Dragon Eye Well) and local water resource culture in Hunei District","target_keywords": ["Lungmujing","well","water culture"] }
   ]
 }

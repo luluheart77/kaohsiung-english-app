@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LangQuest: Immersive English</title>
+    <title>LangQuest: Kaohsiung</title>
     <link rel="stylesheet" href="app.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
     <div id="app-container">
         <header>
-            <div class="logo">LangQuest 🚀</div>
+            <div class="logo">LangQuest 🗺️</div>
             <nav id="nav-menu">
                 <button onclick="app.navigate('home')" class="nav-btn active" id="nav-home">首頁</button>
-                <button onclick="app.navigate('scenarios')" class="nav-btn" id="nav-scenarios">情境</button>
+                <button onclick="app.navigate('scenarios')" class="nav-btn" id="nav-scenarios">地圖</button>
                 <button onclick="app.navigate('badges')" class="nav-btn" id="nav-badges">我的進度</button>
             </nav>
         </header>
@@ -22,48 +24,78 @@
             <!-- Home View -->
             <section id="view-home" class="view active">
                 <div class="hero">
-                    <h1>在真實情境中掌握英語</h1>
-                    <p>練習與市場、節慶及農漁特產相關的對話。</p>
-                    <button class="primary-btn pulse" onclick="app.navigate('scenarios')">開始學習</button>
+                    <div class="hero-badge">高雄在地英語學習</div>
+                    <h1>探索高雄<br>掌握英語</h1>
+                    <p>點擊地圖上的景點，與AI導遊用英語對話，學習在地文化知識。</p>
+                    <button class="primary-btn" onclick="app.navigate('scenarios')">
+                        <span>開啟地圖</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="hero-stats">
+                        <div class="hero-stat"><span class="hero-stat-num">80+</span><span>學習景點</span></div>
+                        <div class="hero-stat"><span class="hero-stat-num">5</span><span>主題路線</span></div>
+                        <div class="hero-stat"><span class="hero-stat-num">∞</span><span>對話情境</span></div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Scenarios Selection View -->
-            <section id="view-scenarios" class="view">
-                <h2>選擇情境</h2>
-                <div id="topics-grid" class="card-grid">
-                    <!-- Topics will be dynamically populated here -->
+            <!-- Map / Scenarios View -->
+            <section id="view-scenarios" class="view map-view">
+                <div id="map"></div>
+
+                <!-- Location Side Panel -->
+                <div id="location-panel" class="location-panel hidden">
+                    <div class="panel-header">
+                        <button class="panel-close-btn" onclick="app.closeLocationPanel()">✕</button>
+                        <div id="panel-location-icon" class="panel-icon"></div>
+                        <div>
+                            <h3 id="panel-location-name"></h3>
+                            <p id="panel-location-meta"></p>
+                        </div>
+                    </div>
+                    <div id="panel-topic-list" class="panel-topic-list"></div>
+                </div>
+
+                <!-- Map legend -->
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-dot" style="background:#4f46e5"></span>愛河</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#0891b2"></span>西子灣</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#d97706"></span>美食</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#059669"></span>公園</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#dc2626"></span>文化</div>
                 </div>
             </section>
 
             <!-- Chat View -->
-            <section id="view-chat" class="view">
+            <section id="view-chat" class="view chat-view">
                 <div class="chat-header">
-                    <button class="back-btn" onclick="app.navigate('scenarios')">← 返回</button>
-                    <h2 id="chat-scenario-title">情境</h2>
+                    <button class="back-btn" onclick="app.navigate('scenarios')">← 返回地圖</button>
+                    <div class="chat-title-wrap">
+                        <span id="chat-location-icon" class="chat-loc-icon"></span>
+                        <h2 id="chat-scenario-title">情境</h2>
+                    </div>
                     <button class="task-btn" onclick="app.showTasks()">📋 任務</button>
                 </div>
-                <div id="chat-messages" class="messages-container">
-                    <!-- Messages will be injected here -->
-                </div>
+                <div id="chat-messages" class="messages-container"></div>
                 <div class="chat-controls">
                     <button class="tool-btn hint-btn" onclick="app.requestHint()">💡 提示</button>
                     <button class="tool-btn translate-btn" onclick="app.toggleTranslation()">🌐 翻譯</button>
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="chat-input" placeholder="用英文輸入您的訊息..." onkeypress="app.handleInputKeypress(event)">
-                    <button id="send-btn" class="send-btn" onclick="app.sendMessage()">發送</button>
+                    <button id="send-btn" class="send-btn" onclick="app.sendMessage()">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 2l7 7-7 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
                 </div>
             </section>
 
-            <!-- Task View (Overlay/Modal) -->
+            <!-- Task Modal -->
             <div id="task-modal" class="modal hidden">
                 <div class="modal-content">
-                    <span class="close-btn" onclick="app.hideTasks()">&times;</span>
-                    <h2>任務目標</h2>
-                    <ul id="task-list" class="task-list">
-                        <!-- Tasks go here -->
-                    </ul>
+                    <span class="close-btn" onclick="app.hideTasks()">✕</span>
+                    <h2>🎯 任務目標</h2>
+                    <p class="modal-subtitle">完成這些對話任務來解鎖徽章！</p>
+                    <ul id="task-list" class="task-list"></ul>
                 </div>
             </div>
 
@@ -86,7 +118,6 @@
                 </div>
                 <h3 class="badges-title">獲得徽章</h3>
                 <div id="badges-grid" class="badges-grid">
-                    <!-- Badges injected here -->
                     <div class="empty-state">尚未獲得徽章。快開始一個情境對話吧！</div>
                 </div>
             </section>

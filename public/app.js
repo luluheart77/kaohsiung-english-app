@@ -1,9 +1,11 @@
 const app = {
     data: null,
+    map: null,
     state: {
         currentView: 'home',
         currentScenario: null,
         currentTopicId: null,
+        currentLocationIcon: '',
         messages: [],
         showTranslations: false,
         stats: {
@@ -13,9 +15,9 @@ const app = {
             sessions: 0
         }
     },
+    currentTasks: [],
 
     async init() {
-        console.log("App initialized");
         this.loadStatsFromStorage();
         await this.loadAppJson();
         this.navigate('home');
@@ -25,9 +27,8 @@ const app = {
         try {
             const response = await fetch('/kaohsiung_tour_data.json');
             this.data = await response.json();
-            console.log("Loaded local JSON data:", this.data);
         } catch(e) {
-            console.error("Failed to load JSON data:", e);
+            console.error('Failed to load JSON data:', e);
         }
     },
 
@@ -36,21 +37,14 @@ const app = {
             const savedStats = localStorage.getItem('langquest_stats');
             const lastDate = localStorage.getItem('langquest_last_date');
             const today = new Date().toDateString();
-            
+
             if (savedStats) {
-                // Merge with default state structure
                 this.state.stats = { ...this.state.stats, ...JSON.parse(savedStats) };
-                
-                // Track streak safely
                 if (lastDate !== today) {
                     if (lastDate) {
-                        const lastTime = new Date(lastDate).getTime();
-                        const diffDays = Math.floor((new Date().getTime() - lastTime) / (1000 * 3600 * 24));
-                        if (diffDays === 1) {
-                            this.state.stats.streak++;
-                        } else if (diffDays > 1) {
-                            this.state.stats.streak = 1; // Reset streak if missed a day
-                        }
+                        const diffDays = Math.floor((new Date() - new Date(lastDate)) / (1000 * 3600 * 24));
+                        if (diffDays === 1) this.state.stats.streak++;
+                        else if (diffDays > 1) this.state.stats.streak = 1;
                     }
                     localStorage.setItem('langquest_last_date', today);
                     this.saveStats();
@@ -58,8 +52,8 @@ const app = {
             } else {
                 localStorage.setItem('langquest_last_date', today);
             }
-        } catch (e) {
-            console.error("Storage error:", e);
+        } catch(e) {
+            console.error('Storage error:', e);
         }
     },
 
@@ -72,179 +66,264 @@ const app = {
         document.getElementById(`view-${viewId}`).classList.add('active');
         this.state.currentView = viewId;
 
-        if (viewId === 'scenarios') {
-            this.loadTopics();
-        }
-
         document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
         const activeNavBtn = document.getElementById(`nav-${viewId}`);
-        if(activeNavBtn) activeNavBtn.classList.add('active');
-        
-        if (typeof analytics !== 'undefined') analytics.track('page_view', { page: viewId });
+        if (activeNavBtn) activeNavBtn.classList.add('active');
+
+        if (viewId === 'scenarios') {
+            // Wait for the element to be visible and sized before initialising Leaflet
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.initMap();
+                    if (this.map) {
+                        this.map.invalidateSize();
+                    }
+                });
+            });
+        }
+        if (viewId === 'badges') {
+            this.loadStats();
+        }
     },
 
-    async loadTopics() {
+    // ── Map ──────────────────────────────────────────────────────────────────
+
+    // Area color mapping
+    areaColors: {
+        1: '#4f46e5', // Love River — indigo
+        2: '#0891b2', // Sizihwan — cyan
+        3: '#d97706', // Food — amber
+        4: '#dc2626', // Culture/Districts — red
+        5: '#059669', // Parks — emerald
+    },
+
+    initMap() {
         if (!this.data) return;
-        const grid = document.getElementById('topics-grid');
-        grid.innerHTML = '';
-        
-        // Let's only list the first 12 topics so it doesn't get overwhelmingly long for now.
-        const topics = this.data.topics.slice(0, 12);
-        
-        topics.forEach((topic, index) => {
-            const card = document.createElement('div');
-            card.className = 'scenario-card';
-            card.style.animationDelay = `${index * 0.05}s`;
-            card.onclick = () => this.startScenario(topic);
-            
-            // Find the location icon
-            const location = this.data.locations.find(l => l.id === topic.location_id);
-            const icon = location ? location.icon : "📍";
-            
-            card.innerHTML = `
-                <div class="icon-wrapper"><div class="icon">${icon}</div></div>
-                <div class="card-content">
-                    <h3>${topic.title_zh}</h3>
-                    <p class="subtitle">${topic.title_en.toUpperCase()}</p>
-                    <p class="desc">${location ? location.name_zh : ''}</p>
-                </div>
-            `;
-            grid.appendChild(card);
+
+        const mapEl = document.getElementById('map');
+        if (!mapEl) return;
+
+        // Already initialised — just refresh size
+        if (this.map) {
+            this.map.invalidateSize();
+            return;
+        }
+
+        this.map = L.map('map', {
+            center: [22.638, 120.298],
+            zoom: 12,
+            zoomControl: true,
         });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 18,
+        }).addTo(this.map);
+
+        // Group topics by location_id
+        const topicsByLocation = {};
+        this.data.topics.forEach(t => {
+            if (!topicsByLocation[t.location_id]) topicsByLocation[t.location_id] = [];
+            topicsByLocation[t.location_id].push(t);
+        });
+
+        // Place a marker for each location that has coordinates
+        this.data.locations.forEach(loc => {
+            if (!loc.lat || !loc.lng) return;
+
+            const topics = topicsByLocation[loc.id] || [];
+            if (topics.length === 0) return;
+
+            const color = this.areaColors[loc.area_id] || '#4f46e5';
+
+            const icon = L.divIcon({
+                className: '',
+                html: `
+                    <div class="map-pin" style="
+                        width: 38px; height: 38px;
+                        border: 2.5px solid ${color};
+                        box-shadow: 0 4px 14px ${color}55;
+                    ">
+                        <span style="font-size:1.05rem; line-height:1">${loc.icon}</span>
+                        <span class="pin-badge" style="background:${color}">${topics.length}</span>
+                    </div>`,
+                iconSize: [38, 38],
+                iconAnchor: [19, 19],
+                popupAnchor: [0, -22],
+            });
+
+            const marker = L.marker([loc.lat, loc.lng], { icon }).addTo(this.map);
+            marker.on('click', () => this.showLocationPanel(loc, topics));
+        });
+
+        // Slight delay to ensure container is sized
+        setTimeout(() => this.map.invalidateSize(), 150);
     },
 
-    async startScenario(topic) {
-        if (typeof analytics !== 'undefined') analytics.track('start_scenario', { scenario: topic.title_en });
-        
+    showLocationPanel(loc, topics) {
+        const area = this.data.areas.find(a => a.id === loc.area_id);
+        const color = this.areaColors[loc.area_id] || '#4f46e5';
+
+        document.getElementById('panel-location-icon').textContent = loc.icon;
+        document.getElementById('panel-location-name').textContent = loc.name_zh;
+        document.getElementById('panel-location-meta').textContent =
+            `${loc.name_en}${area ? ' · ' + area.name_zh : ''}`;
+
+        const list = document.getElementById('panel-topic-list');
+        list.innerHTML = topics.map(t => `
+            <div class="topic-card" onclick="app.startScenario(${JSON.stringify(t).replace(/"/g, '&quot;')}, '${loc.icon}')">
+                <div class="topic-card-zh">${t.title_zh}</div>
+                <div class="topic-card-en">${t.title_en}</div>
+            </div>
+        `).join('');
+
+        const panel = document.getElementById('location-panel');
+        panel.classList.remove('hidden');
+        // Re-trigger animation
+        panel.style.animation = 'none';
+        panel.offsetHeight; // reflow
+        panel.style.animation = '';
+    },
+
+    closeLocationPanel() {
+        document.getElementById('location-panel').classList.add('hidden');
+    },
+
+    // ── Chat ─────────────────────────────────────────────────────────────────
+
+    async startScenario(topic, locationIcon = '') {
         this.state.currentScenario = topic.title_en;
         this.state.currentTopicId = topic.id;
-        
-        document.getElementById('chat-scenario-title').innerText = topic.title_zh;
-        
+        this.state.currentLocationIcon = locationIcon;
+
+        document.getElementById('chat-scenario-title').textContent = topic.title_zh;
+        document.getElementById('chat-location-icon').textContent = locationIcon;
         document.getElementById('chat-messages').innerHTML = '';
+
+        // Reset message history
         this.state.messages = [];
-        
-        // Mock session stats
+
         this.state.stats.sessions++;
         this.saveStats();
 
         this.navigate('chat');
+        this.closeLocationPanel();
         this.loadTasksForScenario(topic.id);
-        
+
         const typingId = this.showTypingIndicator();
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    scenario: topic.title_en,
-                    messages: []
-                })
+                body: JSON.stringify({ scenario: topic.title_en, messages: [] })
             });
             const data = await response.json();
             this.removeTypingIndicator(typingId);
-            
             if (data.reply) {
                 this.addMessageToUI('bot', data.reply, data.translation);
             }
-        } catch (error) {
-            console.error(error);
+        } catch(error) {
             this.removeTypingIndicator(typingId);
-            this.addMessageToUI('bot', `Welcome to the ${topic.title_en}. How can I help you today?`, `歡迎來到${topic.title_zh}。今天我能如何幫忙？`);
+            this.addMessageToUI('bot',
+                `Welcome! Let's talk about ${topic.title_en}.`,
+                `歡迎！讓我們聊聊${topic.title_zh}。`
+            );
         }
     },
 
     showTypingIndicator() {
-        const typingId = 'msg-' + Date.now();
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `message bot typing`;
-        msgDiv.id = typingId;
-        msgDiv.innerHTML = `<div class="content"><span style="font-size: 1.5rem; line-height: 0.5;">...</span></div>`;
-        document.getElementById('chat-messages').appendChild(msgDiv);
-        document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
-        return typingId;
+        const id = 'typing-' + Date.now();
+        const div = document.createElement('div');
+        div.className = 'message bot typing';
+        div.id = id;
+        div.innerHTML = '<span style="letter-spacing:2px">•••</span>';
+        document.getElementById('chat-messages').appendChild(div);
+        this._scrollToBottom();
+        return id;
     },
 
-    removeTypingIndicator(typingId) {
-        const el = document.getElementById(typingId);
+    removeTypingIndicator(id) {
+        const el = document.getElementById(id);
         if (el) el.remove();
     },
 
-    addMessageToUI(role, content, translation = "") {
-        const messagesContainer = document.getElementById('chat-messages');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `message ${role} ${this.state.showTranslations ? 'show-translation' : ''}`;
-        
-        const safeContent = content.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        const safeTranslation = translation ? translation.replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    addMessageToUI(role, content, translation = '') {
+        const container = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.className = `message ${role}${this.state.showTranslations && translation ? ' show-translation' : ''}`;
 
-        let innerHTML = `<div class="content">${safeContent}</div>`;
-        if (translation) innerHTML += `<div class="translation">${safeTranslation}</div>`;
-        
-        msgDiv.innerHTML = innerHTML;
-        messagesContainer.appendChild(msgDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        
-        this.state.messages.push({ role, content, translation });
-        
-        if (role === 'user') {
-            this.state.stats.rounds++;
-            this.saveStats();
-        }
+        const safe = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        div.innerHTML = `<div class="content">${safe(content)}</div>` +
+            (translation ? `<div class="translation">${safe(translation)}</div>` : '');
+
+        container.appendChild(div);
+        this._scrollToBottom();
     },
 
-    handleInputKeypress(event) {
-        if (event.key === 'Enter') this.sendMessage();
+    _scrollToBottom() {
+        const c = document.getElementById('chat-messages');
+        if (c) c.scrollTop = c.scrollHeight;
+    },
+
+    handleInputKeypress(e) {
+        if (e.key === 'Enter') this.sendMessage();
     },
 
     async sendMessage() {
         const inputEl = document.getElementById('chat-input');
         const text = inputEl.value.trim();
         if (!text) return;
-        
-        this.addMessageToUI('user', text);
+
         inputEl.value = '';
 
-        const historyToSend = [...this.state.messages];
-        this.state.messages.push({ role: 'user', content: text });
-        
-        const typingId = this.showTypingIndicator();
-        
-        try {
-            this.evaluateUserMessageSync(text);
+        // Show in UI immediately
+        this.addMessageToUI('user', text);
 
+        // Snapshot history BEFORE adding the new user message
+        const historyToSend = [...this.state.messages];
+
+        // Now push user message to state
+        this.state.messages.push({ role: 'user', content: text });
+        this.state.stats.rounds++;
+        this.saveStats();
+
+        const typingId = this.showTypingIndicator();
+
+        // Evaluate tasks in parallel (fire and forget)
+        this.evaluateUserMessage(text);
+
+        try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     scenario: this.state.currentScenario,
-                    messages: this.state.messages
+                    messages: [...historyToSend, { role: 'user', content: text }]
                 })
             });
 
             const data = await response.json();
             this.removeTypingIndicator(typingId);
-            
+
             if (data.reply) {
                 this.addMessageToUI('bot', data.reply, data.translation);
-            } else if (data.error) {
-                const detailedError = data.details ? JSON.stringify(data.details) : '';
-                this.addMessageToUI('bot', `Backend Error: ${data.error} ${detailedError}`, `伺服器錯誤: ${data.error}`);
+                this.state.messages.push({ role: 'bot', content: data.reply, translation: data.translation || '' });
             } else {
-                this.addMessageToUI('bot', `Unknown error: ${JSON.stringify(data)}`, `未知錯誤`);
+                this.addMessageToUI('bot', `Error: ${data.error || 'Unknown error'}`);
             }
-            
-        } catch (error) {
+        } catch(error) {
             this.removeTypingIndicator(typingId);
-            this.addMessageToUI('bot', "Sorry, I had trouble connecting to the server.", "抱歉，無法連接到伺服器。");
-            console.error(error);
+            this.addMessageToUI('bot', 'Sorry, I had trouble connecting to the server.', '抱歉，無法連接到伺服器。');
         }
     },
 
     toggleTranslation() {
         this.state.showTranslations = !this.state.showTranslations;
         document.querySelectorAll('.message').forEach(msg => {
-            msg.classList.toggle('show-translation', this.state.showTranslations);
+            const hasTranslation = msg.querySelector('.translation');
+            if (hasTranslation) {
+                msg.classList.toggle('show-translation', this.state.showTranslations);
+            }
         });
     },
 
@@ -262,45 +341,42 @@ const app = {
             });
             const data = await response.json();
             this.removeTypingIndicator(typingId);
-            if(data.hint) {
+            if (data.hint) {
                 document.getElementById('chat-input').value = data.hint;
+                document.getElementById('chat-input').focus();
             }
-        } catch (e) {
+        } catch(e) {
             this.removeTypingIndicator(typingId);
-            console.error("Hint error:", e);
         }
     },
 
-    async loadTasksForScenario(topicId) {
-        if(!this.data) return;
-        
+    // ── Tasks ────────────────────────────────────────────────────────────────
+
+    loadTasksForScenario(topicId) {
+        if (!this.data) return;
         const tasks = this.data.tasks.filter(t => t.topic_id === topicId);
-        
-        this.currentTasks = tasks.map((task, index) => ({
-            id: topicId * 100 + index, // Generate unique ID for evaluator
+        this.currentTasks = tasks.map((task, i) => ({
+            id: topicId * 100 + i,
             text: task.task_content_zh,
             task_content_en: task.task_content_en,
-            completed: false
+            completed: false,
         }));
-        
         this.renderTasks();
     },
 
     renderTasks() {
-        const taskList = document.getElementById('task-list');
-        taskList.innerHTML = '';
-        
-        this.currentTasks.forEach(task => {
-            const li = document.createElement('li');
-            li.className = task.completed ? 'completed' : '';
-            li.innerText = task.text;
-            taskList.appendChild(li);
-        });
+        const list = document.getElementById('task-list');
+        if (!list) return;
+        list.innerHTML = this.currentTasks.map(t =>
+            `<li class="${t.completed ? 'completed' : ''}">${t.text}</li>`
+        ).join('');
     },
 
-    async evaluateUserMessageSync(userMessage) {
-        const openTasks = this.currentTasks.filter(t => !t.completed).map(t => ({ id: t.id, question: t.task_content_en || t.text }));
-        if(openTasks.length === 0) return;
+    async evaluateUserMessage(userMessage) {
+        const openTasks = this.currentTasks
+            .filter(t => !t.completed)
+            .map(t => ({ id: t.id, question: t.task_content_en || t.text }));
+        if (openTasks.length === 0) return;
 
         try {
             const response = await fetch('/api/task', {
@@ -309,104 +385,69 @@ const app = {
                 body: JSON.stringify({
                     action: 'evaluate_tasks',
                     scenario: this.state.currentScenario,
-                    userMessage: userMessage,
+                    userMessage,
                     currentTasks: openTasks
                 })
             });
             const data = await response.json();
-            if(data.completedIds && data.completedIds.length > 0) {
+            if (data.completedIds && data.completedIds.length > 0) {
                 this.currentTasks.forEach(t => {
                     if (data.completedIds.includes(t.id)) {
                         t.completed = true;
-                        this.notifyTaskCompleted(t.text);
+                        this.showToast(`🎯 任務完成：${t.text}`);
                         this.state.stats.taskCount++;
                         this.saveStats();
                     }
                 });
                 this.renderTasks();
             }
-        } catch (e) {
-            console.error("Eval error", e);
+        } catch(e) {
+            console.error('Eval error:', e);
         }
     },
 
-    notifyTaskCompleted(taskText) {
+    showToast(msg) {
         const toast = document.createElement('div');
-        toast.style.position = 'fixed';
-        toast.style.top = '20px';
-        toast.style.right = '20px';
-        toast.style.background = 'var(--success)';
-        toast.style.color = '#fff';
-        toast.style.padding = '1rem 1.5rem';
-        toast.style.borderRadius = '100px';
-        toast.style.zIndex = '1000';
-        toast.style.boxShadow = '0 8px 24px rgba(16, 185, 129, 0.4)';
-        toast.style.animation = 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-        toast.style.fontWeight = '600';
-        toast.innerText = `🎯 任務完成：${taskText}`;
-        
+        toast.className = 'toast';
+        toast.textContent = msg;
         document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 4000);
+        setTimeout(() => toast.remove(), 3500);
     },
 
     showTasks() { document.getElementById('task-modal').classList.remove('hidden'); },
     hideTasks() { document.getElementById('task-modal').classList.add('hidden'); },
 
-    async loadStats() {
-        document.getElementById('stat-streak').innerText = this.state.stats.streak;
-        document.getElementById('stat-completed').innerText = this.state.stats.taskCount;
+    // ── Badges ───────────────────────────────────────────────────────────────
 
-        const avgRounds = this.state.stats.sessions > 0 ? (this.state.stats.rounds / this.state.stats.sessions).toFixed(1) : 0;
-        document.getElementById('stat-rounds').innerText = avgRounds;
-
+    loadStats() {
+        document.getElementById('stat-streak').textContent = this.state.stats.streak;
+        document.getElementById('stat-completed').textContent = this.state.stats.taskCount;
+        const avg = this.state.stats.sessions > 0
+            ? (this.state.stats.rounds / this.state.stats.sessions).toFixed(1)
+            : 0;
+        document.getElementById('stat-rounds').textContent = avg;
         this.renderBadges(this.state.stats.taskCount, this.state.stats.streak);
     },
 
     renderBadges(taskCount, streak) {
-        const badgesContainer = document.getElementById('badges-grid');
-        badgesContainer.innerHTML = '';
-
-        const availableBadges = [
-            { id: 1, title: '初學起步', icon: '🐣', requirement: '完成 1 個任務', earned: taskCount >= 1 },
-            { id: 2, title: '侃侃而談', icon: '💬', requirement: '完成 5 個任務', earned: taskCount >= 5 },
-            { id: 3, title: '在地專家', icon: '🌟', requirement: '完成 10 個任務', earned: taskCount >= 10 },
-            { id: 4, title: '持之以恆', icon: '🔥', requirement: '連續 3 天學習', earned: streak >= 3 }
+        const grid = document.getElementById('badges-grid');
+        const badges = [
+            { icon: '🐣', title: '初學起步', req: '完成 1 個任務', earned: taskCount >= 1 },
+            { icon: '💬', title: '侃侃而談', req: '完成 5 個任務', earned: taskCount >= 5 },
+            { icon: '🌟', title: '在地專家', req: '完成 10 個任務', earned: taskCount >= 10 },
+            { icon: '🗺️', title: '地圖探索家', req: '完成 20 個任務', earned: taskCount >= 20 },
+            { icon: '🔥', title: '持之以恆', req: '連續 3 天學習', earned: streak >= 3 },
+            { icon: '🏆', title: '高雄通', req: '連續 7 天學習', earned: streak >= 7 },
         ];
 
-        let earnedCount = 0;
-        availableBadges.forEach(badge => {
-            if (badge.earned) earnedCount++;
-            const badgeEl = document.createElement('div');
-            badgeEl.className = `badge-card ${badge.earned ? 'earned' : 'locked'}`;
-            badgeEl.innerHTML = `
-                <div class="icon">${badge.icon}</div>
-                <h4>${badge.title}</h4>
-                <p>${badge.requirement}</p>
-            `;
-            badgesContainer.appendChild(badgeEl);
-        });
-
-        if(earnedCount === 0) {
-            badgesContainer.innerHTML = '<div class="empty-state">尚未獲得徽章。快開始一個情境對話吧！</div>';
-        }
+        grid.innerHTML = badges.map(b => `
+            <div class="badge-card ${b.earned ? 'earned' : 'locked'}">
+                <div class="icon">${b.icon}</div>
+                <h4>${b.title}</h4>
+                <p>${b.req}</p>
+            </div>
+        `).join('');
     }
 };
 
-const originalNavigate = app.navigate.bind(app);
-app.navigate = function(viewId) {
-    originalNavigate(viewId);
-    if(viewId === 'badges') {
-        app.loadStats();
-    }
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-    app.init();
-    if(typeof analytics !== 'undefined') analytics.track('app_load');
-});
-
-const analytics = {
-    track(event, data = {}) {
-        console.log(`[Analytics] ${event}`, data);
-    }
-};
+document.addEventListener('DOMContentLoaded', () => app.init());
