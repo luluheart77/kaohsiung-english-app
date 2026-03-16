@@ -491,6 +491,35 @@ h1 { font-size: 3rem; font-weight: 700; letter-spacing: -1.5px; line-height: 1.0
 
 .chat-controls { padding: 0.5rem 1.5rem; display: flex; gap: 0.6rem; background: rgba(248,250,252,0.8); border-top: 1px solid rgba(0,0,0,0.04); flex-shrink: 0; }
 .chat-input-area { padding: 1rem 1.5rem; background: white; border-top: 1px solid rgba(0,0,0,0.05); display: flex; gap: 0.75rem; align-items: center; flex-shrink: 0; }
+
+/* Mic button */
+.mic-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    background: white;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.mic-btn:hover { border-color: var(--primary); color: var(--primary); }
+.mic-btn.recording {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+    animation: pulse-mic 1s ease-in-out infinite;
+}
+.tool-btn.tts-active { background: rgba(79,70,229,0.08); color: var(--primary); border-color: rgba(79,70,229,0.3); }
+
+@keyframes pulse-mic {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+    50%       { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+}
 #chat-input { flex-grow: 1; background: #f1f5f9; border: 1px solid transparent; color: var(--text-main); padding: 0.85rem 1.25rem; border-radius: 100px; font-size: 0.98rem; font-family: inherit; transition: all 0.25s; }
 #chat-input:focus { outline: none; background: white; border-color: rgba(79,70,229,0.3); box-shadow: 0 0 0 3px rgba(79,70,229,0.06); }
 .send-btn { background: var(--primary); color: white; border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; box-shadow: 0 4px 12px rgba(79,70,229,0.3); }

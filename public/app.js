@@ -178,6 +178,9 @@ const app = {
         if (btn) btn.classList.add('active');
 
         if (viewId === 'scenarios') {
+            // Stop any active voice when leaving chat
+            this._stopMic();
+            speechSynthesis.cancel();
             requestAnimationFrame(() => requestAnimationFrame(() => {
                 this.initMap();
                 if (this.map) {
@@ -478,7 +481,10 @@ const app = {
             });
             const d = await r.json();
             this.removeTypingIndicator(tid);
-            if (d.reply) this.addMessageToUI('bot', d.reply, d.translation);
+            if (d.reply) {
+                this.addMessageToUI('bot', d.reply, d.translation);
+                this._speak(d.reply);
+            }
         } catch(e) {
             this.removeTypingIndicator(tid);
             this.addMessageToUI('bot',
@@ -550,6 +556,7 @@ const app = {
             if (d.reply) {
                 this.addMessageToUI('bot', d.reply, d.translation);
                 this.state.messages.push({ role: 'bot', content: d.reply, translation: d.translation || '' });
+                this._speak(d.reply);
             } else {
                 this.addMessageToUI('bot', `Error: ${d.error || 'Unknown error'}`);
             }
@@ -820,6 +827,114 @@ const app = {
                 <h4>${b.title}</h4>
                 <p>${b.req}</p>
             </div>`).join('');
+    },
+
+    // ── Voice input (Speech-to-Text) ──────────────────────────────────────────
+
+    _recognition: null,
+    _isRecording: false,
+
+    toggleMic() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            this.showToast('⚠️ 您的瀏覽器不支援語音輸入（請使用 Chrome 或 Edge）');
+            return;
+        }
+
+        if (this._isRecording) {
+            this._stopMic();
+        } else {
+            this._startMic();
+        }
+    },
+
+    _startMic() {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        this._recognition = new SR();
+        this._recognition.lang = 'en-US';
+        this._recognition.continuous = false;
+        this._recognition.interimResults = true;
+
+        const btn = document.getElementById('mic-btn');
+        const input = document.getElementById('chat-input');
+
+        this._recognition.onstart = () => {
+            this._isRecording = true;
+            btn.classList.add('recording');
+            input.placeholder = '正在聆聽…';
+        };
+
+        this._recognition.onresult = e => {
+            // Show interim results in the input box as the user speaks
+            const transcript = Array.from(e.results)
+                .map(r => r[0].transcript)
+                .join('');
+            input.value = transcript;
+        };
+
+        this._recognition.onend = () => {
+            this._stopMic();
+            // Auto-send if there's content
+            if (input.value.trim()) {
+                this.sendMessage();
+            }
+        };
+
+        this._recognition.onerror = e => {
+            this._stopMic();
+            if (e.error !== 'aborted') {
+                this.showToast(`⚠️ 語音錯誤：${e.error}`);
+            }
+        };
+
+        this._recognition.start();
+    },
+
+    _stopMic() {
+        this._isRecording = false;
+        const btn = document.getElementById('mic-btn');
+        const input = document.getElementById('chat-input');
+        if (btn) btn.classList.remove('recording');
+        if (input) input.placeholder = '用英文輸入或按麥克風說話…';
+        if (this._recognition) {
+            this._recognition.abort();
+            this._recognition = null;
+        }
+    },
+
+    // ── Audio output (Text-to-Speech) ─────────────────────────────────────────
+
+    _ttsEnabled: false,
+
+    toggleTts() {
+        this._ttsEnabled = !this._ttsEnabled;
+        const btn = document.getElementById('tts-toggle-btn');
+        if (btn) {
+            btn.classList.toggle('tts-active', this._ttsEnabled);
+            btn.textContent = this._ttsEnabled ? '🔊 朗讀' : '🔈 朗讀';
+        }
+        if (!this._ttsEnabled) {
+            speechSynthesis.cancel();
+        }
+    },
+
+    _speak(text) {
+        if (!this._ttsEnabled) return;
+        // Cancel any currently playing speech first
+        speechSynthesis.cancel();
+
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'en-US';
+        utt.rate = 0.92;   // slightly slower — better for learners
+        utt.pitch = 1.0;
+
+        // Pick a natural English voice if available
+        const voices = speechSynthesis.getVoices();
+        const preferred = voices.find(v =>
+            v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel'))
+        ) || voices.find(v => v.lang.startsWith('en'));
+        if (preferred) utt.voice = preferred;
+
+        speechSynthesis.speak(utt);
     },
 };
 
