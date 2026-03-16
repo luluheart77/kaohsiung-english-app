@@ -204,6 +204,9 @@ const app = {
         
         this.addMessageToUI('user', text);
         inputEl.value = '';
+
+        const historyToSend = [...this.state.messages];
+        this.state.messages.push({ role: 'user', content: text });
         
         const typingId = this.showTypingIndicator();
         
