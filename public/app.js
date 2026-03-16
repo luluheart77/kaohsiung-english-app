@@ -360,37 +360,85 @@ const app = {
         const route = ROUTES.find(r => r.id === routeId);
         if (!route || !this.data) return;
 
-        // Navigate to map
         this.navigate('scenarios');
 
         requestAnimationFrame(() => requestAnimationFrame(() => {
-            // Clear old route
-            if (this.routeLayer) this.map.removeLayer(this.routeLayer);
+            // Remove previous routing control
+            if (this.routeLayer) {
+                this.map.removeControl(this.routeLayer);
+                this.routeLayer = null;
+            }
 
-            // Gather coordinates in order
-            const coords = route.location_ids
+            // Gather waypoints in order
+            const waypoints = route.location_ids
                 .map(id => this.data.locations.find(l => l.id === id))
                 .filter(l => l && l.lat && l.lng)
-                .map(l => [l.lat, l.lng]);
+                .map(l => L.latLng(l.lat, l.lng));
 
-            if (coords.length === 0) return;
+            if (waypoints.length < 2) return;
 
-            // Draw polyline
-            this.routeLayer = L.polyline(coords, {
-                color: route.color,
-                weight: 4,
-                opacity: 0.75,
-                dashArray: '10 6',
-            }).addTo(this.map);
-
-            // Fit bounds with padding
-            this.map.fitBounds(this.routeLayer.getBounds(), { padding: [60, 60] });
-
-            // Reset filter to show all
             this.filterBySdg('all');
 
-            // Show route info toast
-            this.showToast(`${route.emoji} ${route.title} — ${coords.length} 站`);
+            // Build routing control — hide the sidebar panel, style the line
+            this.routeLayer = L.Routing.control({
+                waypoints,
+                router: L.Routing.osrmv1({
+                    serviceUrl: 'https://router.project-osrm.org/route/v1',
+                    profile: 'driving',
+                }),
+                lineOptions: {
+                    styles: [{ color: route.color, weight: 5, opacity: 0.85 }],
+                    extendToWaypoints: true,
+                    missingRouteTolerance: 0,
+                },
+                // Numbered waypoint markers in the route colour
+                createMarker: (i, wp) => {
+                    const loc = this.data.locations.find(l =>
+                        Math.abs(l.lat - wp.latLng.lat) < 0.0001 &&
+                        Math.abs(l.lng - wp.latLng.lng) < 0.0001
+                    );
+                    const icon = L.divIcon({
+                        className: '',
+                        html: `<div style="
+                            width:32px;height:32px;
+                            background:${route.color};
+                            border:2.5px solid white;
+                            border-radius:50%;
+                            display:flex;align-items:center;justify-content:center;
+                            color:white;font-weight:700;font-size:0.85rem;
+                            box-shadow:0 3px 10px ${route.color}88;
+                        ">${i + 1}</div>`,
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 16],
+                    });
+                    const marker = L.marker(wp.latLng, { icon });
+                    if (loc) {
+                        marker.bindTooltip(
+                            `<strong>${loc.icon} ${loc.name_zh}</strong><br><span style="font-size:0.8rem;color:#64748b">${loc.name_en}</span>`,
+                            { direction: 'top', offset: [0, -18] }
+                        );
+                    }
+                    return marker;
+                },
+                // Hide the default turn-by-turn instructions panel
+                show: false,
+                collapsible: false,
+                addWaypoints: false,
+                draggableWaypoints: false,
+                fitSelectedRoutes: true,
+                routeWhileDragging: false,
+            }).addTo(this.map);
+
+            // Fit map to route once it loads
+            this.routeLayer.on('routesfound', e => {
+                const bounds = L.latLngBounds(e.routes[0].coordinates);
+                this.map.fitBounds(bounds, { padding: [60, 320] });
+                this.showToast(`${route.emoji} ${route.title} — ${waypoints.length} 站`);
+            });
+
+            this.routeLayer.on('routingerror', () => {
+                this.showToast('⚠️ 路線載入失敗，請檢查網路連線');
+            });
         }));
     },
 

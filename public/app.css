@@ -537,3 +537,6 @@ h2 { font-size: 1.6rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing:
 .leaflet-control-zoom { border: none !important; box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important; }
 .leaflet-control-zoom a { border-radius: 8px !important; border: none !important; width: 32px !important; height: 32px !important; line-height: 32px !important; color: var(--text-main) !important; }
 .leaflet-control-attribution { font-size: 0.65rem !important; background: rgba(255,255,255,0.7) !important; }
+
+/* Hide LRM's default turn-by-turn sidebar entirely */
+.leaflet-routing-container { display: none !important; }
