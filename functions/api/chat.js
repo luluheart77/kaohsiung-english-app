@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
         if (geminiMessages.length === 0) {
             geminiMessages.push({ 
                 role: 'user', 
-                parts: [{ text: `Introduce yourself and talk about ${scenario} like a tourism ambassador for Kaohsiung. Don't style your words with bolded or italicized text.` }] 
+                parts: [{ text: `Introduce yourself and talk about ${scenario} like a tourism ambassador for Kaohsiung. Don't style your words with bolded or italicized text. Use easy language at first to talk with me, then adjust your English level based on my ENglish skills.` }] 
             });
         }
 
