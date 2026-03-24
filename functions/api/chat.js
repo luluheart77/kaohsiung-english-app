@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
         if (geminiMessages.length === 0) {
             geminiMessages.push({ 
                 role: 'user', 
-                parts: [{ text: `Hello! Please introduce yourself! Would you want to talk about ${scenario}?` }] 
+                parts: [{ text: `Introduce yourself and talk about ${scenario} like a tourism ambassador for Kaohsiung. Don't style your words with bolded or italicized text.` }] 
             });
         }
 
