@@ -43,7 +43,7 @@ export async function onRequestPost(context) {
         if (geminiMessages.length === 0) {
             geminiMessages.push({ 
                 role: 'user', 
-                parts: [{ text: `Introduce yourself and talk about ${scenario} like a tourism ambassador for Kaohsiung.` }] 
+                parts: [{ text: `Hello! Please introduce yourself very briefly (maximum 2 sentences) and start our roleplay in the ${scenario} scenario.` }] 
             });
         }
 
