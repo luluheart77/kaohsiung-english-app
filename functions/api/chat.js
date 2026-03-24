@@ -19,7 +19,14 @@ export async function onRequestPost(context) {
             'default': `You are a friendly local guide in Kaohsiung. The scenario is: ${scenario}. Help the user practice English while learning about the area.`
         };
 
-    const systemPrompt = systemPrompts[scenario] || systemPrompts['default'];
+    const globalRules = `
+    STRICT CONSTRAINTS:
+    1. FORMATTING: Use plain text ONLY. Do not use bold (**) or italics (*).
+    2. ADAPTIVE LEVEL: Continuously analyze the user's English level. If they use simple words and short sentences, reply using A1-A2 level English. If they use complex grammar, you may use B2-C1 level English.
+    3. BREVITY: Keep your opening message under 3 sentences.
+    `;
+
+    const systemPrompt = (systemPrompts[scenario] || "You are a helpful AI assistant.") + globalRules;
 
         const geminiMessages = [];
 
@@ -36,7 +43,7 @@ export async function onRequestPost(context) {
         if (geminiMessages.length === 0) {
             geminiMessages.push({ 
                 role: 'user', 
-                parts: [{ text: `Introduce yourself and talk about ${scenario} like a tourism ambassador for Kaohsiung. Use easy and short language at first to talk with me, then adjust your English level based on my English skills. Don't reply with over three sentences and don't style your words with bolded or italicized text in our entire conversation.` }] 
+                parts: [{ text: `Introduce yourself and talk about ${scenario} like a tourism ambassador for Kaohsiung.` }] 
             });
         }
 
