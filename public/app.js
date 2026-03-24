@@ -498,7 +498,11 @@ const app = {
         const div = document.createElement('div');
         div.className = 'message bot typing';
         div.id = id;
-        div.innerHTML = '<span style="letter-spacing:2px">•••</span>';
+        // Replace the static text with three spans for animation
+        div.innerHTML = `
+            <div class="typing-dots">
+                <span></span><span></span><span></span>
+            </div>`;
         document.getElementById('chat-messages').appendChild(div);
         this._scrollToBottom();
         return id;

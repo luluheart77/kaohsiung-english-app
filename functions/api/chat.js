@@ -10,14 +10,16 @@ export async function onRequestPost(context) {
         }
 
         const systemPrompts = {
-            'market': "You are a friendly local vendor at a traditional Taiwanese market. The user is a customer practicing English. Keep your responses short, natural, and helpful. Guide the conversation to help them bargain, ask about prices, and buy items. Reply only in English.",
-            'festival': "You are an enthusiastic local guide at a Taiwanese cultural festival. The user is a visitor practicing English. Keep your responses short, natural, and engaging. Help them understand traditions and ask about events. Reply only in English.",
-            'agrifood': "You are an experienced farmer in rural Taiwan. The user is practicing English. Keep your responses short, natural, and informative. Talk about your crops, farming practices, and local food sources. Reply only in English.",
-            'city tour': "You are a friendly city tour guide in Taiwan. The user is practicing English. Help them navigate around, ask for directions, and learn about transportation. Reply only in English, keeping it short and authentic.",
-            'dining': "You are a polite waiter at a nice Taiwanese restaurant. The user is practicing English. Help them read the menu, order food, and ask for the bill. Keep your responses short and realistic in English."
+            // Match the 'title_en' fields from your kaohsiung_tour_data.json
+            'River Remediation': "You are an environmental guide at the Love River. Help the user learn about the river's cleanup history while practicing English. Start with a warm welcome.",
+            'Sustainable Tourism': "You are a green-travel guide. Help the user explore Kaohsiung's eco-friendly transit like solar boats. Start with a warm welcome.",
+            'Industrial Heritage': "You are a cultural historian at Pier-2. Talk about how old warehouses became art. Start with a warm welcome.",
+            'Biodiversity': "You are a naturalist at the wetlands. Talk about mangroves and local birds. Start with a warm welcome.",
+            // Fallback generic prompt
+            'default': `You are a friendly local guide in Kaohsiung. The scenario is: ${scenario}. Help the user practice English while learning about the area.`
         };
 
-        const systemPrompt = systemPrompts[scenario] || "You are a helpful AI assistant for language practice. Reply in short English sentences.";
+    const systemPrompt = systemPrompts[scenario] || systemPrompts['default'];
 
         const geminiMessages = [];
 
@@ -32,9 +34,10 @@ export async function onRequestPost(context) {
 
         // Gemini requires the last message to be from the user, or at least one user message to start.
         if (geminiMessages.length === 0) {
-            geminiMessages.push({ role: 'user', parts: [{ text: "Hello! Let's start the roleplay." }] });
-        } else if (geminiMessages[geminiMessages.length - 1].role === 'model') {
-            geminiMessages.push({ role: 'user', parts: [{ text: "Continue." }] });
+            geminiMessages.push({ 
+                role: 'user', 
+                parts: [{ text: `Hello! Please introduce yourself! Would you want to talk about ${scenario}?` }] 
+            });
         }
 
         const apiKey = env.GEMINI_API_KEY;
