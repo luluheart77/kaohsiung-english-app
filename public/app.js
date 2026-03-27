@@ -1,3 +1,96 @@
+// ── Lightweight Markdown → HTML renderer ─────────────────────────────────────
+// Supports: **bold**, *italic*, `code`, ## headings, - bullet lists, numbered lists, blank-line paragraphs
+function parseMarkdown(text) {
+    if (!text) return '';
+
+    // Escape raw HTML first so injected content can't break the page
+    const escape = s => s
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+    // Split into lines for block-level processing
+    const lines = text.split('\n');
+    const out = [];
+    let inUl = false;
+    let inOl = false;
+
+    const closeList = () => {
+        if (inUl) { out.push('</ul>'); inUl = false; }
+        if (inOl) { out.push('</ol>'); inOl = false; }
+    };
+
+    // Inline formatting (applied after escaping)
+    const inline = raw => {
+        const esc = escape(raw);
+        return esc
+            // **bold**
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            // *italic* (but not **)
+            .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
+            // `code`
+            .replace(/`([^`]+)`/g, '<code>$1</code>');
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trim();
+
+        // Blank line
+        if (trimmed === '') {
+            closeList();
+            out.push('<br>');
+            continue;
+        }
+
+        // ### Heading (h3)
+        if (/^###\s+/.test(trimmed)) {
+            closeList();
+            out.push(`<h3>${inline(trimmed.replace(/^###\s+/, ''))}</h3>`);
+            continue;
+        }
+
+        // ## Heading (h2)
+        if (/^##\s+/.test(trimmed)) {
+            closeList();
+            out.push(`<h2>${inline(trimmed.replace(/^##\s+/, ''))}</h2>`);
+            continue;
+        }
+
+        // # Heading (h1)
+        if (/^#\s+/.test(trimmed)) {
+            closeList();
+            out.push(`<h1>${inline(trimmed.replace(/^#\s+/, ''))}</h1>`);
+            continue;
+        }
+
+        // Unordered list item: - or * at start
+        if (/^[-*]\s+/.test(trimmed)) {
+            if (inOl) { out.push('</ol>'); inOl = false; }
+            if (!inUl) { out.push('<ul>'); inUl = true; }
+            out.push(`<li>${inline(trimmed.replace(/^[-*]\s+/, ''))}</li>`);
+            continue;
+        }
+
+        // Ordered list item: 1. 2. etc.
+        if (/^\d+\.\s+/.test(trimmed)) {
+            if (inUl) { out.push('</ul>'); inUl = false; }
+            if (!inOl) { out.push('<ol>'); inOl = true; }
+            out.push(`<li>${inline(trimmed.replace(/^\d+\.\s+/, ''))}</li>`);
+            continue;
+        }
+
+        // Normal paragraph line
+        closeList();
+        out.push(`<p>${inline(trimmed)}</p>`);
+    }
+
+    closeList();
+
+    // Clean up consecutive <br> spam from blank lines between blocks
+    return out.join('').replace(/(<br>){2,}/g, '<br>');
+}
+
 // ── SDG metadata ─────────────────────────────────────────────────────────────
 const SDG_META = {
     6:  { label: 'SDG 6',  name: '潔淨水資源',     color: '#26BDE2', emoji: '💧' },
@@ -68,7 +161,6 @@ const ROUTES = [
 ];
 
 // ── Vocab keywords mapped to topics ──────────────────────────────────────────
-// These are extracted when the user completes tasks. Each entry becomes a vocab card.
 const VOCAB_BY_TOPIC = {
     1:   [{ word: 'remediation',      zh: '整治／復育',     sdgs: [6,11] },
           { word: 'watershed',        zh: '流域',           sdgs: [6]    }],
@@ -109,8 +201,8 @@ const VOCAB_BY_TOPIC = {
 const app = {
     data: null,
     map: null,
-    allMarkers: [],        // { marker, locationId, sdgs[] }
-    routeLayer: null,      // active polyline on map
+    allMarkers: [],
+    routeLayer: null,
     activeSdgFilter: 'all',
 
     state: {
@@ -178,7 +270,6 @@ const app = {
         if (btn) btn.classList.add('active');
 
         if (viewId === 'scenarios') {
-            // Stop any active voice when leaving chat
             this._stopMic();
             speechSynthesis.cancel();
             requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -204,7 +295,6 @@ const app = {
         5: '#059669',
     },
 
-    // Build a lookup: locationId → sdg numbers[]
     _buildLocationSdgIndex() {
         const index = {};
         this.data.topics.forEach(topic => {
@@ -270,13 +360,9 @@ const app = {
 
     filterBySdg(sdg) {
         this.activeSdgFilter = sdg;
-
-        // Update button states
         document.querySelectorAll('.sdg-filter-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.sdg == sdg);
         });
-
-        // Show/hide markers
         this.allMarkers.forEach(({ marker, sdgs }) => {
             if (sdg === 'all' || sdgs.includes(Number(sdg))) {
                 if (!this.map.hasLayer(marker)) marker.addTo(this.map);
@@ -284,8 +370,6 @@ const app = {
                 if (this.map.hasLayer(marker)) this.map.removeLayer(marker);
             }
         });
-
-        // Clear any active route line when changing filter
         if (this.routeLayer) {
             this.map.removeLayer(this.routeLayer);
             this.routeLayer = null;
@@ -335,9 +419,7 @@ const app = {
                 const m = SDG_META[s];
                 return m ? `<span class="sdg-pill" style="background:${m.color}20;color:${m.color};border-color:${m.color}40">${m.emoji} ${m.label} ${m.name}</span>` : '';
             }).join('');
-
             const stops = route.location_ids.length;
-
             return `
             <div class="route-card" onclick="app.openRoute('${route.id}')">
                 <div class="route-card-header" style="background:${route.color}15;border-bottom:2px solid ${route.color}30">
@@ -366,13 +448,11 @@ const app = {
         this.navigate('scenarios');
 
         requestAnimationFrame(() => requestAnimationFrame(() => {
-            // Remove previous routing control
             if (this.routeLayer) {
                 this.map.removeControl(this.routeLayer);
                 this.routeLayer = null;
             }
 
-            // Gather waypoints in order
             const waypoints = route.location_ids
                 .map(id => this.data.locations.find(l => l.id === id))
                 .filter(l => l && l.lat && l.lng)
@@ -382,7 +462,6 @@ const app = {
 
             this.filterBySdg('all');
 
-            // Build routing control — hide the sidebar panel, style the line
             this.routeLayer = L.Routing.control({
                 waypoints,
                 router: L.Routing.osrmv1({
@@ -394,7 +473,6 @@ const app = {
                     extendToWaypoints: true,
                     missingRouteTolerance: 0,
                 },
-                // Numbered waypoint markers in the route colour
                 createMarker: (i, wp) => {
                     const loc = this.data.locations.find(l =>
                         Math.abs(l.lat - wp.latLng.lat) < 0.0001 &&
@@ -423,7 +501,6 @@ const app = {
                     }
                     return marker;
                 },
-                // Hide the default turn-by-turn instructions panel
                 show: false,
                 collapsible: false,
                 addWaypoints: false,
@@ -432,7 +509,6 @@ const app = {
                 routeWhileDragging: false,
             }).addTo(this.map);
 
-            // Fit map to route once it loads
             this.routeLayer.on('routesfound', e => {
                 const bounds = L.latLngBounds(e.routes[0].coordinates);
                 this.map.fitBounds(bounds, { padding: [60, 320] });
@@ -456,7 +532,6 @@ const app = {
         document.getElementById('chat-scenario-title').textContent = topic.title_zh;
         document.getElementById('chat-location-icon').textContent = locationIcon;
 
-        // Render SDG tags in chat header
         const tagContainer = document.getElementById('chat-sdg-tags');
         tagContainer.innerHTML = (topic.sdg_ids || []).map(s => {
             const m = SDG_META[s];
@@ -488,7 +563,7 @@ const app = {
         } catch(e) {
             this.removeTypingIndicator(tid);
             this.addMessageToUI('bot',
-                `Welcome! Let's talk about ${topic.title_en}.`,
+                `Welcome! Let's talk about **${topic.title_en}**.`,
                 `歡迎！讓我們聊聊${topic.title_zh}。`);
         }
     },
@@ -498,11 +573,7 @@ const app = {
         const div = document.createElement('div');
         div.className = 'message bot typing';
         div.id = id;
-        // Replace the static text with three spans for animation
-        div.innerHTML = `
-            <div class="typing-dots">
-                <span></span><span></span><span></span>
-            </div>`;
+        div.innerHTML = '<span style="letter-spacing:3px;font-size:1.2rem">•••</span>';
         document.getElementById('chat-messages').appendChild(div);
         this._scrollToBottom();
         return id;
@@ -513,13 +584,22 @@ const app = {
         if (el) el.remove();
     },
 
+    // ── Markdown-aware message renderer ──────────────────────────────────────
     addMessageToUI(role, content, translation = '') {
         const c = document.getElementById('chat-messages');
         const div = document.createElement('div');
         div.className = `message ${role}${this.state.showTranslations && translation ? ' show-translation' : ''}`;
-        const safe = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        div.innerHTML = `<div class="content">${safe(content)}</div>` +
-            (translation ? `<div class="translation">${safe(translation)}</div>` : '');
+
+        // Bot messages get markdown rendering; user messages are plain-text escaped
+        const contentHtml = role === 'bot'
+            ? `<div class="content md-body">${parseMarkdown(content)}</div>`
+            : `<div class="content">${content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+
+        const translationHtml = translation
+            ? `<div class="translation">${translation.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`
+            : '';
+
+        div.innerHTML = contentHtml + translationHtml;
         c.appendChild(div);
         this._scrollToBottom();
     },
@@ -566,7 +646,7 @@ const app = {
             }
         } catch(e) {
             this.removeTypingIndicator(tid);
-            this.addMessageToUI('bot', 'Sorry, connection failed.', '抱歉，連線失敗。');
+            this.addMessageToUI('bot', 'Sorry, connection failed. 抱歉，連線失敗。');
         }
     },
 
@@ -588,7 +668,10 @@ const app = {
             });
             const d = await r.json();
             this.removeTypingIndicator(tid);
-            if (d.hint) { document.getElementById('chat-input').value = d.hint; document.getElementById('chat-input').focus(); }
+            if (d.hint) {
+                document.getElementById('chat-input').value = d.hint;
+                document.getElementById('chat-input').focus();
+            }
         } catch(e) { this.removeTypingIndicator(tid); }
     },
 
@@ -632,7 +715,6 @@ const app = {
                         this.showToast(`🎯 任務完成：${t.text}`);
                         this.state.stats.taskCount++;
                         this.saveStats();
-                        // Award vocab for this topic
                         this._awardVocab(this.state.currentTopicId);
                     }
                 });
@@ -664,7 +746,6 @@ const app = {
                 });
                 added++;
             } else {
-                // Increment seen count
                 const existing = stored.find(v => v.word === entry.word);
                 if (existing) existing.seen = (existing.seen || 1) + 1;
             }
@@ -691,7 +772,6 @@ const app = {
     renderVocab() {
         const vocab = this._loadVocab();
 
-        // Build SDG filter pills from vocab actually owned
         const sdgsInVocab = new Set();
         vocab.forEach(v => (v.sdgs || []).forEach(s => sdgsInVocab.add(s)));
 
@@ -709,7 +789,6 @@ const app = {
                 </button>` : '';
             }).join('')}`;
 
-        // Filter
         let filtered = vocab;
         if (this._vocabFilter !== 'all') {
             filtered = filtered.filter(v => (v.sdgs||[]).includes(Number(this._vocabFilter)));
@@ -734,7 +813,6 @@ const app = {
                 const m = SDG_META[s];
                 return m ? `<span class="sdg-pill" style="background:${m.color}20;color:${m.color};border-color:${m.color}40">${m.emoji} ${m.label}</span>` : '';
             }).join('');
-
             const date = v.learnedAt ? new Date(v.learnedAt).toLocaleDateString('zh-TW') : '';
             return `
             <div class="vocab-card" onclick="app.openVocabModal('${v.word.replace(/'/g,"\\'")}')">
@@ -774,12 +852,12 @@ const app = {
 
         document.getElementById('vocab-modal-body').innerHTML = `
             <div style="margin-bottom:1.2rem">
-                <div style="font-size:1.8rem;font-weight:700;color:#1e293b;margin-bottom:0.3rem">${v.word}</div>
-                <div style="font-size:1.1rem;color:#64748b;margin-bottom:1rem">${v.zh}</div>
-                <div style="font-size:0.8rem;color:#94a3b8">出現 ${v.seen || 1} 次 · 首次學習 ${v.learnedAt ? new Date(v.learnedAt).toLocaleDateString('zh-TW') : ''}</div>
+                <div style="font-size:1.8rem;font-weight:700;margin-bottom:0.3rem">${v.word}</div>
+                <div style="font-size:1.1rem;color:var(--text-muted);margin-bottom:1rem">${v.zh}</div>
+                <div style="font-size:0.8rem;color:var(--text-dim)">出現 ${v.seen || 1} 次 · 首次學習 ${v.learnedAt ? new Date(v.learnedAt).toLocaleDateString('zh-TW') : ''}</div>
             </div>
             <div style="margin-bottom:1rem">
-                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:0.6rem">相關 SDG 目標</div>
+                <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:0.6rem">相關 SDG 目標</div>
                 <div style="display:flex;flex-direction:column;gap:0.5rem">${sdgPills}</div>
             </div>`;
 
@@ -843,12 +921,7 @@ const app = {
             this.showToast('⚠️ 您的瀏覽器不支援語音輸入（請使用 Chrome 或 Edge）');
             return;
         }
-
-        if (this._isRecording) {
-            this._stopMic();
-        } else {
-            this._startMic();
-        }
+        if (this._isRecording) { this._stopMic(); } else { this._startMic(); }
     },
 
     _startMic() {
@@ -868,26 +941,18 @@ const app = {
         };
 
         this._recognition.onresult = e => {
-            // Show interim results in the input box as the user speaks
-            const transcript = Array.from(e.results)
-                .map(r => r[0].transcript)
-                .join('');
+            const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
             input.value = transcript;
         };
 
         this._recognition.onend = () => {
             this._stopMic();
-            // Auto-send if there's content
-            if (input.value.trim()) {
-                this.sendMessage();
-            }
+            if (input.value.trim()) this.sendMessage();
         };
 
         this._recognition.onerror = e => {
             this._stopMic();
-            if (e.error !== 'aborted') {
-                this.showToast(`⚠️ 語音錯誤：${e.error}`);
-            }
+            if (e.error !== 'aborted') this.showToast(`⚠️ 語音錯誤：${e.error}`);
         };
 
         this._recognition.start();
@@ -916,22 +981,26 @@ const app = {
             btn.classList.toggle('tts-active', this._ttsEnabled);
             btn.textContent = this._ttsEnabled ? '🔊 朗讀' : '🔈 朗讀';
         }
-        if (!this._ttsEnabled) {
-            speechSynthesis.cancel();
-        }
+        if (!this._ttsEnabled) speechSynthesis.cancel();
     },
 
     _speak(text) {
         if (!this._ttsEnabled) return;
-        // Cancel any currently playing speech first
         speechSynthesis.cancel();
+        // Strip markdown before speaking
+        const plain = text
+            .replace(/\*\*(.+?)\*\*/g, '$1')
+            .replace(/\*(.+?)\*/g, '$1')
+            .replace(/`([^`]+)`/g, '$1')
+            .replace(/^#{1,3}\s+/gm, '')
+            .replace(/^[-*]\s+/gm, '')
+            .replace(/^\d+\.\s+/gm, '');
 
-        const utt = new SpeechSynthesisUtterance(text);
+        const utt = new SpeechSynthesisUtterance(plain);
         utt.lang = 'en-US';
-        utt.rate = 0.92;   // slightly slower — better for learners
+        utt.rate = 0.92;
         utt.pitch = 1.0;
 
-        // Pick a natural English voice if available
         const voices = speechSynthesis.getVoices();
         const preferred = voices.find(v =>
             v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel'))

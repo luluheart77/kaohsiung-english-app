@@ -957,26 +957,57 @@ h3 { color: var(--text); }
 
 .leaflet-routing-container { display: none !important; }
 
-/* Animated Typing Indicator */
-.typing-dots {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+/* ─────────────────────────────────────────────────────────────────────────────
+   MARKDOWN BODY  (inside .md-body — bot messages only)
+───────────────────────────────────────────────────────────────────────────── */
+.md-body { line-height: 1.7; }
+
+.md-body p {
+    margin: 0 0 0.6em;
+}
+.md-body p:last-child { margin-bottom: 0; }
+
+.md-body strong { font-weight: 700; }
+.md-body em     { font-style: italic; }
+
+.md-body code {
+    font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.88em;
+    background: rgba(0,200,212,0.12);
+    color: var(--teal-bright);
+    padding: 0.15em 0.45em;
+    border-radius: 5px;
+    border: 1px solid rgba(0,200,212,0.2);
 }
 
-.typing-dots span {
-    width: 6px;
-    height: 6px;
-    background-color: var(--text-muted);
-    border-radius: 50%;
-    display: inline-block;
-    animation: dot-jump 1.4s infinite ease-in-out both;
+.md-body h1,
+.md-body h2,
+.md-body h3 {
+    font-weight: 700;
+    margin: 0.85em 0 0.4em;
+    line-height: 1.2;
+    color: var(--text);
 }
+.md-body h1 { font-size: 1.25em; }
+.md-body h2 { font-size: 1.1em; }
+.md-body h3 { font-size: 1em; }
 
-.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+.md-body ul,
+.md-body ol {
+    padding-left: 1.4em;
+    margin: 0.4em 0 0.7em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+}
+.md-body ul { list-style: disc; }
+.md-body ol { list-style: decimal; }
 
-@keyframes dot-jump {
-    0%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-6px); }
+.md-body li { line-height: 1.55; }
+
+/* Inside a user bubble (shouldn't apply, but safety fallback) */
+.message.user .md-body code {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-color: rgba(255,255,255,0.2);
 }
