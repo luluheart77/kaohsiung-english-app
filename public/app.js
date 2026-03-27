@@ -596,7 +596,7 @@ const app = {
             : `<div class="content">${content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
 
         const translationHtml = translation
-            ? `<div class="translation">${translation.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`
+            ? `<div class="translation md-body">${parseMarkdown(translation)}</div>`
             : '';
 
         div.innerHTML = contentHtml + translationHtml;
